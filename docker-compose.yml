@@ -12,7 +12,7 @@ services:
     image: flyway/flyway
     command:
       -url=jdbc:mariadb://database
-      -schemas=data
+      -schemas=helpboi
       -table=FLYWAY
       -user=root
       -password=root
@@ -30,8 +30,6 @@ services:
       DB_HOST: database
     depends_on:
       - database
-    networks:
-      - client-to-api
 
   client:
     build:
@@ -54,12 +52,3 @@ services:
     tty: true
     volumes:
       - ./client/:/var/www/html
-    networks:
-      - client-to-www
-      - client-to-api
-
-networks:
-  client-to-www:
-    driver: bridge
-  client-to-api:
-    driver: bridge
