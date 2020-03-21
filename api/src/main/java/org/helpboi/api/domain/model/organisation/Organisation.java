@@ -15,6 +15,8 @@ import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 @Entity(name = "organisation")
 public class Organisation {
 
@@ -40,6 +42,7 @@ public class Organisation {
     @Size(max = 255)
     private String address;
 
+    @JsonIgnore
     @OneToMany(orphanRemoval = true, mappedBy = "organisation", cascade = {CascadeType.ALL})
     private Set<OrganisationUser> users = new LinkedHashSet<>();
 
