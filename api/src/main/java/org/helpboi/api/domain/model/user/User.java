@@ -1,20 +1,14 @@
 package org.helpboi.api.domain.model.user;
 
-import java.util.Collections;
-import java.util.LinkedHashSet;
 import java.util.Objects;
-import java.util.Set;
 
-import javax.persistence.CollectionTable;
 import javax.persistence.Column;
-import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
 import javax.validation.constraints.Email;
+import javax.validation.constraints.Min;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
@@ -50,10 +44,14 @@ public class User {
     @Size(max = 255)
     private String phone;
 
-    @ElementCollection(fetch = FetchType.EAGER)
-    @CollectionTable(name = "organisation_user", joinColumns = @JoinColumn(name = "user_id"))
+    @Min(1L)
     @Column(name = "organisation_id")
-    private Set<Long> organisationIds = new LinkedHashSet<>();
+    private Long organisationId;
+
+    @Column(name = "is_admin")
+    private Boolean isAdmin;
+    @Column(name = "is_verified")
+    private Boolean isVerified;
 
     public User() {
     }
@@ -101,8 +99,16 @@ public class User {
         return phone;
     }
 
-    public Set<Long> getOrganisationIds() {
-        return Collections.unmodifiableSet(organisationIds);
+    public Long getOrganisationId() {
+        return organisationId;
+    }
+
+    public Boolean isAdmin() {
+        return isAdmin;
+    }
+
+    public Boolean isVerified() {
+        return isVerified;
     }
 
     @Override
@@ -130,6 +136,9 @@ public class User {
                 ", firstname='" + firstname + '\'' +
                 ", lastname='" + lastname + '\'' +
                 ", phone='" + phone + '\'' +
+                ", organisationId=" + organisationId +
+                ", isAdmin=" + isAdmin +
+                ", isVerified=" + isVerified +
                 '}';
     }
 }
