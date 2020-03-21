@@ -1,11 +1,19 @@
 package org.helpboi.api.domain.model.user;
 
+import java.util.Collections;
+import java.util.LinkedHashSet;
 import java.util.Objects;
+import java.util.Set;
 
+import javax.persistence.CollectionTable;
+import javax.persistence.Column;
+import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
@@ -41,6 +49,11 @@ public class User {
     @NotBlank
     @Size(max = 255)
     private String phone;
+
+    @ElementCollection(fetch = FetchType.EAGER)
+    @CollectionTable(name = "organisation_user", joinColumns = @JoinColumn(name = "user_id"))
+    @Column(name = "organisation_id")
+    private Set<Long> organisationIds = new LinkedHashSet<>();
 
     public User() {
     }
@@ -86,6 +99,10 @@ public class User {
 
     public String getPhone() {
         return phone;
+    }
+
+    public Set<Long> getOrganisationIds() {
+        return Collections.unmodifiableSet(organisationIds);
     }
 
     @Override
