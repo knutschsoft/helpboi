@@ -14,7 +14,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 
 public class CreateUser extends Command<User> {
 
-	@Email
+    @Email
     @NotNull
     @NotBlank
     @Size(max = 255)
@@ -22,7 +22,6 @@ public class CreateUser extends Command<User> {
     @NotNull
     @NotBlank
     @Size(max = 255)
-    @JsonIgnore
     private String password;
 
     @NotBlank
@@ -36,69 +35,68 @@ public class CreateUser extends Command<User> {
     @Size(max = 255)
     private String phone;
 
-	public CreateUser(
-			String email,
-	        String password,
-	        String firstname,
-	        String lastname,
-	        String phone
-	) {
-		Objects.requireNonNull(email);
-        Objects.requireNonNull(password);
-		this.firstname = firstname;
-		this.lastname = lastname;
-		this.email = email;
-		this.password = password;
-		this.phone = phone;
-	}
+    public CreateUser(
+            String email,
+            String password,
+            String firstname,
+            String lastname,
+            String phone
+    ) {
+        this.firstname = firstname;
+        this.lastname = lastname;
+        this.email = email;
+        this.password = password;
+        this.phone = phone;
+    }
 
-	public String getFirstName() {
-		return lastname;
-	}
+    public String getFirstName() {
+        return lastname;
+    }
 
-	public String getLastName() {
-		return lastname;
-	}
+    public String getLastName() {
+        return lastname;
+    }
 
-	public String getEmail() {
-		return email;
-	}
+    public String getEmail() {
+        return email;
+    }
 
-	public String getPassword() {
-		return password;
-	}
+    public String getPassword() {
+        return password;
+    }
 
-	public String getPhone() {
-		return phone;
-	}
+    public String getPhone() {
+        return phone;
+    }
 
-	
-	@Override
-	public int hashCode() {
-		final int prime = 31;
-		int result = 1;
-		result = prime * result + ((email == null) ? 0 : email.hashCode());
-		return result;
-	}
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
+        CreateUser that = (CreateUser) o;
+        return Objects.equals(email, that.email) &&
+                Objects.equals(password, that.password) &&
+                Objects.equals(firstname, that.firstname) &&
+                Objects.equals(lastname, that.lastname) &&
+                Objects.equals(phone, that.phone);
+    }
 
-	@Override
-	public boolean equals(Object obj) {
-		if (this == obj)
-			return true;
-		if (!(obj instanceof CreateUser))
-			return false;
-		CreateUser other = (CreateUser) obj;
-		if (email == null) {
-			if (other.email != null)
-				return false;
-		} else if (!email.equals(other.email))
-			return false;
-		return true;
-	}
+    @Override
+    public int hashCode() {
+        return Objects.hash(email, password, firstname, lastname, phone);
+    }
 
-	@Override
-	public String toString() {
-		return "CreateUser [firstname=" + firstname + ", lastname=" + lastname + ", email=" + email + ", password="
-				+ password + ", phone=" + phone + "]";
-	}
+    @Override
+    public String toString() {
+        return "CreateUser{" +
+                "email='" + email + '\'' +
+                ", firstname='" + firstname + '\'' +
+                ", lastname='" + lastname + '\'' +
+                ", phone='" + phone + '\'' +
+                '}';
+    }
 }

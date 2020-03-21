@@ -16,7 +16,7 @@ import io.micronaut.http.annotation.PathVariable;
 import io.micronaut.http.annotation.Post;
 import io.reactivex.Maybe;
 
-@Controller("/user")
+@Controller("/users")
 public class UserResource {
 
 	@Inject
@@ -24,15 +24,13 @@ public class UserResource {
 	
 	@Post
 	@PermitAll
-	@Consumes(MediaType.APPLICATION_JSON)
 	public Maybe<User> createUser(CreateUser command) {
 		return commandBus.execute(command);
 	}
 	
 	@Delete("/{id}")
 	@PermitAll
-	@Consumes(MediaType.APPLICATION_JSON)
-	public Maybe<String> deleteUser(@PathVariable Long id) {
+	public Maybe<Void> deleteUser(Long id) {
 		return commandBus.execute(new DeleteUser(id));
 	}
 }

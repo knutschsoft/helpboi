@@ -1,5 +1,7 @@
 package org.helpboi.api.application;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import io.reactivex.Maybe;
 
 public abstract class Command<T> {
@@ -8,10 +10,12 @@ public abstract class Command<T> {
             new IllegalStateException(
                     String.format("Command: '%s' was not rejected or resolved", this)));
 
+    @JsonIgnore
     public Maybe<T> getResult() {
         return result;
     }
 
+    @JsonIgnore
     public T getResultBlocking() {
         return result.blockingGet();
     }

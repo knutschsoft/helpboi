@@ -18,6 +18,6 @@ public class DeleteUserHandler implements CommandHandler<DeleteUser> {
     @Transactional
     public void handle(DeleteUser command) {
         userRepository.deleteById(command.getId());
-        command.resolve("User with id " + command.getId() + " removed from repository");
+        command.resolve(null);
     }
 }
