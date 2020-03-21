@@ -1,5 +1,8 @@
 package org.helpboi.api.application.command.user;
 
+import java.util.Objects;
+
+import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
@@ -7,27 +10,31 @@ import javax.validation.constraints.Size;
 import org.helpboi.api.application.Command;
 import org.helpboi.api.domain.model.user.User;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 public class CreateUser extends Command<User> {
 
-	@NotBlank
-	@Size(min = 0, max = 255)
-	private String firstname;
+	@Email
+    @NotNull
+    @NotBlank
+    @Size(max = 255)
+    private String email;
+    @NotNull
+    @NotBlank
+    @Size(max = 255)
+    @JsonIgnore
+    private String password;
 
-	@NotBlank
-	@Size(min = 0, max = 255)
-	private String lastname;
+    @NotBlank
+    @Size(max = 255)
+    private String firstname;
+    @NotBlank
+    @Size(max = 255)
+    private String lastname;
 
-	@NotNull
-	@NotBlank
-	private String email;
-
-	@NotNull
-	@NotBlank
-	private String password;
-
-	@NotBlank
-	@Size(min = 0, max = 255)
-	private String phone;
+    @NotBlank
+    @Size(max = 255)
+    private String phone;
 
 	public CreateUser(
 			String email,
@@ -36,6 +43,8 @@ public class CreateUser extends Command<User> {
 	        String lastname,
 	        String phone
 	) {
+		Objects.requireNonNull(email);
+        Objects.requireNonNull(password);
 		this.firstname = firstname;
 		this.lastname = lastname;
 		this.email = email;

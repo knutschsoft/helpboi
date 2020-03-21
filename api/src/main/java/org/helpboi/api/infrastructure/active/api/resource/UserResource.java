@@ -25,8 +25,8 @@ public class UserResource {
 	@Post
 	@PermitAll
 	@Consumes(MediaType.APPLICATION_JSON)
-	public Maybe<User> createUser(User user) {
-		return commandBus.execute(new CreateUser(user.getEmail(),  user.getPassword(), user.getFirstname(), user.getLastname(), user.getPhone()));
+	public Maybe<User> createUser(CreateUser command) {
+		return commandBus.execute(command);
 	}
 	
 	@Delete("/{id}")
