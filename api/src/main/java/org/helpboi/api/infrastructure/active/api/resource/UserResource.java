@@ -19,24 +19,26 @@ import io.reactivex.Maybe;
 @Controller("/users")
 public class UserResource {
 
-	@Inject
-	private CommandBus commandBus;
-	
-	@Get("/{id}")
-	@PermitAll
-	public Maybe<User> getUser(Long id) {
-		return commandBus.execute(new GetUser(id));
-	}
-	
-	@Post
-	@PermitAll
-	public Maybe<User> createUser(@Body CreateUser command) {
-		return commandBus.execute(command);
-	}
-	
-	@Delete("/{id}")
-	@PermitAll
-	public Maybe<Void> deleteUser(Long id) {
-		return commandBus.execute(new DeleteUser(id));
-	}
+    @Inject
+    private CommandBus commandBus;
+
+    @Get("/{id}")
+    @PermitAll
+    public Maybe<User> getUser(Long id) {
+        return commandBus.execute(new GetUser(id));
+    }
+
+    @Post
+    @PermitAll
+    public Maybe<User> createUser(
+            @Body CreateUser command
+    ) {
+        return commandBus.execute(command);
+    }
+
+    @Delete("/{id}")
+    @PermitAll
+    public Maybe<Void> deleteUser(Long id) {
+        return commandBus.execute(new DeleteUser(id));
+    }
 }

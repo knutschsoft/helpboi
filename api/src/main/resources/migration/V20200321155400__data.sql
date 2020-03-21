@@ -1,0 +1,2 @@
+insert into organisation (name, zipcode, city, address) values ('Testorga', '00123', 'Berlin', 'Musterstrasse');
+insert into user (email, password, firstname, lastname, phone) values ('test@helpboi.com', 'Test1234', 'Max', 'Mustermann', '1234567890');
