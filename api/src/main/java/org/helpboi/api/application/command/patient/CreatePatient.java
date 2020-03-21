@@ -13,8 +13,6 @@ import org.helpboi.api.domain.model.patient.Patient;
 import org.helpboi.api.domain.model.patient.PatientGender;
 import org.helpboi.api.domain.model.patient.PatientStatus;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-
 import io.micronaut.core.annotation.Introspected;
 
 @Introspected
@@ -22,7 +20,6 @@ public class CreatePatient extends Command<Patient> {
 
     @Min(1L)
     @NotNull
-    @JsonIgnore
     private Long organisationId;
 
     @NotBlank

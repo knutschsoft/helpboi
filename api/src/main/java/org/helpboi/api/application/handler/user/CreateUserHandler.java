@@ -40,8 +40,7 @@ public class CreateUserHandler implements CommandHandler<CreateUser> {
         password = passwordEncoder.encode(password);
         User finalUser = new User(
                 null, email, password, firstname, lastname, phone);
-        finalUser = userRepository
-                .save(finalUser);
+        finalUser = userRepository.save(finalUser);
 
         command.resolve(finalUser);
     }
