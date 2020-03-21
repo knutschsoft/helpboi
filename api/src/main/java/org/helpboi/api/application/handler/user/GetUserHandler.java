@@ -7,22 +7,22 @@ import javax.inject.Singleton;
 import javax.transaction.Transactional;
 
 import org.helpboi.api.application.CommandHandler;
-import org.helpboi.api.application.command.user.DeleteUser;
+import org.helpboi.api.application.command.user.GetUser;
 import org.helpboi.api.application.persistence.UserRepository;
 import org.helpboi.api.domain.model.user.User;
 
 @Singleton
-public class DeleteUserHandler implements CommandHandler<DeleteUser> {
+public class GetUserHandler implements CommandHandler<GetUser> {
 
     @Inject
     private UserRepository userRepository;
 
     @Override
     @Transactional
-    public void handle(DeleteUser command) {
+    public void handle(GetUser command) {
         Optional<User> user = userRepository.findById(command.getId());
         if (user.isPresent()) {
-        	command.resolve(null);	
+        	command.resolve(user.get());
         } else {
         	command.notFound();
         }
