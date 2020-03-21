@@ -7,7 +7,7 @@ micronaut:
     port: ${PORT:8080}
 
   ssl:
-    enabled: true
+    enabled: false
     build-self-signed: true
 
   security:

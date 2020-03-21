@@ -47,11 +47,11 @@ public class CreateUser extends Command<User> {
         this.phone = phone;
     }
 
-    public String getFirstName() {
+    public String getFirstname() {
         return lastname;
     }
 
-    public String getLastName() {
+    public String getLastname() {
         return lastname;
     }
 
