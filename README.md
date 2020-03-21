@@ -22,6 +22,10 @@ Credentials: `root:root`
 
 # Client
 
+### Other 
+
+Endpoint: `http://localhost:8085`  
+
 ### Project setup
 ```
 npm install
