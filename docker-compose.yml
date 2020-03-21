@@ -24,7 +24,7 @@ services:
   api:
     build: ./api
     ports:
-      - 8080:8443
+      - 8080:8080
     restart: always
     environment:
       DB_HOST: database
