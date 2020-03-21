@@ -1,7 +1,5 @@
 package org.helpboi.api.application.command.user;
 
-import java.util.Objects;
-
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
@@ -9,42 +7,89 @@ import javax.validation.constraints.Size;
 import org.helpboi.api.application.Command;
 import org.helpboi.api.domain.model.user.User;
 
-public class CreateUser extends Command<String> {
+public class CreateUser extends Command<User> {
 
-    @NotNull
-    @NotBlank
-    @Size(min = 0, max = 255)
-    private String name;
+	@NotBlank
+	@Size(min = 0, max = 255)
+	private String firstname;
 
-    public CreateUser(User user) {
-        this.name = user.getName();
-    }
+	@NotBlank
+	@Size(min = 0, max = 255)
+	private String lastname;
 
-    public String getName() {
-        return name;
-    }
+	@NotNull
+	@NotBlank
+	private String email;
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) {
-            return true;
-        }
-        if (o == null || getClass() != o.getClass()) {
-            return false;
-        }
-        CreateUser createUser = (CreateUser) o;
-        return Objects.equals(name, createUser.name);
-    }
+	@NotNull
+	@NotBlank
+	private String password;
 
-    @Override
-    public int hashCode() {
-        return Objects.hash(name);
-    }
+	@NotBlank
+	@Size(min = 0, max = 255)
+	private String phone;
 
-    @Override
-    public String toString() {
-        return "CreateUser{" +
-                "name='" + name + '\'' +
-                '}';
-    }
+	public CreateUser(
+			String email,
+	        String password,
+	        String firstname,
+	        String lastname,
+	        String phone
+	) {
+		this.firstname = firstname;
+		this.lastname = lastname;
+		this.email = email;
+		this.password = password;
+		this.phone = phone;
+	}
+
+	public String getFirstName() {
+		return lastname;
+	}
+
+	public String getLastName() {
+		return lastname;
+	}
+
+	public String getEmail() {
+		return email;
+	}
+
+	public String getPassword() {
+		return password;
+	}
+
+	public String getPhone() {
+		return phone;
+	}
+
+	
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + ((email == null) ? 0 : email.hashCode());
+		return result;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (!(obj instanceof CreateUser))
+			return false;
+		CreateUser other = (CreateUser) obj;
+		if (email == null) {
+			if (other.email != null)
+				return false;
+		} else if (!email.equals(other.email))
+			return false;
+		return true;
+	}
+
+	@Override
+	public String toString() {
+		return "CreateUser [firstname=" + firstname + ", lastname=" + lastname + ", email=" + email + ", password="
+				+ password + ", phone=" + phone + "]";
+	}
 }

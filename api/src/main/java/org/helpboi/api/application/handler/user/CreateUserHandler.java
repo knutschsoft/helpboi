@@ -18,8 +18,14 @@ public class CreateUserHandler implements CommandHandler<CreateUser> {
     @Override
     @Transactional
     public void handle(CreateUser command) {
-        User user = new User(null, command.getName());
+        User user = new User(null,
+                command.getEmail(),
+                command.getPassword(),
+                command.getFirstName(),
+                command.getLastName(),
+                command.getPhone()
+                );
         user = userRepository.save(user);
-        command.resolve("User " + command.getName() + ", you#ve got id: " + user.getId());
+        command.resolve(user);
     }
 }
