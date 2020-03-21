@@ -10,6 +10,9 @@ import javax.validation.constraints.Size;
 import org.helpboi.api.application.Command;
 import org.helpboi.api.domain.model.user.User;
 
+import io.micronaut.core.annotation.Introspected;
+
+@Introspected
 public class CreateUser extends Command<User> {
 
     @Email

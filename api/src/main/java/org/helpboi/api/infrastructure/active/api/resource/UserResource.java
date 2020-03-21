@@ -9,6 +9,7 @@ import org.helpboi.api.application.command.user.DeleteUser;
 import org.helpboi.api.application.command.user.GetUser;
 import org.helpboi.api.domain.model.user.User;
 
+import io.micronaut.http.annotation.Body;
 import io.micronaut.http.annotation.Controller;
 import io.micronaut.http.annotation.Delete;
 import io.micronaut.http.annotation.Get;
@@ -29,7 +30,7 @@ public class UserResource {
 	
 	@Post
 	@PermitAll
-	public Maybe<User> createUser(CreateUser command) {
+	public Maybe<User> createUser(@Body CreateUser command) {
 		return commandBus.execute(command);
 	}
 	
