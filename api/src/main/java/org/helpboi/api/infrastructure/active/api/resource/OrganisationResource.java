@@ -1,6 +1,5 @@
 package org.helpboi.api.infrastructure.active.api.resource;
 
-import javax.annotation.security.PermitAll;
 import javax.inject.Inject;
 
 import org.helpboi.api.application.CommandBus;
@@ -10,7 +9,9 @@ import org.helpboi.api.domain.model.organisation.Organisation;
 import io.micronaut.http.annotation.Controller;
 import io.micronaut.http.annotation.Get;
 import io.reactivex.Maybe;
+import io.swagger.v3.oas.annotations.tags.Tag;
 
+@Tag(name = "Organisation")
 @Controller("/organisations")
 public class OrganisationResource {
 
@@ -18,8 +19,8 @@ public class OrganisationResource {
 	private CommandBus commandBus;
 	
 	@Get("/{id}")
-	@PermitAll
 	public Maybe<Organisation> getOrganisation(Long id) {
-		return commandBus.execute(new GetOrganisation(id));
+		return commandBus.execute(
+		        new GetOrganisation(id));
 	}
 }

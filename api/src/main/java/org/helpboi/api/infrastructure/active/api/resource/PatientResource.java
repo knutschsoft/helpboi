@@ -1,6 +1,5 @@
 package org.helpboi.api.infrastructure.active.api.resource;
 
-import javax.annotation.security.PermitAll;
 import javax.inject.Inject;
 
 import org.helpboi.api.application.CommandBus;
@@ -15,7 +14,9 @@ import io.micronaut.http.annotation.Delete;
 import io.micronaut.http.annotation.Get;
 import io.micronaut.http.annotation.Post;
 import io.reactivex.Maybe;
+import io.swagger.v3.oas.annotations.tags.Tag;
 
+@Tag(name = "Patient")
 @Controller("/patients")
 public class PatientResource {
 
@@ -23,20 +24,19 @@ public class PatientResource {
 	private CommandBus commandBus;
 	
 	@Get("/{id}")
-	@PermitAll
 	public Maybe<Patient> getPatient(Long id) {
-		return commandBus.execute(new GetPatient(id));
+		return commandBus.execute(
+		        new GetPatient(id));
 	}
 	
 	@Post
-	@PermitAll
 	public Maybe<Patient> createPatient(@Body CreatePatient command) {
 		return commandBus.execute(command);
 	}
 	
 	@Delete("/{id}")
-	@PermitAll
 	public Maybe<Void> deletePatient(Long id) {
-		return commandBus.execute(new DeletePatient(id));
+		return commandBus.execute(
+		        new DeletePatient(id));
 	}
 }
