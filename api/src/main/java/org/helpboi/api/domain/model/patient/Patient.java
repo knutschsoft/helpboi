@@ -27,6 +27,8 @@ import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 @Entity(name = "patient")
 public class Patient {
 
@@ -71,11 +73,13 @@ public class Patient {
     @Lob
     private String notes;
 
+    @JsonIgnore
     @ElementCollection(fetch = FetchType.LAZY)
     @CollectionTable(name = "patient_symptom", joinColumns = @JoinColumn(name = "patient_id"))
     @Column(name = "symptom_id")
     private Set<Long> symptomIds = new LinkedHashSet<>();
 
+    @JsonIgnore
     @OneToMany(orphanRemoval = true, mappedBy = "patient", cascade = {CascadeType.ALL})
     private List<History> histories = new ArrayList<>();
 

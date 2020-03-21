@@ -2,11 +2,13 @@ package org.helpboi.api.domain.model.user;
 
 import java.util.Objects;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.validation.constraints.Email;
+import javax.validation.constraints.Min;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
@@ -41,6 +43,15 @@ public class User {
     @NotBlank
     @Size(max = 255)
     private String phone;
+
+    @Min(1L)
+    @Column(name = "organisation_id")
+    private Long organisationId;
+
+    @Column(name = "is_admin")
+    private Boolean isAdmin;
+    @Column(name = "is_verified")
+    private Boolean isVerified;
 
     public User() {
     }
@@ -88,6 +99,18 @@ public class User {
         return phone;
     }
 
+    public Long getOrganisationId() {
+        return organisationId;
+    }
+
+    public Boolean isAdmin() {
+        return isAdmin;
+    }
+
+    public Boolean isVerified() {
+        return isVerified;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) {
@@ -113,6 +136,9 @@ public class User {
                 ", firstname='" + firstname + '\'' +
                 ", lastname='" + lastname + '\'' +
                 ", phone='" + phone + '\'' +
+                ", organisationId=" + organisationId +
+                ", isAdmin=" + isAdmin +
+                ", isVerified=" + isVerified +
                 '}';
     }
 }

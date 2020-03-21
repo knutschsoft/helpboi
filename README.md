@@ -19,7 +19,7 @@ can spin up the required services from the `docker-compose.yml` file.
 
 Endpoint: `https://localhost:8080`  
 Documentation: `https://localhost:8080/documentation.html`  
-Credentials: `root:root`
+Credentials: `root@root.com:root`
 
 # Client
 

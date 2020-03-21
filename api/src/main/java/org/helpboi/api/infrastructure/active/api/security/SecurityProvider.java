@@ -1,14 +1,15 @@
 package org.helpboi.api.infrastructure.active.api.security;
 
 import java.util.Collections;
-import java.util.Objects;
 
+import javax.inject.Inject;
 import javax.inject.Singleton;
 
+import org.helpboi.api.application.persistence.UserRepository;
+import org.helpboi.api.domain.model.user.User;
 import org.helpboi.api.infrastructure.active.api.misc.BCrypt;
 import org.reactivestreams.Publisher;
 
-import io.micronaut.context.annotation.Property;
 import io.micronaut.security.authentication.AuthenticationFailed;
 import io.micronaut.security.authentication.AuthenticationProvider;
 import io.micronaut.security.authentication.AuthenticationRequest;
@@ -20,10 +21,8 @@ import io.reactivex.Flowable;
 @Singleton
 public class SecurityProvider implements AuthenticationProvider, PasswordEncoder {
 
-    @Property(name = "micronaut.security.basic.username")
-    private String username;
-    @Property(name = "micronaut.security.basic.password")
-    private String password;
+    @Inject
+    private UserRepository userRepository;
 
     @Override
     public String encode(String rawPassword) {
@@ -39,19 +38,28 @@ public class SecurityProvider implements AuthenticationProvider, PasswordEncoder
     public Publisher<AuthenticationResponse> authenticate(
             AuthenticationRequest authenticationRequest
     ) {
-        String username = authenticationRequest.getIdentity().toString();
+        String email = authenticationRequest.getIdentity().toString();
         String password = authenticationRequest.getSecret().toString();
 
-        if (Objects.equals(this.username, username)
-                && Objects.equals(this.password, password)) {
+        User user = userRepository
+                .findByEmail(email)
+                .orElse(null);
+
+        if (user == null) {
             return Flowable.just(
-                    new UserDetails(
-                            username,
-                            Collections.emptyList()
-                    )
-            );
+                    new AuthenticationFailed());
         }
+
+        if (!matches(password, user.getPassword())) {
+            return Flowable.just(
+                    new AuthenticationFailed());
+        }
+
         return Flowable.just(
-                new AuthenticationFailed());
+                new UserDetails(
+                        user.getEmail(),
+                        Collections.emptyList()
+                )
+        );
     }
 }

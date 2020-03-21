@@ -1,18 +1,5 @@
 CREATE SCHEMA IF NOT EXISTS `helpboi` DEFAULT CHARACTER SET = utf8 DEFAULT COLLATE = utf8_unicode_ci;
 
-CREATE TABLE IF NOT EXISTS `user`
-(
-    `id`        BIGINT(20)   NOT NULL AUTO_INCREMENT,
-    `email`     VARCHAR(255) NOT NULL,
-    `password`  VARCHAR(255) NOT NULL,
-    `firstname` VARCHAR(255) DEFAULT NULL,
-    `lastname`  VARCHAR(255) DEFAULT NULL,
-    `phone`     VARCHAR(255) DEFAULT NULL,
-
-    PRIMARY KEY (`id`),
-    UNIQUE KEY `uq_email` (`email`)
-) ENGINE = InnoDB;
-
 CREATE TABLE IF NOT EXISTS `organisation`
 (
     `id`      BIGINT(20)   NOT NULL AUTO_INCREMENT,
@@ -24,16 +11,21 @@ CREATE TABLE IF NOT EXISTS `organisation`
     PRIMARY KEY (`id`)
 ) ENGINE = InnoDB;
 
-CREATE TABLE IF NOT EXISTS `organisation_user`
+CREATE TABLE IF NOT EXISTS `user`
 (
-    `organisation_id` BIGINT(20) NOT NULL,
-    `user_id`         BIGINT(20) NOT NULL,
-    `is_admin`        BIT(1)     NOT NULL,
-    `is_verified`     BIT(1)     NOT NULL,
+    `id`              BIGINT(20)   NOT NULL AUTO_INCREMENT,
+    `email`           VARCHAR(255) NOT NULL,
+    `password`        VARCHAR(255) NOT NULL,
+    `firstname`       VARCHAR(255) DEFAULT NULL,
+    `lastname`        VARCHAR(255) DEFAULT NULL,
+    `phone`           VARCHAR(255) DEFAULT NULL,
+    `organisation_id` BIGINT(20)   DEFAULT NULL,
+    `is_admin`        BIT(1)       DEFAULT NULL,
+    `is_verified`     BIT(1)       DEFAULT NULL,
 
-    PRIMARY KEY (`organisation_id`, `user_id`),
-    FOREIGN KEY `fk_organisation_user_organisation_id` (`organisation_id`) REFERENCES `organisation` (`id`),
-    FOREIGN KEY `fk_organisation_user_user_id` (`user_id`) REFERENCES `user` (`id`)
+    PRIMARY KEY (`id`),
+    UNIQUE KEY `uq_email` (`email`),
+    FOREIGN KEY `fk_user_organisation_id` (`organisation_id`) REFERENCES `organisation` (`id`)
 ) ENGINE = InnoDB;
 
 CREATE TABLE IF NOT EXISTS `symptom`
