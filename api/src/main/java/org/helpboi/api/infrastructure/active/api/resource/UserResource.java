@@ -6,10 +6,12 @@ import javax.inject.Inject;
 import org.helpboi.api.application.CommandBus;
 import org.helpboi.api.application.command.user.CreateUser;
 import org.helpboi.api.application.command.user.DeleteUser;
+import org.helpboi.api.application.command.user.GetUser;
 import org.helpboi.api.domain.model.user.User;
 
 import io.micronaut.http.annotation.Controller;
 import io.micronaut.http.annotation.Delete;
+import io.micronaut.http.annotation.Get;
 import io.micronaut.http.annotation.Post;
 import io.reactivex.Maybe;
 
@@ -18,6 +20,12 @@ public class UserResource {
 
 	@Inject
 	private CommandBus commandBus;
+	
+	@Get("/{id}")
+	@PermitAll
+	public Maybe<User> getUser(Long id) {
+		return commandBus.execute(new GetUser(id));
+	}
 	
 	@Post
 	@PermitAll
