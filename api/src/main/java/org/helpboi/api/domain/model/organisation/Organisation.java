@@ -5,6 +5,7 @@ import java.util.LinkedHashSet;
 import java.util.Objects;
 import java.util.Set;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -39,7 +40,7 @@ public class Organisation {
     @Size(max = 255)
     private String address;
 
-    @OneToMany(mappedBy = "organisation")
+    @OneToMany(orphanRemoval = true, mappedBy = "organisation", cascade = {CascadeType.ALL})
     private Set<OrganisationUser> users = new LinkedHashSet<>();
 
     public Organisation() {

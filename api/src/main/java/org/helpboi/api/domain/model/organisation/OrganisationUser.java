@@ -2,6 +2,8 @@ package org.helpboi.api.domain.model.organisation;
 
 import java.util.Objects;
 
+import javax.persistence.CascadeType;
+import javax.persistence.Column;
 import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
@@ -14,13 +16,15 @@ public class OrganisationUser {
     @EmbeddedId
     private OrganisationUserId id;
 
-    @ManyToOne
+    @ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REFRESH})
     @JoinColumn(name = "organisation_id", insertable = false, updatable = false)
     private Organisation organisation;
 
     @NotNull
+    @Column(name = "is_admin")
     private Boolean isAdmin;
     @NotNull
+    @Column(name = "is_verified")
     private Boolean isVerified;
 
     public OrganisationUser() {

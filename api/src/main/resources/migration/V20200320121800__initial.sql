@@ -64,8 +64,8 @@ CREATE TABLE IF NOT EXISTS `patient`
 
 CREATE TABLE IF NOT EXISTS `patient_symptom`
 (
-    `patient_id`  BIGINT(20) NOT NULL,
-    `symptom_id`  BIGINT(20) NOT NULL,
+    `patient_id` BIGINT(20) NOT NULL,
+    `symptom_id` BIGINT(20) NOT NULL,
 
     PRIMARY KEY (`patient_id`, `symptom_id`),
     FOREIGN KEY `fk_patient_symptom_patient_id` (`patient_id`) REFERENCES `patient` (`id`),
@@ -80,7 +80,7 @@ CREATE TABLE IF NOT EXISTS `history`
     `created_at`  TIMESTAMP    NULL NOT NULL,
     `modified_at` TIMESTAMP    NULL NOT NULL,
     `type`        VARCHAR(255) NOT NULL,
-    `notes`       LONGTEXT     NOT NULL,
+    `content`     LONGTEXT     NOT NULL,
 
     PRIMARY KEY (`id`),
     FOREIGN KEY `fk_history_patient_id` (`patient_id`) REFERENCES `patient` (`id`),

@@ -1,11 +1,14 @@
 package org.helpboi.api.domain.model.patient;
 
 import java.time.ZonedDateTime;
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.LinkedHashSet;
+import java.util.List;
 import java.util.Objects;
 import java.util.Set;
 
+import javax.persistence.CascadeType;
 import javax.persistence.CollectionTable;
 import javax.persistence.Column;
 import javax.persistence.ElementCollection;
@@ -18,11 +21,9 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.Lob;
+import javax.persistence.OneToMany;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
-
-import org.helpboi.api.domain.shared.Gender;
-import org.helpboi.api.domain.shared.Status;
 
 @Entity(name = "patient")
 public class Patient {
@@ -39,12 +40,12 @@ public class Patient {
     private String lastname;
 
     @Enumerated(EnumType.STRING)
-    private Gender gender;
+    private PatientGender gender;
     @NotBlank
     @Size(max = 255)
-    private String phone;
+    private String        phone;
 
-    @Column(name="date_of_birth")
+    @Column(name = "date_of_birth")
     private ZonedDateTime dateOfBirth;
 
     @NotBlank
@@ -58,14 +59,18 @@ public class Patient {
     private String address;
 
     @Enumerated(EnumType.STRING)
-    private Status status;
+    private PatientStatus status;
 
     @Lob
     private String notes;
 
     @ElementCollection(fetch = FetchType.LAZY)
     @CollectionTable(name = "patient_symptom", joinColumns = @JoinColumn(name = "patient_id"))
+    @Column(name = "symptom_id")
     private Set<Long> symptomIds = new LinkedHashSet<>();
+
+    @OneToMany(orphanRemoval = true, mappedBy = "patient", cascade = {CascadeType.ALL})
+    private List<History> histories = new ArrayList<>();
 
     public Patient() {
     }
@@ -74,7 +79,7 @@ public class Patient {
             Long id,
             String firstname,
             String lastname,
-            Gender gender,
+            PatientGender gender,
             String phone,
             ZonedDateTime dateOfBirth,
             String zipcode,
@@ -106,7 +111,7 @@ public class Patient {
         return lastname;
     }
 
-    public Gender getGender() {
+    public PatientGender getGender() {
         return gender;
     }
 
@@ -130,7 +135,7 @@ public class Patient {
         return address;
     }
 
-    public Status getStatus() {
+    public PatientStatus getStatus() {
         return status;
     }
 
@@ -140,6 +145,10 @@ public class Patient {
 
     public Set<Long> getSymptomIds() {
         return Collections.unmodifiableSet(symptomIds);
+    }
+
+    public List<History> getHistories() {
+        return Collections.unmodifiableList(histories);
     }
 
     @Override
