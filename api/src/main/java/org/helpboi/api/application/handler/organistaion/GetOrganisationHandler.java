@@ -15,14 +15,15 @@ import org.helpboi.api.domain.model.organisation.Organisation;
 public class GetOrganisationHandler implements CommandHandler<GetOrganisation> {
 
     @Inject
-    private OrganisationRepository orgRepository;
+    private OrganisationRepository organisationRepository;
 
     @Override
     @Transactional
     public void handle(GetOrganisation command) {
-        Optional<Organisation> org = orgRepository.findById(command.getId());
-        if (org.isPresent()) {
-        	command.resolve(org.get());
+        Optional<Organisation> organisation = organisationRepository
+                .findById(command.getId());
+        if (organisation.isPresent()) {
+        	command.resolve(organisation.get());
         } else {
         	command.notFound();
         }

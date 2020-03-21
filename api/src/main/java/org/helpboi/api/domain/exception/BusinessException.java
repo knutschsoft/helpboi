@@ -5,19 +5,19 @@ public class BusinessException extends RuntimeException {
     public BusinessException() {
     }
 
-    public BusinessException(String s) {
-        super(s);
+    public BusinessException(String message) {
+        super(message);
     }
 
-    public BusinessException(String s, Throwable throwable) {
-        super(s, throwable);
+    public BusinessException(String message, Throwable cause) {
+        super(message, cause);
     }
 
-    public BusinessException(Throwable throwable) {
-        super(throwable);
+    public BusinessException(Throwable cause) {
+        super(cause);
     }
 
-    public BusinessException(String s, Throwable throwable, boolean b, boolean b1) {
-        super(s, throwable, b, b1);
+    public BusinessException(String message, Throwable cause, boolean enableSuppression, boolean writableStackTrace) {
+        super(message, cause, enableSuppression, writableStackTrace);
     }
 }
