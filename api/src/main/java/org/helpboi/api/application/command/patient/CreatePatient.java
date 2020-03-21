@@ -3,7 +3,9 @@ package org.helpboi.api.application.command.patient;
 import java.time.ZonedDateTime;
 import java.util.Objects;
 
+import javax.validation.constraints.Min;
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
 import org.helpboi.api.application.Command;
@@ -11,10 +13,17 @@ import org.helpboi.api.domain.model.patient.Patient;
 import org.helpboi.api.domain.model.patient.PatientGender;
 import org.helpboi.api.domain.model.patient.PatientStatus;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import io.micronaut.core.annotation.Introspected;
 
 @Introspected
 public class CreatePatient extends Command<Patient> {
+
+    @Min(1L)
+    @NotNull
+    @JsonIgnore
+    private Long organisationId;
 
     @NotBlank
     @Size(max = 255)
@@ -45,6 +54,7 @@ public class CreatePatient extends Command<Patient> {
     private String notes;
 
     public CreatePatient(
+            Long organisationId,
             String firstname,
             String lastname,
             PatientGender gender,
@@ -56,6 +66,7 @@ public class CreatePatient extends Command<Patient> {
             PatientStatus status,
             String notes
     ) {
+        this.organisationId = organisationId;
         this.firstname = firstname;
         this.lastname = lastname;
         this.gender = gender;
@@ -66,6 +77,10 @@ public class CreatePatient extends Command<Patient> {
         this.address = address;
         this.status = status;
         this.notes = notes;
+    }
+
+    public Long getOrganisationId() {
+        return organisationId;
     }
 
     public String getFirstname() {

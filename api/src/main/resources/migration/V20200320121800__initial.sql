@@ -47,19 +47,21 @@ CREATE TABLE IF NOT EXISTS `symptom`
 
 CREATE TABLE IF NOT EXISTS `patient`
 (
-    `id`            BIGINT(20) NOT NULL AUTO_INCREMENT,
-    `firstname`     VARCHAR(255)    DEFAULT NULL,
-    `lastname`      VARCHAR(255)    DEFAULT NULL,
-    `gender`        VARCHAR(255)    DEFAULT NULL,
-    `phone`         VARCHAR(255)    DEFAULT NULL,
-    `date_of_birth` TIMESTAMP  NULL DEFAULT NULL,
-    `zipcode`       VARCHAR(255)    DEFAULT NULL,
-    `city`          VARCHAR(255)    DEFAULT NULL,
-    `address`       VARCHAR(255)    DEFAULT NULL,
-    `status`        VARCHAR(255)    DEFAULT NULL,
-    `notes`         LONGTEXT        DEFAULT NULL,
+    `id`              BIGINT(20) NOT NULL AUTO_INCREMENT,
+    `organisation_id` BIGINT(20) NOT NULL,
+    `firstname`       VARCHAR(255)    DEFAULT NULL,
+    `lastname`        VARCHAR(255)    DEFAULT NULL,
+    `gender`          VARCHAR(255)    DEFAULT NULL,
+    `phone`           VARCHAR(255)    DEFAULT NULL,
+    `date_of_birth`   TIMESTAMP  NULL DEFAULT NULL,
+    `zipcode`         VARCHAR(255)    DEFAULT NULL,
+    `city`            VARCHAR(255)    DEFAULT NULL,
+    `address`         VARCHAR(255)    DEFAULT NULL,
+    `status`          VARCHAR(255)    DEFAULT NULL,
+    `notes`           LONGTEXT        DEFAULT NULL,
 
-    PRIMARY KEY (`id`)
+    PRIMARY KEY (`id`),
+    FOREIGN KEY `fk_patient_organisation_id` (`organisation_id`) REFERENCES `organisation` (`id`)
 ) ENGINE = InnoDB;
 
 CREATE TABLE IF NOT EXISTS `patient_symptom`

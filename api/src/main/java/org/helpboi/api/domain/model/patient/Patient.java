@@ -22,7 +22,9 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.Lob;
 import javax.persistence.OneToMany;
+import javax.validation.constraints.Min;
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
 @Entity(name = "patient")
@@ -31,6 +33,11 @@ public class Patient {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
+    @Min(1L)
+    @NotNull
+    @Column(name = "organisation_id")
+    private Long organisationId;
 
     @NotBlank
     @Size(max = 255)
@@ -77,6 +84,7 @@ public class Patient {
 
     public Patient(
             Long id,
+            Long organisationId,
             String firstname,
             String lastname,
             PatientGender gender,
@@ -88,6 +96,7 @@ public class Patient {
             String notes
     ) {
         this.id = id;
+        this.organisationId = organisationId;
         this.firstname = firstname;
         this.lastname = lastname;
         this.gender = gender;
@@ -101,6 +110,10 @@ public class Patient {
 
     public Long getId() {
         return id;
+    }
+
+    public Long getOrganisationId() {
+        return organisationId;
     }
 
     public String getFirstname() {
@@ -172,6 +185,7 @@ public class Patient {
     public String toString() {
         return "Patient{" +
                 "id=" + id +
+                ", organisationId=" + organisationId +
                 ", firstname='" + firstname + '\'' +
                 ", lastname='" + lastname + '\'' +
                 ", gender=" + gender +

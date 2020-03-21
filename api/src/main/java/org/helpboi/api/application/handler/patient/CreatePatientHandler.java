@@ -19,6 +19,7 @@ public class CreatePatientHandler implements CommandHandler<CreatePatient> {
     @Transactional
     public void handle(CreatePatient command) {
         Patient patient = new Patient(null,
+        		command.getOrganisationId(),
         		command.getFirstname(),
         		command.getLastname(),
         		command.getGender(),

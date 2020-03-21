@@ -5,6 +5,8 @@ micronaut:
 
   server:
     port: ${PORT:8080}
+    cors:
+      enabled: true
 
   ssl:
     enabled: false
