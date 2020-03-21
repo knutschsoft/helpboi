@@ -1,15 +1,22 @@
 package org.helpboi.api.domain.model.patient;
 
 import java.time.ZonedDateTime;
+import java.util.Collections;
+import java.util.LinkedHashSet;
 import java.util.Objects;
+import java.util.Set;
 
+import javax.persistence.CollectionTable;
 import javax.persistence.Column;
+import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.Lob;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
@@ -55,6 +62,10 @@ public class Patient {
 
     @Lob
     private String notes;
+
+    @ElementCollection(fetch = FetchType.LAZY)
+    @CollectionTable(name = "patient_symptom", joinColumns = @JoinColumn(name = "patient_id"))
+    private Set<Long> symptomIds = new LinkedHashSet<>();
 
     public Patient() {
     }
@@ -125,6 +136,10 @@ public class Patient {
 
     public String getNotes() {
         return notes;
+    }
+
+    public Set<Long> getSymptomIds() {
+        return Collections.unmodifiableSet(symptomIds);
     }
 
     @Override

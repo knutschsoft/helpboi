@@ -1,7 +1,7 @@
 package org.helpboi.api.domain.model.organisation;
 
 import java.util.Collections;
-import java.util.HashSet;
+import java.util.LinkedHashSet;
 import java.util.Objects;
 import java.util.Set;
 
@@ -40,7 +40,7 @@ public class Organisation {
     private String address;
 
     @OneToMany(mappedBy = "organisation")
-    private Set<OrganisationUser> users = new HashSet<>();
+    private Set<OrganisationUser> users = new LinkedHashSet<>();
 
     public Organisation() {
     }
