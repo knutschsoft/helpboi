@@ -18,7 +18,11 @@
                                         <v-icon>mdi-lock-reset</v-icon>
                                     </v-btn>
                                 </template>
-                                <span>Passwort vergessen</span>
+                                <span>
+                                    <b>Passwort vergessen?!</b><br>
+                                    Hoppla! Du würdest diese Funktion gerne sehen?<br>Dann gib uns Feedback und Unterstützung
+                                    <v-icon color="white">mdi-emoticon-outline</v-icon>
+                                </span>
                             </v-tooltip>
                             <v-tooltip bottom>
                                 <template v-slot:activator="{ on }">

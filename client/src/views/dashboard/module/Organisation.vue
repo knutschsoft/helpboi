@@ -10,10 +10,18 @@
             <v-icon class="mr-5">mdi-bank</v-icon>
             <v-toolbar-title class="headline">Organisation verwalten</v-toolbar-title>
             <v-spacer/>
-            <v-btn text color="secondary">
-                <v-icon left>mdi-plus</v-icon>
-                Mitarbeiter hinzufügen
-            </v-btn>
+            <v-tooltip>
+                <template v-slot:activator="{ on }">
+                    <v-btn text color="secondary" v-on="on">
+                        <v-icon left>mdi-plus</v-icon>
+                        Mitarbeiter hinzufügen
+                    </v-btn>
+                </template>
+                <span>
+                    Hoppla! Du würdest diese Funktion gerne sehen?<br>Dann gib uns Feedback und Unterstützung
+                    <v-icon color="white">mdi-emoticon-outline</v-icon>
+                </span>
+            </v-tooltip>
         </v-toolbar>
 
         <v-tabs show-arrows background-color="transparent">
