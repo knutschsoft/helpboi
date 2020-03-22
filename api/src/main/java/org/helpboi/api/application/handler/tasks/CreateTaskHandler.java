@@ -10,6 +10,7 @@ import org.helpboi.api.application.CommandHandler;
 import org.helpboi.api.application.command.tasks.CreateTask;
 import org.helpboi.api.application.persistence.PatientRepository;
 import org.helpboi.api.application.persistence.TaskRepository;
+import org.helpboi.api.application.persistence.UserRepository;
 import org.helpboi.api.domain.exception.BusinessException;
 import org.helpboi.api.domain.model.task.Task;
 
@@ -21,6 +22,9 @@ public class CreateTaskHandler implements CommandHandler<CreateTask> {
    
     @Inject
     private PatientRepository      patientRepository;
+    
+    @Inject
+    private UserRepository      userRepository;
    
     @Override
     @Transactional
@@ -33,9 +37,15 @@ public class CreateTaskHandler implements CommandHandler<CreateTask> {
         patientRepository.findById(patientId)
                 .orElseThrow(() -> new BusinessException(String.format(
                         "Patient id: %s not found", patientId)));
+        
+        if (agentId != null) {
+        	userRepository.findById(agentId)
+            		.orElseThrow(() -> new BusinessException(String.format(
+            				"User id: %s not found", agentId)));
+        }
 
         Task task = new Task(
-                null, agentId, patientId, activeTo, content
+                null, patientId, agentId, activeTo, content
         );
         
         task = taskRepository.save(task);
