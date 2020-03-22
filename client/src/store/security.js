@@ -3,7 +3,8 @@ import SecurityAPI from "../api/security";
 const AUTHENTICATING = "AUTHENTICATING",
     AUTHENTICATING_SUCCESS = "AUTHENTICATING_SUCCESS",
     AUTHENTICATING_ERROR = "AUTHENTICATING_ERROR",
-    PROVIDING_DATA_ON_REFRESH_SUCCESS = "PROVIDING_DATA_ON_REFRESH_SUCCESS";
+    PROVIDING_DATA_ON_REFRESH_SUCCESS = "PROVIDING_DATA_ON_REFRESH_SUCCESS",
+    UPDATE_CURRENT_USER = "UPDATE_CURRENT_USER";
 
 export default {
     namespaced: true,
@@ -30,6 +31,9 @@ export default {
             return role => {
                 return state.user.roles.indexOf(role) !== -1;
             }
+        },
+        currentUser(state) {
+            return state.user;
         }
     },
     mutations: {
@@ -57,6 +61,9 @@ export default {
             state.isAuthenticated = payload.isAuthenticated;
             state.user = payload.user;
         },
+        [UPDATE_CURRENT_USER](state, user) {
+            state.user = user;
+        },
     },
     actions: {
         async login({commit}, payload) {
@@ -73,5 +80,8 @@ export default {
         onRefresh({commit}, payload) {
             commit(PROVIDING_DATA_ON_REFRESH_SUCCESS, payload);
         },
+        updateCurrentUser({commit}, user) {
+            commit(UPDATE_CURRENT_USER, user);
+        }
     }
 }

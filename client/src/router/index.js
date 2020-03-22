@@ -8,6 +8,7 @@ import Logout from "../views/Logout";
 
 import Dashboard from "../views/dashboard/Dashboard";
 import Organisation from "../views/Organisation.vue";
+import OrganisationCreate from "../views/OrganisationCreate.vue";
 import Users from "../views/Users";
 import Tasks from "../views/Tasks";
 
@@ -23,9 +24,14 @@ const routes = [
         },
         children: [
             {
-                path: '',
+                path: '/organisation',
                 name: 'Organisation',
                 component: Organisation
+            },
+            {
+                path: '/organisation/erstellen',
+                name: 'OrganisationCreate',
+                component: OrganisationCreate
             },
             {
                 path: '/users',
@@ -51,7 +57,7 @@ const routes = [
         component: Register
     },
     {
-        path: '/logout',
+        path: '/abmelden',
         name: 'Logout',
         component: Logout,
         meta: {

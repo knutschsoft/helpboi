@@ -1,5 +1,6 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
+import OrganisationModule from "./organisation";
 import UserModule from "./user";
 import SecurityModule from "./security";
 
@@ -10,6 +11,7 @@ export default new Vuex.Store({
     mutations: {},
     actions: {},
     modules: {
+        organisation: OrganisationModule,
         user: UserModule,
         security: SecurityModule,
     }

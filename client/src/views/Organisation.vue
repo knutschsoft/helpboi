@@ -10,12 +10,12 @@
 <script>
 
     export default {
-        name: 'Home',
+        name: 'Organisation',
         components: {},
         data: () => ({
             breadcrumbItems: [
                 {
-                    to: {path: '/'},
+                    to: {path: '/organisation'},
                     text: 'Organisation',
                     disabled: false,
                     exact: false,

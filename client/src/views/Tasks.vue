@@ -16,13 +16,13 @@
             breadcrumbItems: [
                 {
                     to: {path: '/aufgaben'},
-                    text: 'Organisation',
+                    text: 'Aufgaben',
                     disabled: false,
                     exact: false,
                 },
                 {
                     to: 'details',
-                    text: 'Aufgaben',
+                    text: 'Details',
                     disabled: true,
                 },
             ]

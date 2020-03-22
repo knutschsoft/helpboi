@@ -115,8 +115,10 @@
 
                     if (typeof redirect !== "undefined") {
                         this.$router.push({path: redirect});
+                    } else if (user.organisationId) {
+                        this.$router.push({path: "/patientenkartei"});
                     } else {
-                        this.$router.push({path: "/users"});
+                        this.$router.push({path: "/organisation/create"});
                     }
                 }
             }

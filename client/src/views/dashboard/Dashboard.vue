@@ -16,19 +16,9 @@
                     </v-list-item-content>
                 </v-list-item>
                 <v-list-item
-                        link
-                        to="/"
-                >
-                    <v-list-item-action>
-                        <v-icon>mdi-home</v-icon>
-                    </v-list-item-action>
-                    <v-list-item-content>
-                        <v-list-item-title>Home</v-list-item-title>
-                    </v-list-item-content>
-                </v-list-item>
-                <v-list-item
-                        link
-                        to="/users"
+                    v-if="user.organisationId"
+                    link
+                    to="/patientenkartei"
                 >
                     <v-list-item-action>
                         <v-icon>mdi-account-box</v-icon>
@@ -38,14 +28,39 @@
                     </v-list-item-content>
                 </v-list-item>
                 <v-list-item
-                        link
-                        to="/aufgaben"
+                    v-if="user.admin && user.organisationId"
+                    link
+                    to="/aufgaben"
                 >
                     <v-list-item-action>
                         <v-icon>mdi-calendar-today</v-icon>
                     </v-list-item-action>
                     <v-list-item-content>
                         <v-list-item-title>Aufgaben</v-list-item-title>
+                    </v-list-item-content>
+                </v-list-item>
+                <v-list-item
+                    v-if="user.admin && user.organisationId"
+                    link
+                    to="/organisation"
+                >
+                    <v-list-item-action>
+                        <v-icon>mdi-bank</v-icon>
+                    </v-list-item-action>
+                    <v-list-item-content>
+                        <v-list-item-title>Organisation verwalten</v-list-item-title>
+                    </v-list-item-content>
+                </v-list-item>
+                <v-list-item
+                    v-else-if="!user.organisationId"
+                    link
+                    to="/organisation/erstellen"
+                >
+                    <v-list-item-action>
+                        <v-icon>mdi-bank-plus</v-icon>
+                    </v-list-item-action>
+                    <v-list-item-content>
+                        <v-list-item-title>Organisation erstellen</v-list-item-title>
                     </v-list-item-content>
                 </v-list-item>
                 <v-list-item
@@ -71,8 +86,6 @@
 </template>
 
 <script>
-    import axios from "axios";
-
     export default {
         name: 'Dashboard',
 
@@ -82,7 +95,7 @@
         data: () => ({
             drawer: true, // Display side menu by default
             isExpandOnHover: false,
-            user: null,
+            user: false,
         }),
         computed: {
             isAuthenticated() {
@@ -91,31 +104,12 @@
             hello() {
                 return `Hallo ${this.user.firstname}!:)`;
             },
-        },
-        method: {
+            currentUser() {
+                return this.$store.getters['security/currentUser'];
+            },
         },
         created() {
-            let isAuthenticated = this.$localStorage.get('isAuthenticated', false);
-            let user = this.$localStorage.get('user', null);
-            let payload = this.$localStorage.get('payload', null);
-            this.$data.user = user;
-
-            if (payload) {
-                let basicAuth = 'Basic ' + btoa(payload.email + ':' + payload.password);
-                axios.defaults.headers.common = {'Authorization': basicAuth}
-            }
-
-            payload = { isAuthenticated: isAuthenticated, user: user };
-            this.$store.dispatch("security/onRefresh", payload);
-
-            axios.interceptors.response.use(undefined, (err) => {
-                return new Promise(() => {
-                    if (err.response.status === 401) {
-                        this.$router.push({path: "/login"})
-                    }
-                    throw err;
-                });
-            });
+            this.user = this.$store.getters['security/currentUser'];
         },
     };
 </script>
