@@ -251,19 +251,28 @@
             },
             async createTask() {
                 let activeTo = "2020-03-22T21:16:00Z";
-                let task = "Nachsorge Anruf";
+                let content = "Nachsorge Anruf";
 
                 let patient = await this.$store.dispatch(
                     "organisation/addHistoryToPatient",
                     [
                         this.patientId,
                         "TASK",
-                        `Aufgabe hinzugefügt: ${task} bis ${activeTo}, pullern und ab ins Bett!`
+                        `Aufgabe hinzugefügt: ${content} bis ${activeTo}`
                     ]
                 );
 
                 if (patient) {
                     this.patient = patient;
+
+                    await this.$store.dispatch(
+                        "task/create",
+                        [
+                            this.patientId,
+                            content,
+                            activeTo
+                        ]
+                    );
                 }
             },
             isMale(patient) {
