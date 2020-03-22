@@ -17,6 +17,8 @@ import javax.validation.constraints.Min;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 @Entity(name = "history")
 public class History {
 
@@ -24,8 +26,10 @@ public class History {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @JsonIgnore
     @ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REFRESH})
     private Patient patient;
+    
     @Min(1L)
     @NotNull
     @Column(name = "creator_id")
@@ -34,6 +38,7 @@ public class History {
     @NotNull
     @Column(name = "created_at")
     private ZonedDateTime createdAt;
+    
     @NotNull
     @Column(name = "modified_at")
     private ZonedDateTime modifiedAt;
@@ -69,7 +74,7 @@ public class History {
         this.content = content;
 
         this.createdAt = ZonedDateTime.now();
-        this.modifiedAt = null;
+        this.modifiedAt = createdAt;
     }
 
     public Long getId() {

@@ -5,16 +5,19 @@ import java.util.Set;
 import javax.inject.Inject;
 
 import org.helpboi.api.application.CommandBus;
+import org.helpboi.api.application.command.patient.AddHistoryToPatient;
 import org.helpboi.api.application.command.patient.AddSymptomsToPatient;
 import org.helpboi.api.application.command.patient.CreatePatient;
 import org.helpboi.api.application.command.patient.DeletePatient;
 import org.helpboi.api.application.command.patient.GetPatient;
+import org.helpboi.api.domain.model.patient.HistoryType;
 import org.helpboi.api.domain.model.patient.Patient;
 
 import io.micronaut.http.annotation.Body;
 import io.micronaut.http.annotation.Controller;
 import io.micronaut.http.annotation.Delete;
 import io.micronaut.http.annotation.Get;
+import io.micronaut.http.annotation.PathVariable;
 import io.micronaut.http.annotation.Post;
 import io.reactivex.Maybe;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -35,6 +38,11 @@ public class PatientResource {
 	@Post
 	public Maybe<Patient> createPatient(@Body CreatePatient command) {
 		return commandBus.execute(command);
+	}
+	
+	@Post("/{id}/history")
+	public Maybe<Patient> addSymptomsToPatient(@PathVariable Long id, HistoryType type, String content) {
+		return commandBus.execute(new AddHistoryToPatient(id, type, content));
 	}
 	
 	@Post("/{id}/symptoms")
