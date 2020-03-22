@@ -31,10 +31,10 @@ public class OrganisationResource {
         return commandBus.execute(command);
     }
 	
-	@Post("/{oid}/user/{uid}")
+	@Post("/{organisationId}/users")
     @Secured(SecurityRule.IS_ANONYMOUS)
-    public Maybe<User> addUser(Long oid, Long uid) {
-        return commandBus.execute(new AddUserToOrganisation(oid, uid));
+    public Maybe<User> addUserToOrganisation(Long organisationId, Long userId) {
+        return commandBus.execute(new AddUserToOrganisation(organisationId, userId));
     }
 	
 	@Get("/{id}")
