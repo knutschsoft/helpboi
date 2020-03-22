@@ -46,7 +46,7 @@
                                     v-model="email"
                                     name="login"
                                     placeholder="E-Mail-Adresse"
-                                    prepend-icon="mdi-account"
+                                    prepend-icon="mdi-email"
                                     type="text"
                                 />
 
@@ -57,7 +57,9 @@
                                     name="password"
                                     placeholder="Passwort"
                                     prepend-icon="mdi-lock"
-                                    type="password"
+                                    :append-icon="showPassword ? 'mdi-eye-off-outline' : 'mdi-eye-outline'"
+                                    @click:append="() => (showPassword = !showPassword)"
+                                    :type="showPassword ? 'text' : 'password'"
                                 />
                             </v-form>
                         </v-card-text>
@@ -88,7 +90,9 @@
         data() {
             return {
                 email: "",
-                password: ""
+                password: "",
+
+                showPassword: false,
             };
         },
         computed: {

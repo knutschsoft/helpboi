@@ -1,61 +1,93 @@
 <template>
-    <v-container>
-        <v-row class="text-center">
-            <v-col cols="12">
-                <v-alert
-                    v-if="hasError"
-                    error
+    <v-app>
+        <v-content>
+            <v-container
+                class="fill-height grey lighten-4"
+                fluid
+            >
+                <v-row
+                    align="center"
+                    justify="center"
                 >
-                    {{ error }}
-                </v-alert>
-                <v-text-field
-                    v-model="firstName"
-                    type="text"
-                    placeholder="Vorname"
-                    class="form-control"
-                />
-                <v-text-field
-                    v-model="lastName"
-                    type="text"
-                    placeholder="Nachname"
-                    class="form-control"
-                />
-                <v-text-field
-                    v-model="phone"
-                    type="text"
-                    placeholder="Telefonnummer"
-                    class="form-control"
-                />
-                <v-text-field
-                    v-model="email"
-                    type="text"
-                    placeholder="E-Mail"
-                    class="form-control"
-                />
-                <v-text-field
-                    v-model="password"
-                    type="text"
-                    placeholder="Passwort"
-                    class="form-control"
-                />
-                <v-btn
-                    :disabled="firstName.length === 0 || lastName.length === 0 || email.length === 0 || password.length === 0 || phone.length === 0 || isLoading"
-                    type="button"
-                    class="btn btn-primary"
-                    @click="createUser()"
-                >
-                    Registrieren und Einloggen
-                </v-btn>
-            </v-col>
-        </v-row>
-    </v-container>
+                    <v-card class="elevation-10" width="400">
+                        <v-toolbar flat>
+                            <v-btn icon class="hidden-xs-only" @click="$router.go(-1)">
+                                <v-icon>mdi-arrow-left</v-icon>
+                            </v-btn>
+                            <v-toolbar-title>Noch keinen Account?</v-toolbar-title>
+                        </v-toolbar>
+                        <v-card-text>
+                            <v-alert
+                                v-if="hasError"
+                                dense
+                                text
+                                type="error"
+                            >
+                                {{ error }}
+                            </v-alert>
+                            <v-form @keyup.native.enter="createUser">
+                                <v-text-field
+                                    v-model="firstName"
+                                    type="text"
+                                    placeholder="Vorname"
+                                    prepend-icon="mdi-account-details"
+                                />
+                                <v-text-field
+                                    v-model="lastName"
+                                    type="text"
+                                    placeholder="Nachname"
+                                    prepend-icon="mdi-account-details-outline"
+                                />
+                                <v-text-field
+                                    v-model="phone"
+                                    type="text"
+                                    placeholder="Telefonnummer"
+                                    prepend-icon="mdi-phone"
+                                />
+                                <v-text-field
+                                    v-model="email"
+                                    type="text"
+                                    placeholder="E-Mail"
+                                    prepend-icon="mdi-email"
+                                />
+                                <v-text-field
+                                    v-model="password"
+                                    placeholder="Passwort"
+                                    prepend-icon="mdi-lock"
+                                    :append-icon="showPassword ? 'mdi-eye-off-outline' : 'mdi-eye-outline'"
+                                    @click:append="() => (showPassword = !showPassword)"
+                                    :type="showPassword ? 'text' : 'password'"
+                                />
+                            </v-form>
+                        </v-card-text>
+                        <v-toolbar color="primary" dark flat>
+                            <v-btn
+                                block
+                                depressed
+                                x-large
+                                text
+                                :disabled="firstName.length === 0 || lastName.length === 0 || email.length === 0 || password.length === 0 || phone.length === 0 || isLoading"
+                                class="px-4 ml-4" @click="createUser()">
+                                Jetzt anmelden
+                            </v-btn>
+                        </v-toolbar>
+                    </v-card>
+                </v-row>
+            </v-container>
+        </v-content>
+        <Footer />
+    </v-app>
 </template>
 
 <script>
+    import Footer from "../components/Footer";
+
     export default {
         name: "Register",
-        props: {
+        components: {
+            Footer
         },
+
         data() {
             return {
                 firstName: "",
@@ -63,6 +95,8 @@
                 email: "",
                 password: "",
                 phone: '',
+
+                showPassword: false,
             };
         },
         computed: {
@@ -110,7 +144,6 @@
                 }
             }
         },
-        watch: {
-        },
+        watch: {},
     };
 </script>
