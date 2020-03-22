@@ -194,22 +194,21 @@
                 'Zum Arzt/KH',
             ],
         }),
-        created() {
+        async created() {
             let user = this.$store.getters["security/currentUser"];
             if (user.organisationId) {
                 this.$store.dispatch("organisation/find", user.organisationId);
-                this.$store.dispatch("organisation/findOrganisationPatients", user.organisationId);
+                let patients = await this.$store.dispatch("organisation/findOrganisationPatients", user.organisationId);
+
+                let that = this;
+                patients.forEach(function (patient) {
+                    if (parseInt(patient.id) === parseInt(that.patientId)) {
+                        that.patient = patient;
+                    }
+                });
             } else {
                 this.$router.push({path: "/organisation"});
             }
-
-            let patients = this.$store.getters['organisation/organisationPatients'];
-            let that = this;
-            patients.forEach(function (patient) {
-                if (parseInt(patient.id) === parseInt(that.patientId)) {
-                    that.patient = patient;
-                }
-            });
         },
         methods: {
             async createAction(actionType) {
