@@ -2,8 +2,6 @@ import SecurityAPI from "../api/security";
 import axios from "axios";
 
 let payload = window.localStorage['helpboi-store-payload'];
-console.log('payload');
-console.log(payload);
 if (undefined !== payload) {
     payload = JSON.parse(payload);
     if (payload && payload.email && payload.password) {
