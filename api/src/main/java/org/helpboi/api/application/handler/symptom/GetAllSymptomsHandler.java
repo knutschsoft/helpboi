@@ -18,7 +18,7 @@ public class GetAllSymptomsHandler implements CommandHandler<GetAllSymptoms> {
     @Override
     @Transactional
     public void handle(GetAllSymptoms command) {
-    	Iterable<Symptom> symptoms = symptomRepository.findAll();
+    	Iterable<Symptom> symptoms = symptomRepository.listOrderByIdAsc();
         command.resolve(symptoms);
     }
 }
