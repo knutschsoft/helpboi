@@ -7,10 +7,10 @@ import Register from "../views/Register";
 import Logout from "../views/Logout";
 
 import Dashboard from "../views/dashboard/Dashboard";
-import Organisation from "../views/Organisation.vue";
+import Organisation from "../views/dashboard/module/Organisation.vue";
 import OrganisationCreate from "../views/OrganisationCreate.vue";
-import Users from "../views/Users";
-import Tasks from "../views/Tasks";
+import Users from "../views/dashboard/module/Users";
+import Tasks from "../views/dashboard/module/Tasks";
 
 Vue.use(VueRouter);
 
@@ -45,7 +45,6 @@ const routes = [
             },
         ]
     },
-
     {
         path: '/login',
         name: 'Login',

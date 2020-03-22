@@ -1,74 +1,78 @@
 <template>
-    <v-container
-        class="fill-height"
-        fluid
-    >
-        <v-row
-            align="center"
-            justify="center"
-        >
-            <v-col
-                cols="12"
-                sm="10"
-                md="8"
+    <v-app>
+        <v-content>
+            <v-container
+                class="fill-height grey lighten-4"
+                fluid
             >
-                <v-card class="elevation-12">
-                    <v-toolbar
-                        dark
-                        flat
-                    >
-                        <v-toolbar-title>Anmeldung</v-toolbar-title>
-                    </v-toolbar>
-                    <v-card-text>
-                        <v-form>
-                            <v-text-field
-                                v-model="email"
-                                label="E-Mail-Adresse"
-                                name="login"
-                                prepend-icon="mdi-account"
-                                type="text"
-                            />
+                <v-row
+                    align="center"
+                    justify="center"
+                >
+                    <v-card class="elevation-10" width="400">
+                        <v-toolbar flat>
+                            <v-toolbar-title>Helpboi</v-toolbar-title>
+                            <v-spacer/>
+                            <v-tooltip bottom>
+                                <template v-slot:activator="{ on }">
+                                    <v-btn :disabled="isLoading" icon large v-on="on">
+                                        <v-icon>mdi-lock-reset</v-icon>
+                                    </v-btn>
+                                </template>
+                                <span>Passwort vergessen</span>
+                            </v-tooltip>
+                            <v-tooltip bottom>
+                                <template v-slot:activator="{ on }">
+                                    <v-btn :disabled="isLoading" icon large v-on="on" to="/register">
+                                        <v-icon>mdi-account-plus</v-icon>
+                                    </v-btn>
+                                </template>
+                                <span>Erstelle Account</span>
+                            </v-tooltip>
+                        </v-toolbar>
+                        <v-img :src="require('../assets/logo.png')" class="ma-12" height="200" contain></v-img>
+                        <v-card-text>
+                            <v-alert
+                                v-if="hasError"
+                                dense
+                                text
+                                type="error"
+                            >
+                                {{ error }}
+                            </v-alert>
+                            <v-form @keyup.native.enter="performLogin">
+                                <v-text-field
+                                    required
+                                    v-model="email"
+                                    name="login"
+                                    placeholder="E-Mail-Adresse"
+                                    prepend-icon="mdi-account"
+                                    type="text"
+                                />
 
-                            <v-text-field
-                                v-model="password"
-                                id="password"
-                                label="Passwort"
-                                name="password"
-                                prepend-icon="mdi-lock"
-                                type="password"
-                            />
-                        </v-form>
-                    </v-card-text>
-                    <v-card-actions>
-                        <v-spacer />
-                        <v-btn
-                            :disabled="isLoading"
-                            text
-                            class="mr-4 px-4 font-weight-regular"
-                            to="/register"
-                        >
-                            noch kein Account?
-                        </v-btn>
-                        <v-btn
-                            :disabled="email.length === 0 || password.length === 0 || isLoading"
-                            class="px-4 ml-4"
-                            dark
-                            @click="performLogin()"
-                        >
-                            Jetzt anmelden
-                        </v-btn>
-                    </v-card-actions>
-                    <v-divider></v-divider>
-                    <v-alert
-                        v-if="hasError"
-                        class="warning"
-                    >
-                        {{ error }}
-                    </v-alert>
-                </v-card>
-            </v-col>
-        </v-row>
-    </v-container>
+                                <v-text-field
+                                    required
+                                    v-model="password"
+                                    id="password"
+                                    name="password"
+                                    placeholder="Passwort"
+                                    prepend-icon="mdi-lock"
+                                    type="password"
+                                />
+                            </v-form>
+                        </v-card-text>
+                        <v-toolbar color="primary" dark flat>
+                            <v-btn block depressed x-large text
+                                :disabled="email.length === 0 || password.length === 0 || isLoading"
+                                class="px-4 ml-4" @click="performLogin()">
+                                Jetzt anmelden
+                            </v-btn>
+                        </v-toolbar>
+                    </v-card>
+                </v-row>
+            </v-container>
+        </v-content>
+    </v-app>
 </template>
 
 <script>
