@@ -63,18 +63,20 @@
                                 />
                             </v-form>
                         </v-card-text>
-                        <v-toolbar color="primary" dark flat>
-                            <v-btn block depressed x-large text
-                                :disabled="email.length === 0 || password.length === 0 || isLoading"
-                                class="px-4 ml-4" @click="performLogin()">
-                                Jetzt anmelden
-                            </v-btn>
-                        </v-toolbar>
+                        <v-card-actions>
+                            <v-toolbar color="primary" dark flat>
+                                <v-btn block depressed x-large text
+                                       :disabled="email.length === 0 || password.length === 0 || isLoading"
+                                       class="px-4 ml-4" @click="performLogin()">
+                                    Jetzt anmelden
+                                </v-btn>
+                            </v-toolbar>
+                        </v-card-actions>
                     </v-card>
                 </v-row>
             </v-container>
         </v-content>
-        <Footer />
+        <Footer/>
     </v-app>
 </template>
 
