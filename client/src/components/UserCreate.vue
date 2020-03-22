@@ -83,7 +83,7 @@
             }
         },
         created() {
-            this.$store.dispatch("user/findAll");
+            // this.$store.dispatch("user/findAll");
         },
         methods: {
             async createUser() {
