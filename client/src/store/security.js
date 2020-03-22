@@ -1,11 +1,16 @@
 import SecurityAPI from "../api/security";
 import axios from "axios";
 
-let payload = JSON.parse(window.localStorage['helpboi-store-payload'])
-if (payload) {
+let payload = window.localStorage['helpboi-store-payload'];
+if (undefined !== payload) {
+    payload = JSON.parse(payload);
     let basicAuth = 'Basic ' + btoa(payload.email + ':' + payload.password);
     axios.defaults.headers.common = {'Authorization': basicAuth}
 }
+let isAuthenticated = window.localStorage['helpboi-store-isAuthenticated'];
+isAuthenticated = undefined !== isAuthenticated ? JSON.parse(isAuthenticated) : false;
+let user = window.localStorage['helpboi-store-isuser'];
+user = undefined !== user ? JSON.parse(user) : false;
 
 const AUTHENTICATING = "AUTHENTICATING",
     AUTHENTICATING_SUCCESS = "AUTHENTICATING_SUCCESS",
@@ -18,8 +23,8 @@ export default {
     state: {
         isLoading: false,
         error: null,
-        isAuthenticated: JSON.parse(window.localStorage['helpboi-store-isAuthenticated']),
-        user: JSON.parse(window.localStorage['helpboi-store-user']),
+        isAuthenticated: isAuthenticated,
+        user: user,
     },
     getters: {
         isLoading(state) {
