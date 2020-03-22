@@ -64,7 +64,6 @@
                 return this.$store.getters['security/currentUser'];
             },
             organisationUsers() {
-                console.log(this.$store.getters['organisation/organisationUsers']);
                 return this.$store.getters['organisation/organisationUsers'];
             },
         },
