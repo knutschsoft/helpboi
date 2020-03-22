@@ -1,5 +1,7 @@
 package org.helpboi.api.application.handler.user;
 
+import java.util.Objects;
+
 import javax.inject.Inject;
 import javax.inject.Singleton;
 import javax.transaction.Transactional;
@@ -7,14 +9,19 @@ import javax.transaction.Transactional;
 import org.helpboi.api.application.CommandHandler;
 import org.helpboi.api.application.command.user.DeleteUser;
 import org.helpboi.api.application.persistence.UserRepository;
+import org.helpboi.api.domain.exception.AuthorizationException;
 import org.helpboi.api.domain.exception.NotFoundException;
 import org.helpboi.api.domain.model.user.User;
+
+import io.micronaut.security.utils.SecurityService;
 
 @Singleton
 public class DeleteUserHandler implements CommandHandler<DeleteUser> {
 
     @Inject
-    private UserRepository userRepository;
+    private UserRepository  userRepository;
+    @Inject
+    private SecurityService securityService;
 
     @Override
     @Transactional
@@ -23,7 +30,14 @@ public class DeleteUserHandler implements CommandHandler<DeleteUser> {
         User user = userRepository.findById(userId)
                 .orElseThrow(() -> new NotFoundException(String.format(
                         "User id: %s not found", userId)));
+
+        String authenticatedEmail = securityService.username().orElse(null);
+        if (!Objects.equals(user.getEmail(), authenticatedEmail)) {
+            throw new AuthorizationException(String.format(
+                    "it's not allowed to delete user id: %s", userId));
+        }
+
         userRepository.delete(user);
-       command.resolve(null);
+        command.resolve(null);
     }
 }
