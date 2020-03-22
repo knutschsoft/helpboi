@@ -155,7 +155,7 @@ export default {
             notes = 'test';
 
 
-            commit(CREATING_ORGANISATION);
+            commit(CREATING_ORGANISATION_PATIENT);
             try {
                 let response = await OrganisationAPI.createPatient(
                     organisationId,
@@ -170,10 +170,10 @@ export default {
                     status,
                     notes
                 );
-                commit(CREATING_ORGANISATION_SUCCESS, response.data);
+                commit(CREATING_ORGANISATION_PATIENT_SUCCESS, response.data);
                 return response.data;
             } catch (error) {
-                commit(CREATING_ORGANISATION_ERROR, error);
+                commit(CREATING_ORGANISATION_PATIENT_ERROR, error);
                 return null;
             }
         },
