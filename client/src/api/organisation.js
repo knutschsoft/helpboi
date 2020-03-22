@@ -1,5 +1,7 @@
 import axios from "axios";
 import config from '@/config';
+import faker from 'faker';
+faker.locale = "de";
 
 export default {
     find(organisationId) {
@@ -33,6 +35,17 @@ export default {
         status,
         notes
     ) {
+        firstname = faker.name.firstName();
+        lastname = faker.name.lastName();
+        gender = faker.helpers.randomize(['DIVERS', 'MALE', 'FEMALE']);
+        phone = faker.phone.phoneNumber();
+        dateOfBirth = faker.date.past();//'1983-03-22T15:27:07Z';
+        zipcode = faker.address.zipCode();
+        city = faker.address.city();
+        address = faker.address.streetName();
+        status = faker.helpers.randomize(['UNKNOWN']);
+        notes = faker.lorem.sentence();
+
         return axios.post(`${config.apiUrl}/patients`, {
             organisationId: organisationId,
             firstname: firstname,

@@ -143,18 +143,6 @@ export default {
             status,
             notes
         ]) {
-            firstname = 'test';
-            lastname = 'test';
-            gender = 'DIVERS';
-            phone = 'test';
-            dateOfBirth = '1983-03-22T15:27:07Z';
-            zipcode = 'test';
-            city = 'test';
-            address = 'test';
-            status = 'UNKNOWN';
-            notes = 'test';
-
-
             commit(CREATING_ORGANISATION_PATIENT);
             try {
                 let response = await OrganisationAPI.createPatient(
