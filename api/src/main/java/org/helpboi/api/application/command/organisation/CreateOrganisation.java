@@ -1,5 +1,7 @@
 package org.helpboi.api.application.command.organisation;
 
+import java.util.Objects;
+
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
@@ -42,7 +44,8 @@ public class CreateOrganisation  extends Command<Organisation> {
             String zipcode,
             String city,
             String address,
-            Long userId) {
+            Long userId
+    ) {
         this.name = name;
         this.zipcode = zipcode;
         this.city = city;
@@ -70,52 +73,35 @@ public class CreateOrganisation  extends Command<Organisation> {
 		return userId;
 	}
 
-	@Override
-	public int hashCode() {
-		final int prime = 31;
-		int result = 1;
-		result = prime * result + ((address == null) ? 0 : address.hashCode());
-		result = prime * result + ((city == null) ? 0 : city.hashCode());
-		result = prime * result + ((name == null) ? 0 : name.hashCode());
-		result = prime * result + ((zipcode == null) ? 0 : zipcode.hashCode());
-		return result;
-	}
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
+        CreateOrganisation that = (CreateOrganisation) o;
+        return Objects.equals(name, that.name) &&
+                Objects.equals(zipcode, that.zipcode) &&
+                Objects.equals(city, that.city) &&
+                Objects.equals(address, that.address) &&
+                Objects.equals(userId, that.userId);
+    }
 
-	@Override
-	public boolean equals(Object obj) {
-		if (this == obj)
-			return true;
-		if (!(obj instanceof CreateOrganisation))
-			return false;
-		CreateOrganisation other = (CreateOrganisation) obj;
-		if (address == null) {
-			if (other.address != null)
-				return false;
-		} else if (!address.equals(other.address))
-			return false;
-		if (city == null) {
-			if (other.city != null)
-				return false;
-		} else if (!city.equals(other.city))
-			return false;
-		if (name == null) {
-			if (other.name != null)
-				return false;
-		} else if (!name.equals(other.name))
-			return false;
-		if (zipcode == null) {
-			if (other.zipcode != null)
-				return false;
-		} else if (!zipcode.equals(other.zipcode))
-			return false;
-		return true;
-	}
+    @Override
+    public int hashCode() {
+        return Objects.hash(name, zipcode, city, address, userId);
+    }
 
-	@Override
-	public String toString() {
-		return "CreateOrganisation [name=" + name + ", zipcode=" + zipcode + ", city=" + city + ", address=" + address
-				+ "]";
-	}
-
-
+    @Override
+    public String toString() {
+        return "CreateOrganisation{" +
+                "name='" + name + '\'' +
+                ", zipcode='" + zipcode + '\'' +
+                ", city='" + city + '\'' +
+                ", address='" + address + '\'' +
+                ", userId=" + userId +
+                '}';
+    }
 }

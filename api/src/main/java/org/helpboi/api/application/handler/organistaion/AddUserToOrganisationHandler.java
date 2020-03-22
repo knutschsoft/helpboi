@@ -26,7 +26,7 @@ public class AddUserToOrganisationHandler implements CommandHandler<AddUserToOrg
     @Override
     @Transactional
     public void handle(AddUserToOrganisation command) {
-        Long organisationId = command.getOrgId();
+        Long organisationId = command.getOrganisationId();
         Long userId = command.getUserId();
         
         Optional<Organisation> org = organisationRepository.findById(organisationId);

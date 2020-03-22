@@ -1,5 +1,7 @@
 package org.helpboi.api.application.command.organisation;
 
+import java.util.Objects;
+
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
 
@@ -10,58 +12,48 @@ public class AddUserToOrganisation  extends Command<User> {
 
 	@Min(1)
     @NotNull
-    private Long orgId;
+    private Long organisationId;
 	
 	@Min(1)
     @NotNull
     private Long userId;
 
-    public AddUserToOrganisation(Long orgId, Long userId) {
-        this.orgId = orgId;
+    public AddUserToOrganisation(Long organisationId, Long userId) {
+        this.organisationId = organisationId;
         this.userId = userId;
     }
 
-	public Long getOrgId() {
-		return orgId;
+	public Long getOrganisationId() {
+		return organisationId;
 	}
 
 	public Long getUserId() {
 		return userId;
 	}
 
-	@Override
-	public int hashCode() {
-		final int prime = 31;
-		int result = 1;
-		result = prime * result + ((orgId == null) ? 0 : orgId.hashCode());
-		result = prime * result + ((userId == null) ? 0 : userId.hashCode());
-		return result;
-	}
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
+        AddUserToOrganisation that = (AddUserToOrganisation) o;
+        return Objects.equals(organisationId, that.organisationId) &&
+                Objects.equals(userId, that.userId);
+    }
 
-	@Override
-	public boolean equals(Object obj) {
-		if (this == obj)
-			return true;
-		if (!(obj instanceof AddUserToOrganisation))
-			return false;
-		AddUserToOrganisation other = (AddUserToOrganisation) obj;
-		if (orgId == null) {
-			if (other.orgId != null)
-				return false;
-		} else if (!orgId.equals(other.orgId))
-			return false;
-		if (userId == null) {
-			if (other.userId != null)
-				return false;
-		} else if (!userId.equals(other.userId))
-			return false;
-		return true;
-	}
+    @Override
+    public int hashCode() {
+        return Objects.hash(organisationId, userId);
+    }
 
-	@Override
-	public String toString() {
-		return "AddUserToOrganisation [orgId=" + orgId + ", userId=" + userId + "]";
-	}
-
-    
+    @Override
+    public String toString() {
+        return "AddUserToOrganisation{" +
+                "organisationId=" + organisationId +
+                ", userId=" + userId +
+                '}';
+    }
 }
