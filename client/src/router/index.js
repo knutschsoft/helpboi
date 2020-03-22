@@ -25,7 +25,7 @@ const routes = [
         },
         children: [
             {
-                path: '',
+                path: '/',
                 name: 'Patients',
                 component: Patients
             },

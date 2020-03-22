@@ -42,7 +42,7 @@
                 <v-list-item
                     v-if="user.organisationId"
                     link
-                    to="/patientenkartei"
+                    to="/"
                 >
                     <v-list-item-action>
                         <v-icon>mdi-account-box</v-icon>
