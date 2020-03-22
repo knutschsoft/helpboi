@@ -30,15 +30,14 @@ public class DeleteUserHandler implements CommandHandler<DeleteUser> {
     @Transactional
     public void handle(DeleteUser command) {
         Long userId = command.getId();
+        User user = userRepository.findById(userId)
+                .orElseThrow(() -> new NotFoundException(String.format(
+                        "User id: %s not found", userId)));
 
         if (!Objects.equals(currentUser.getId(), userId)) {
             throw new AuthorizationException(String.format(
                     "it's not allowed to delete user id: %s", userId));
         }
-
-        User user = userRepository.findById(userId)
-                .orElseThrow(() -> new NotFoundException(String.format(
-                        "User id: %s not found", userId)));
 
         userRepository.delete(user);
         command.resolve(null);
