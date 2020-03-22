@@ -19,3 +19,6 @@ INSERT INTO `symptom` (`name`) VALUES
 	('Durchfall'),
 	('Bluthusten (Hämoptyse)'),
 	('Schwellung der Bindehaut');
+	
+INSERT INTO `patient` (`organisation_id`, `firstname`, `lastname`, `gender`, `phone`, `date_of_birth`, `zipcode`, `city`, `address`, `status`, `notes`) VALUES
+	(1, 'Shain', 'Toad', 'DIVERS', '1213321123', '1945-03-28 00:00:01.0', '01231', 'Totenstadt', 'Am Friedhof 1', 'UNKNOWN', 'scheintot');

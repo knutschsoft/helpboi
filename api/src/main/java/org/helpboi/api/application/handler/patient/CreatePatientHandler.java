@@ -16,6 +16,7 @@ import org.helpboi.api.domain.exception.AuthorizationException;
 import org.helpboi.api.domain.exception.BusinessException;
 import org.helpboi.api.domain.model.patient.Patient;
 import org.helpboi.api.domain.model.patient.PatientGender;
+import org.helpboi.api.domain.model.patient.PatientStatus;
 
 @Singleton
 public class CreatePatientHandler implements CommandHandler<CreatePatient> {
@@ -40,6 +41,7 @@ public class CreatePatientHandler implements CommandHandler<CreatePatient> {
         String city = command.getCity();
         String address = command.getAddress();
         String notes = command.getNotes();
+        PatientStatus status = command.getStatus();
 
         if (!Objects.equals(currentUser.getOrganisationId(), organisationId)) {
             throw new AuthorizationException(String.format(
@@ -52,7 +54,7 @@ public class CreatePatientHandler implements CommandHandler<CreatePatient> {
 
         Patient patient = new Patient(
                 null, organisationId, firstname, lastname, gender, phone,
-                dateOfBirth, zipcode, city, address, notes
+                dateOfBirth, zipcode, city, address, notes, status
         );
         patient = patientRepository.save(patient);
         command.resolve(patient);
