@@ -1,152 +1,118 @@
 <template>
-    <v-container>
-        <v-row class="text-center">
-            <v-col cols="12">
-                <v-card>
-                    <v-card-title>
-                        {{ patient.firstname }}
-                        {{ patient.lastname }}
-                    </v-card-title>
-                    <v-card-text>
-                        Personendaten
-                        <br>
-                        Name: {{ patient.firstname }} {{ patient.lastname }}
-                        <v-icon
-                            v-if="isMale(patient)"
-                        >
-                            mdi-male
-                        </v-icon>
-                        <v-icon
-                            color="red"
-                            v-else-if="isFemale(patient)"
-                        >
-                            mdi-female
-                        </v-icon>
-                        <v-icon
-                            v-else-if="isDivers(patient)"
-                        >
-                            mdi-male-female
-                        </v-icon>
-                        <br>
-                        Anschrift: {{ patient.address }} {{ patient.zipcode }} {{ patient.city }}
-                        <br>
-                        Geburtsdatum: {{ patient.dateOfBirth }}
-                        <br>
-                        Telefon: {{ patient.dateOfBirth }}
-                        <br>
-                        E-Mail: <a :href="`mailto: ${patient.email}`">{{ patient.email }}</a>
-                    </v-card-text>
-                    <v-card-title>
-                        Vorerkrankungen
-                    </v-card-title>
-                    <v-card-text>
-                        <v-textarea>
-                            Darmkrebs, HIV
-                        </v-textarea>
-                    </v-card-text>
-                    <v-card-text>
-                        Status
-                        <br>
-                        Symptome
-                        <v-icon
-                            v-if="hasSymptoms(patient)"
-                            color="red"
-                        >
-                            mdi-skull-crossbones
-                        </v-icon>
-                        <v-icon
-                            v-else
-                            color="green"
-                        >
-                            mdi-check-outline
-                        </v-icon>
-                        <br>
-                        Schwerkrank
-                        <v-icon
-                            v-if="isSeriouslyIll(patient)"
-                            color="red"
-                        >
-                            mdi-skull-crossbones
-                        </v-icon>
-                        <v-icon
-                            v-else
-                            color="green"
-                        >
-                            mdi-check-outline
-                        </v-icon>
-                        <br>
-                        Quarantäne
-                        <v-icon
-                            v-if="isQuarantine(patient)"
-                            color="red"
-                        >
-                            mdi-skull-crossbones
-                        </v-icon>
-                        <v-icon
-                            v-else
-                            color="green"
-                        >
-                            mdi-check-outline
-                        </v-icon>
-                        <br>
-                        Test
-                        <v-icon
-                            v-if="isTest(patient)"
-                            color="red"
-                        >
-                            mdi-skull-crossbones-outline
-                        </v-icon>
-                        <v-icon
-                            v-else
-                            color="green"
-                        >
-                            mdi-check-outline
-                        </v-icon>
-                        <br>
-                    </v-card-text>
-                    <v-card-text>
-                    </v-card-text>
-                </v-card>
+    <v-container fluid>
+        <v-breadcrumbs
+            large
+            :items="breadcrumbItems"
+            divider=">"
+        />
 
-                <v-tabs show-arrows background-color="transparent">
-                    <v-tab>Verlauf</v-tab>
-                    <v-tab-item>
-                        <v-timeline>
-                            <v-timeline-item
-                                v-for="history in patient.histories"
-                                :key="history.id"
-                            >
-                                {{ getHistoryTypeLabel(history) }}
-                                {{ history.content }}
-                                {{ history.createdAt }}
-                            </v-timeline-item>
-                            <v-timeline-item class="text-right">timeline item</v-timeline-item>
-                            <v-timeline-item>timeline item</v-timeline-item>
-                        </v-timeline>
-                        <v-btn
-                            v-for="actionType in actions"
-                            :key="actionType"
-                            @click="createAction(actionType)"
-                        >
-                            {{ actionType }}
-                        </v-btn>
-                        <v-btn
-                            @click="createInfo()"
-                        >
-                            Info hinzufügen
-                        </v-btn>
-                        <v-btn
-                            @click="createTask()"
-                        >
-                            Aufgabe hinzufügen
-                        </v-btn>
-                    </v-tab-item>
-                    <v-tab>Fragenkatalog</v-tab>
-                    <v-tab-item>
-                    </v-tab-item>
-                </v-tabs>
-            </v-col>
-        </v-row>
+        <v-toolbar flat color="transparent">
+            <v-btn icon @click="$router.go(-1)">
+                <v-icon>mdi-arrow-left</v-icon>
+            </v-btn>
+            <v-toolbar-title class="headline">
+                {{ patient.firstname }}
+                {{ patient.lastname }}
+            </v-toolbar-title>
+            <v-spacer/>
+        </v-toolbar>
+
+        <v-card class="elevation-12 mt-5">
+            <v-banner single-line dark class="mb-5">
+                <span class="title font-weight-light">Status:</span>
+                <div>
+                    <v-chip class="ma-2" :color="hasSymptoms(patient) ? 'red' : 'green'" text-color="white">
+                        <v-avatar left>
+                            <v-icon>{{ hasSymptoms(patient) ? 'mdi-skull' : 'mdi-check-bold' }}</v-icon>
+                        </v-avatar>
+                        Symptome
+                    </v-chip>
+                    <v-chip class="ma-2" :color="isSeriouslyIll(patient) ? 'red' : 'green'" text-color="white">
+                        <v-avatar left>
+                            <v-icon>{{ isSeriouslyIll(patient) ? 'mdi-skull' : 'mdi-check-bold' }}</v-icon>
+                        </v-avatar>
+                        Schwerkrank
+                    </v-chip>
+                    <v-chip class="ma-2" :color="isQuarantine(patient) ? 'red' : 'green'" text-color="white">
+                        <v-avatar left>
+                            <v-icon>{{ isQuarantine(patient) ? 'mdi-skull' : 'mdi-check-bold' }}</v-icon>
+                        </v-avatar>
+                        Quarantäne
+                    </v-chip>
+                    <v-chip class="ma-2" :color="isTest(patient) ? 'red' : 'green'" text-color="white">
+                        <v-avatar left>
+                            <v-icon>{{ isTest(patient) ? 'mdi-skull' : 'mdi-check-bold' }}</v-icon>
+                        </v-avatar>
+                        Test
+                    </v-chip>
+                </div>
+            </v-banner>
+
+            <v-card-text>
+                <h3 class="mb-4">Personendaten</h3>
+                <v-text-field :value="patient.firstname + ' ' + patient.lastname" filled label="Geschlecht" readonly/>
+                <v-text-field :value="getGender(patient)" filled label="Geschlecht" readonly/>
+                <v-text-field :value="patient.address + ' ' + patient.zipcode + ' ' + patient.city" filled
+                              label="Anschrift" readonly/>
+                <v-text-field :value="patient.dateOfBirth" filled label="Geburtsdatum" readonly/>
+                <v-text-field v-model="patient.phone" filled label="Telefon" readonly append-icon="mdi-phone-forward"/>
+                <v-text-field v-model="patient.email" filled label="Email" readonly append-icon="mdi-email-edit"/>
+
+                <h3 class="mb-4">Vorerkrankungen</h3>
+                <v-textarea outlined value="Darmkrebs, HIV"/>
+            </v-card-text>
+        </v-card>
+
+        <v-toolbar flat color="transparent" class="mt-8">
+            <v-spacer/>
+            <v-btn text color="secondary">
+                <v-icon left>mdi-note-text-outline</v-icon>
+                Eintrag hinzufügen
+            </v-btn>
+            <v-divider inset vertical />
+            <v-btn text color="secondary">
+                <v-icon left>mdi-medical-bag</v-icon>
+                Maßnahme hinzufügen
+            </v-btn>
+        </v-toolbar>
+
+        <v-tabs show-arrows background-color="transparent">
+            <v-tab>Verlauf</v-tab>
+            <v-tab-item>
+                <v-timeline>
+                    <v-timeline-item
+                        v-for="history in patient.histories"
+                        :key="history.id"
+                    >
+                        {{ getHistoryTypeLabel(history) }}
+                        {{ history.content }}
+                        {{ history.createdAt }}
+                    </v-timeline-item>
+                    <v-timeline-item class="text-right">timeline item</v-timeline-item>
+                    <v-timeline-item>timeline item</v-timeline-item>
+                </v-timeline>
+                <v-btn
+                    v-for="actionType in actions"
+                    :key="actionType"
+                    @click="createAction(actionType)"
+                >
+                    {{ actionType }}
+                </v-btn>
+                <v-btn
+                    @click="createInfo()"
+                >
+                    Info hinzufügen
+                </v-btn>
+                <v-btn
+                    @click="createTask()"
+                >
+                    Aufgabe hinzufügen
+                </v-btn>
+            </v-tab-item>
+            <v-tab>Fragenkatalog</v-tab>
+            <v-tab-item>
+            </v-tab-item>
+        </v-tabs>
     </v-container>
 </template>
 
@@ -275,15 +241,6 @@
                     );
                 }
             },
-            isMale(patient) {
-                return patient.gender === 'MALE';
-            },
-            isFemale(patient) {
-                return patient.gender === 'FEMALE';
-            },
-            isDivers(patient) {
-                return patient.gender === 'DIVERS';
-            },
             hasSymptoms(patient) {
                 return patient.gender !== 'DIVERS';
             },
@@ -295,6 +252,17 @@
             },
             isTest(patient) {
                 return patient.gender !== 'DIVERS';
+            },
+            getGender(patient) {
+                switch (patient.gender) {
+                    case 'MALE':
+                        return "Männlich";
+                    case 'FEMALE':
+                        return "Weblich";
+                    case 'DIVERS':
+                        return "Divers";
+                }
+                return '';
             },
             getHistoryTypeLabel(history) {
                 switch (history.type) {

@@ -23,8 +23,8 @@
                 <span class="title font-weight-light">
                 Du hast noch keine Organisation. Um loszulegen musst Du zuerst eine erstellen.
             </span>
-
             </v-banner>
+
             <v-card-text>
                 <v-alert
                     v-if="hasError"
