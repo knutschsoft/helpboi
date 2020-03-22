@@ -1,3 +1,5 @@
 export default {
-    apiUrl: 'http://localhost:8080',
+    apiUrl: process.env.NODE_ENV === 'production'
+        ? 'https://helpboi.projektmotor.de'
+        : 'http://localhost:8080',
 }
