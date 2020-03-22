@@ -11,6 +11,11 @@
                 <v-icon>mdi-bank</v-icon>
             </v-btn>
             <v-toolbar-title class="headline">Organisation verwalten</v-toolbar-title>
+            <v-spacer/>
+            <v-btn text color="secondary">
+                <v-icon left>mdi-plus</v-icon>
+                Mitarbeiter hinzufügen
+            </v-btn>
         </v-toolbar>
 
         <v-tabs show-arrows background-color="transparent">
