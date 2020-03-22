@@ -2,7 +2,7 @@
     <v-app>
         <v-content>
             <v-container
-                class="fill-height grey lighten-4 background" style="background-url: url('assets/ringe.png')"
+                class="fill-height grey lighten-4 background"
                 fluid
             >
                 <v-row
@@ -30,7 +30,7 @@
                                 <span>Erstelle Account</span>
                             </v-tooltip>
                         </v-toolbar>
-                        <v-img :src="require('../assets/logo.png')" class="ma-12" height="200" contain></v-img>
+                        <v-img :src="require('../assets/logo2.png')" class="ma-5" height="250" contain></v-img>
                         <v-card-text>
                             <v-alert
                                 v-if="hasError"
