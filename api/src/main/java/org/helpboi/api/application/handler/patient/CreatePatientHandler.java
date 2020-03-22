@@ -1,6 +1,7 @@
 package org.helpboi.api.application.handler.patient;
 
 import java.time.ZonedDateTime;
+import java.util.Objects;
 
 import javax.inject.Inject;
 import javax.inject.Singleton;
@@ -10,6 +11,8 @@ import org.helpboi.api.application.CommandHandler;
 import org.helpboi.api.application.command.patient.CreatePatient;
 import org.helpboi.api.application.persistence.OrganisationRepository;
 import org.helpboi.api.application.persistence.PatientRepository;
+import org.helpboi.api.application.service.user.CurrentUser;
+import org.helpboi.api.domain.exception.AuthorizationException;
 import org.helpboi.api.domain.exception.BusinessException;
 import org.helpboi.api.domain.model.patient.Patient;
 import org.helpboi.api.domain.model.patient.PatientGender;
@@ -22,6 +25,8 @@ public class CreatePatientHandler implements CommandHandler<CreatePatient> {
     private PatientRepository      patientRepository;
     @Inject
     private OrganisationRepository organisationRepository;
+    @Inject
+    private CurrentUser            currentUser;
 
     @Override
     @Transactional
@@ -37,6 +42,11 @@ public class CreatePatientHandler implements CommandHandler<CreatePatient> {
         String address = command.getAddress();
         String notes = command.getNotes();
         PatientStatus status = command.getStatus();
+
+        if (!Objects.equals(currentUser.getOrganisationId(), organisationId)) {
+            throw new AuthorizationException(String.format(
+                    "It's not allowed to create a patient for organisation id: %s", organisationId));
+        }
 
         organisationRepository.findById(organisationId)
                 .orElseThrow(() -> new BusinessException(String.format(

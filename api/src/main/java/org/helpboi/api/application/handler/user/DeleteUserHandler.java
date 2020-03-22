@@ -9,6 +9,7 @@ import javax.transaction.Transactional;
 import org.helpboi.api.application.CommandHandler;
 import org.helpboi.api.application.command.user.DeleteUser;
 import org.helpboi.api.application.persistence.UserRepository;
+import org.helpboi.api.application.service.user.CurrentUser;
 import org.helpboi.api.domain.exception.AuthorizationException;
 import org.helpboi.api.domain.exception.NotFoundException;
 import org.helpboi.api.domain.model.user.User;
@@ -22,6 +23,8 @@ public class DeleteUserHandler implements CommandHandler<DeleteUser> {
     private UserRepository  userRepository;
     @Inject
     private SecurityService securityService;
+    @Inject
+    private CurrentUser     currentUser;
 
     @Override
     @Transactional
@@ -31,8 +34,7 @@ public class DeleteUserHandler implements CommandHandler<DeleteUser> {
                 .orElseThrow(() -> new NotFoundException(String.format(
                         "User id: %s not found", userId)));
 
-        String authenticatedEmail = securityService.username().orElse(null);
-        if (!Objects.equals(user.getEmail(), authenticatedEmail)) {
+        if (!Objects.equals(currentUser.getId(), userId)) {
             throw new AuthorizationException(String.format(
                     "it's not allowed to delete user id: %s", userId));
         }

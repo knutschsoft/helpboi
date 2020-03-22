@@ -44,7 +44,6 @@ public class UserResource {
 
     @Delete("/{id}")
     public Maybe<Void> deleteUser(Long id) {
-        return commandBus.execute(
-                new DeleteUser(id));
+        return commandBus.execute(new DeleteUser(id));
     }
 }

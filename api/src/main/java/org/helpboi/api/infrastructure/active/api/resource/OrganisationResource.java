@@ -1,11 +1,15 @@
 package org.helpboi.api.infrastructure.active.api.resource;
 
+import java.util.List;
+
 import javax.inject.Inject;
 
 import org.helpboi.api.application.CommandBus;
 import org.helpboi.api.application.command.organisation.CreateOrganisation;
+import org.helpboi.api.application.command.organisation.GetAllOrganisationUsers;
 import org.helpboi.api.application.command.organisation.GetOrganisation;
 import org.helpboi.api.domain.model.organisation.Organisation;
+import org.helpboi.api.domain.model.user.User;
 
 import io.micronaut.http.annotation.Body;
 import io.micronaut.http.annotation.Controller;
@@ -31,7 +35,11 @@ public class OrganisationResource {
 	
 	@Get("/{id}")
 	public Maybe<Organisation> getOrganisation(Long id) {
-		return commandBus.execute(
-		        new GetOrganisation(id));
+		return commandBus.execute(new GetOrganisation(id));
 	}
+
+	@Get("/{id}/users")
+	public Maybe<List<User>> getAllOrganisationUsers(Long id) {
+	    return commandBus.execute(new GetAllOrganisationUsers(id));
+    }
 }

@@ -35,7 +35,7 @@
             },
         },
         created() {
-            this.$store.dispatch("user/findAll");
+            // this.$store.dispatch("user/findAll");
         },
     }
 </script>
