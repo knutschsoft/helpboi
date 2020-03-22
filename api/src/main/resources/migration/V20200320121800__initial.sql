@@ -80,3 +80,17 @@ CREATE TABLE IF NOT EXISTS `history`
     FOREIGN KEY `fk_history_patient_id` (`patient_id`) REFERENCES `patient` (`id`),
     FOREIGN KEY `fk_history_creator_id` (`creator_id`) REFERENCES `user` (`id`)
 ) ENGINE = InnoDB;
+
+CREATE TABLE IF NOT EXISTS `task`
+(
+    `id`         BIGINT(20)   NOT NULL AUTO_INCREMENT,
+    `patient_id` BIGINT(20)   NOT NULL,
+    `agent_id`   BIGINT(20) DEFAULT NULL,
+    `status`     VARCHAR(255) NOT NULL,
+    `active_to`  TIMESTAMP    NULL NOT NULL,
+    `content`    LONGTEXT     NOT NULL,
+
+    PRIMARY KEY (`id`),
+    FOREIGN KEY `fk_task_patient_id` (`patient_id`) REFERENCES `patient` (`id`),
+    FOREIGN KEY `fk_task_agent_id` (`agent_id`) REFERENCES `user` (`id`)
+) ENGINE = InnoDB;
