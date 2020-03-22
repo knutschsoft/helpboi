@@ -9,7 +9,7 @@ import Logout from "../views/Logout";
 import Dashboard from "../views/dashboard/Dashboard";
 import Patients from "../views/dashboard/module/Patients.vue";
 import Organisation from "../views/dashboard/module/Organisation.vue";
-import OrganisationCreate from "../views/OrganisationCreate.vue";
+import OrganisationCreate from "../views/dashboard/module/OrganisationCreate.vue";
 import Users from "../views/dashboard/module/Users";
 import Tasks from "../views/dashboard/module/Tasks";
 
