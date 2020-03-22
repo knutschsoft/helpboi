@@ -7,9 +7,7 @@
         />
 
         <v-toolbar flat color="transparent">
-            <v-btn icon>
-                <v-icon>mdi-bank-plus</v-icon>
-            </v-btn>
+            <v-icon class="mr-5">mdi-bank-plus</v-icon>
             <v-toolbar-title class="headline">Organisation erstellen</v-toolbar-title>
         </v-toolbar>
 

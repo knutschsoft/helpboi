@@ -7,9 +7,7 @@
         />
 
         <v-toolbar flat color="transparent">
-            <v-btn icon>
-                <v-icon>mdi-account-box</v-icon>
-            </v-btn>
+            <v-icon class="mr-5">mdi-account-box</v-icon>
             <v-toolbar-title class="headline">Patientenkartei</v-toolbar-title>
             <v-spacer/>
             <v-btn text color="secondary" @click="createPatient()">
