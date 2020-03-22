@@ -75,7 +75,6 @@
                 return this.$store.getters["task/hasTasks"];
             },
             tasks() {
-                console.log(this.$store.getters["task/tasks"]);
                 return this.$store.getters["task/tasks"];
             },
             currentUser() {
