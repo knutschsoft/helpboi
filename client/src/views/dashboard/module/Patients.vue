@@ -23,6 +23,7 @@
                     :items="organisationPatients"
                     :items-per-page="20"
                     :search="organisationPatientsSearch"
+                    @click:row="editPatient"
                     multi-sort
                 >
                     <template v-slot:top>
@@ -107,6 +108,9 @@
             }
         },
         methods: {
+            editPatient(patient) {
+                this.$router.push("/patientenkartei/" + patient.id);
+            },
             async createPatient() {
                 let user = this.$store.getters["security/currentUser"];
 
