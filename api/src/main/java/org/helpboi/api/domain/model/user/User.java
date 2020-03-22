@@ -110,6 +110,12 @@ public class User {
     public Boolean isVerified() {
         return isVerified;
     }
+    
+    public void assignToOrganisation(Long organisationId, boolean isAdmin) {
+    	this.organisationId = organisationId;
+    	this.isAdmin = isAdmin;
+    	this.isVerified = true;
+    }
 
     @Override
     public boolean equals(Object o) {
