@@ -1,34 +1,46 @@
 <template>
-    <v-container>
-        <v-row class="text-center">
-            <v-col cols="12">
-                <v-card>
-                    <v-card-title>
-                        Patientenkartei
-                    </v-card-title>
-                    <v-card-text>
-                        <v-text-field
-                            placeholder="Patient suchen"
-                        ></v-text-field>
-                    </v-card-text>
-                    <v-card-text>
-                        <v-data-table
-                            :headers="headers"
-                            :items="organisationPatients"
-                            :items-per-page="20"
-                            class="elevation-1"
-                        ></v-data-table>
-                    </v-card-text>
-                    <v-btn
-                        block
-                        color="primary"
-                        @click="createPatient()"
-                    >
-                        Patient Hinzufügen
-                    </v-btn>
-                </v-card>
-            </v-col>
-        </v-row>
+    <v-container fluid>
+        <v-breadcrumbs
+            large
+            :items="breadcrumbItems"
+            divider=">"
+        />
+
+        <v-toolbar flat color="transparent">
+            <v-btn icon>
+                <v-icon>mdi-account-box</v-icon>
+            </v-btn>
+            <v-toolbar-title class="headline">Patientenkartei</v-toolbar-title>
+            <v-spacer/>
+            <v-btn text color="secondary" @click="createPatient()">
+                <v-icon left>mdi-plus</v-icon>
+                Patient hinzufügen
+            </v-btn>
+        </v-toolbar>
+
+        <v-card class="elevation-12 mt-5">
+            <v-card-text>
+                <v-data-table
+                    :headers="headers"
+                    :items="organisationPatients"
+                    :items-per-page="20"
+                    :search="organisationPatientsSearch"
+                    multi-sort
+                >
+                    <template v-slot:top>
+                        <v-toolbar flat>
+                            <v-toolbar-title class="font-weight-light">Filter:</v-toolbar-title>
+                            <v-text-field class="ml-4" v-model="organisationPatientsSearch"
+                                          append-icon="mdi-magnify" label="Suche"
+                                          single-line hide-details style="max-width: 500px;"/>
+                        </v-toolbar>
+                    </template>
+                    <template v-slot:no-data>
+                        Keine Einträge gefunden
+                    </template>
+                </v-data-table>
+            </v-card-text>
+        </v-card>
     </v-container>
 </template>
 
@@ -60,6 +72,8 @@
             },
         },
         data: () => ({
+            organisationPatientsSearch: null,
+
             breadcrumbItems: [
                 {
                     to: {path: '/'},
@@ -74,15 +88,15 @@
                 },
             ],
             headers: [
-                { text: 'Vorname', value: 'firstname' },
-                { text: 'Nachname', value: 'lastname' },
-                { text: 'Geschlecht', value: 'gender' },
-                { text: 'Status', value: 'status' },
-                { text: 'Telefon', value: 'phone' },
-                { text: 'PLZ', value: 'zipcode' },
-                { text: 'Ort', value: 'city' },
-                { text: 'Adresse', value: 'address' },
-                { text: 'Vermerk', value: 'notes' },
+                {text: 'Vorname', value: 'firstname'},
+                {text: 'Nachname', value: 'lastname'},
+                {text: 'Geschlecht', value: 'gender'},
+                {text: 'Status', value: 'status'},
+                {text: 'Telefon', value: 'phone'},
+                {text: 'PLZ', value: 'zipcode'},
+                {text: 'Ort', value: 'city'},
+                {text: 'Adresse', value: 'address'},
+                {text: 'Vermerk', value: 'notes'},
             ],
         }),
         created() {
