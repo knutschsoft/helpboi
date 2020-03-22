@@ -63,10 +63,10 @@ export default {
         }
     },
     actions: {
-        async create({ commit }, [ firstName, lastName, email, password, phone ]) {
+        async create({ commit }, [ firstname, lastname, email, password, phone ]) {
             commit(CREATING_USER);
             try {
-                let response = await UserAPI.create(firstName, lastName, email, password, phone);
+                let response = await UserAPI.create(firstname, lastname, email, password, phone);
                 commit(CREATING_USER_SUCCESS, response.data);
                 return response.data;
             } catch (error) {

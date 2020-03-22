@@ -11,10 +11,6 @@
                             placeholder="Patient suchen"
                         ></v-text-field>
                     </v-card-text>
-                </v-card>
-
-                <v-card>
-                    <v-card-title>Patienten</v-card-title>
                     <v-card-text>
                         <v-data-table
                             :headers="headers"
@@ -23,6 +19,13 @@
                             class="elevation-1"
                         ></v-data-table>
                     </v-card-text>
+                    <v-btn
+                        block
+                        color="primary"
+                        @click="createPatient()"
+                    >
+                        Patient Hinzufügen
+                    </v-btn>
                 </v-card>
             </v-col>
         </v-row>
@@ -90,6 +93,28 @@
             } else {
                 this.$router.push({path: "/organisation"});
             }
-        }
+        },
+        methods: {
+            async createPatient() {
+                let user = this.$store.getters["security/currentUser"];
+
+                await this.$store.dispatch(
+                    "organisation/createOrganisationPatient",
+                    [
+                        user.organisationId,
+                        this.$data.firstname,
+                        this.$data.lastname,
+                        this.$data.gender,
+                        this.$data.phone,
+                        this.$data.dateOfBirth,
+                        this.$data.zipcode,
+                        this.$data.city,
+                        this.$data.address,
+                        this.$data.status,
+                        this.$data.notes,
+                    ]
+                );
+            }
+        },
     }
 </script>

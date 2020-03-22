@@ -3,6 +3,9 @@ import OrganisationAPI from "../api/organisation";
 const CREATING_ORGANISATION = "CREATING_ORGANISATION",
     CREATING_ORGANISATION_SUCCESS = "CREATING_ORGANISATION_SUCCESS",
     CREATING_ORGANISATION_ERROR = "CREATING_ORGANISATION_ERROR",
+    CREATING_ORGANISATION_PATIENT = "CREATING_ORGANISATION_PATIENT",
+    CREATING_ORGANISATION_PATIENT_SUCCESS = "CREATING_ORGANISATION_PATIENT_SUCCESS",
+    CREATING_ORGANISATION_PATIENT_ERROR = "CREATING_ORGANISATION_PATIENT_ERROR",
     FETCHING_ORGANISATION_USERS = "FETCHING_ORGANISATION_USERS",
     FETCHING_ORGANISATION_USERS_SUCCESS = "FETCHING_ORGANISATION_USERS_SUCCESS",
     FETCHING_ORGANISATION_USERS_ERROR = "FETCHING_ORGANISATION_USERS_ERROR",
@@ -59,6 +62,19 @@ export default {
             state.isLoading = false;
             state.error = error;
         },
+        [CREATING_ORGANISATION_PATIENT](state) {
+            state.isLoading = true;
+            state.error = null;
+        },
+        [CREATING_ORGANISATION_PATIENT_SUCCESS](state, organisationPatient) {
+            state.isLoading = false;
+            state.error = null;
+            state.organisationPatients.push(organisationPatient);
+        },
+        [CREATING_ORGANISATION_PATIENT_ERROR](state, error) {
+            state.isLoading = false;
+            state.error = error;
+        },
         [FETCHING_ORGANISATION_USERS](state) {
             state.isLoading = true;
             state.error = null;
@@ -107,6 +123,53 @@ export default {
             commit(CREATING_ORGANISATION);
             try {
                 let response = await OrganisationAPI.create(name, zipcode, city, address, userId);
+                commit(CREATING_ORGANISATION_SUCCESS, response.data);
+                return response.data;
+            } catch (error) {
+                commit(CREATING_ORGANISATION_ERROR, error);
+                return null;
+            }
+        },
+        async createOrganisationPatient({commit}, [
+            organisationId,
+            firstname,
+            lastname,
+            gender,
+            phone,
+            dateOfBirth,
+            zipcode,
+            city,
+            address,
+            status,
+            notes
+        ]) {
+            firstname = 'test';
+            lastname = 'test';
+            gender = 'DIVERS';
+            phone = 'test';
+            dateOfBirth = '1983-03-22T15:27:07Z';
+            zipcode = 'test';
+            city = 'test';
+            address = 'test';
+            status = 'UNKNOWN';
+            notes = 'test';
+
+
+            commit(CREATING_ORGANISATION);
+            try {
+                let response = await OrganisationAPI.createPatient(
+                    organisationId,
+                    firstname,
+                    lastname,
+                    gender,
+                    phone,
+                    dateOfBirth,
+                    zipcode,
+                    city,
+                    address,
+                    status,
+                    notes
+                );
                 commit(CREATING_ORGANISATION_SUCCESS, response.data);
                 return response.data;
             } catch (error) {

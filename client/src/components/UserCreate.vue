@@ -9,13 +9,13 @@
                     {{ error }}
                 </v-alert>
                 <v-text-field
-                    v-model="firstName"
+                    v-model="firstname"
                     type="text"
                     placeholder="Vorname"
                     class="form-control"
                 />
                 <v-text-field
-                    v-model="lastName"
+                    v-model="lastname"
                     type="text"
                     placeholder="Nachname"
                     class="form-control"
@@ -39,7 +39,7 @@
                     class="form-control"
                 />
                 <v-btn
-                    :disabled="firstName.length === 0 || lastName.length === 0 || email.length === 0 || password.length === 0 || phone.length === 0 || isLoading"
+                    :disabled="firstname.length === 0 || lastname.length === 0 || email.length === 0 || password.length === 0 || phone.length === 0 || isLoading"
                     type="button"
                     class="btn btn-primary"
                     @click="createUser()"
@@ -58,8 +58,8 @@
         },
         data() {
             return {
-                firstName: "Robb",
-                lastName: "Stark",
+                firstname: "Robb",
+                lastname: "Stark",
                 email: "robb@got.de",
                 password: "EchtStark",
                 phone: '0160 123 123 123',
@@ -90,16 +90,16 @@
                 const result = await this.$store.dispatch(
                     "user/create",
                     [
-                        this.$data.firstName,
-                        this.$data.lastName,
+                        this.$data.firstname,
+                        this.$data.lastname,
                         this.$data.email,
                         this.$data.password,
                         this.$data.phone,
                     ]
                 );
                 if (result !== null) {
-                    this.$data.firstName = "";
-                    this.$data.lastName = "";
+                    this.$data.firstname = "";
+                    this.$data.lastname = "";
                     this.$data.email = "";
                     this.$data.password = "";
                     this.$data.phone = "";

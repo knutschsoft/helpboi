@@ -5,10 +5,10 @@ export default {
     findAll() {
         return axios.get(`${config.apiUrl}/users/1`);
     },
-    create(firstName, lastName, email, password, phone) {
+    create(firstname, lastname, email, password, phone) {
         return axios.post(`${config.apiUrl}/users`, {
-            "firstname": firstName,
-            "lastname": lastName,
+            "firstname": firstname,
+            "lastname": lastname,
             "email": email,
             "password": password,
             "phone": phone

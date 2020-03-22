@@ -27,13 +27,13 @@
                             </v-alert>
                             <v-form @keyup.native.enter="createUser">
                                 <v-text-field
-                                    v-model="firstName"
+                                    v-model="firstname"
                                     type="text"
                                     placeholder="Vorname"
                                     prepend-icon="mdi-account-details"
                                 />
                                 <v-text-field
-                                    v-model="lastName"
+                                    v-model="lastname"
                                     type="text"
                                     placeholder="Nachname"
                                     prepend-icon="mdi-account-details-outline"
@@ -67,7 +67,7 @@
                                     depressed
                                     x-large
                                     text
-                                    :disabled="firstName.length === 0 || lastName.length === 0 || email.length === 0 || password.length === 0 || phone.length === 0 || isLoading"
+                                    :disabled="firstname.length === 0 || lastname.length === 0 || email.length === 0 || password.length === 0 || phone.length === 0 || isLoading"
                                     class="px-4 ml-4" @click="createUser()">
                                     Jetzt anmelden
                                 </v-btn>
@@ -92,8 +92,8 @@
 
         data() {
             return {
-                firstName: "",
-                lastName: "",
+                firstname: "",
+                lastname: "",
                 email: "",
                 password: "",
                 phone: '',
@@ -125,8 +125,8 @@
                 const result = await this.$store.dispatch(
                     "user/create",
                     [
-                        this.$data.firstName,
-                        this.$data.lastName,
+                        this.$data.firstname,
+                        this.$data.lastname,
                         this.$data.email,
                         this.$data.password,
                         this.$data.phone,
