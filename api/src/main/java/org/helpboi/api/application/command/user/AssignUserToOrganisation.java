@@ -1,4 +1,4 @@
-package org.helpboi.api.application.command.organisation;
+package org.helpboi.api.application.command.user;
 
 import java.util.Objects;
 
@@ -8,28 +8,27 @@ import javax.validation.constraints.NotNull;
 import org.helpboi.api.application.Command;
 import org.helpboi.api.domain.model.user.User;
 
-public class AddUserToOrganisation  extends Command<User> {
+public class AssignUserToOrganisation extends Command<User> {
 
-	@Min(1)
-    @NotNull
-    private Long organisationId;
-	
-	@Min(1)
+    @Min(1)
     @NotNull
     private Long userId;
+    @Min(1)
+    @NotNull
+    private Long organisationId;
 
-    public AddUserToOrganisation(Long organisationId, Long userId) {
-        this.organisationId = organisationId;
+    public AssignUserToOrganisation(Long userId, Long organisationId) {
         this.userId = userId;
+        this.organisationId = organisationId;
     }
 
-	public Long getOrganisationId() {
-		return organisationId;
-	}
+    public Long getUserId() {
+        return userId;
+    }
 
-	public Long getUserId() {
-		return userId;
-	}
+    public Long getOrganisationId() {
+        return organisationId;
+    }
 
     @Override
     public boolean equals(Object o) {
@@ -39,7 +38,7 @@ public class AddUserToOrganisation  extends Command<User> {
         if (o == null || getClass() != o.getClass()) {
             return false;
         }
-        AddUserToOrganisation that = (AddUserToOrganisation) o;
+        AssignUserToOrganisation that = (AssignUserToOrganisation) o;
         return Objects.equals(organisationId, that.organisationId) &&
                 Objects.equals(userId, that.userId);
     }
@@ -51,7 +50,7 @@ public class AddUserToOrganisation  extends Command<User> {
 
     @Override
     public String toString() {
-        return "AddUserToOrganisation{" +
+        return "AssignUserToOrganisation{" +
                 "organisationId=" + organisationId +
                 ", userId=" + userId +
                 '}';

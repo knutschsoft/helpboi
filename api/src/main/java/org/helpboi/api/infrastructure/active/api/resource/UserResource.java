@@ -3,6 +3,7 @@ package org.helpboi.api.infrastructure.active.api.resource;
 import javax.inject.Inject;
 
 import org.helpboi.api.application.CommandBus;
+import org.helpboi.api.application.command.user.AssignUserToOrganisation;
 import org.helpboi.api.application.command.user.CreateUser;
 import org.helpboi.api.application.command.user.DeleteUser;
 import org.helpboi.api.application.command.user.GetUser;
@@ -27,14 +28,18 @@ public class UserResource {
 
     @Get("/{id}")
     public Maybe<User> getUser(Long id) {
-        return commandBus.execute(
-                new GetUser(id));
+        return commandBus.execute(new GetUser(id));
     }
 
     @Post
     @Secured(SecurityRule.IS_ANONYMOUS)
     public Maybe<User> createUser(@Body CreateUser command) {
         return commandBus.execute(command);
+    }
+
+    @Post("/{id}/organisations")
+    public Maybe<User> assignUserToOrganisation(Long id, Long organisationId) {
+        return commandBus.execute(new AssignUserToOrganisation(id, organisationId));
     }
 
     @Delete("/{id}")
