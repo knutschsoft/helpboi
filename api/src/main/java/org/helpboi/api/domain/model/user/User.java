@@ -13,6 +13,8 @@ import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
+import org.helpboi.api.domain.exception.BusinessException;
+
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity(name = "user")
@@ -57,12 +59,12 @@ public class User {
     }
 
     public User(
-        Long id,
-        String email,
-        String password,
-        String firstname,
-        String lastname,
-        String phone
+            Long id,
+            String email,
+            String password,
+            String firstname,
+            String lastname,
+            String phone
     ) {
         Objects.requireNonNull(email);
         Objects.requireNonNull(password);
@@ -73,6 +75,18 @@ public class User {
         this.firstname = firstname;
         this.lastname = lastname;
         this.phone = phone;
+    }
+
+    public Boolean hasOrganisation() {
+        return organisationId != null;
+    }
+
+    public Boolean isAdmin() {
+        return isAdmin;
+    }
+
+    public Boolean isVerified() {
+        return isVerified;
     }
 
     public Long getId() {
@@ -103,18 +117,33 @@ public class User {
         return organisationId;
     }
 
-    public Boolean isAdmin() {
-        return isAdmin;
+    public void promoteToAdmin() {
+        if (organisationId == null) {
+            throw new BusinessException(
+                    "While not assigned to a organisation, the user can't be promoted to an admin");
+        }
+        this.isAdmin = true;
     }
 
-    public Boolean isVerified() {
-        return isVerified;
+    public void degradeToUser() {
+        if (organisationId == null) {
+            throw new BusinessException(
+                    "While not assigned to a organisation, the user can't be degraded to an user");
+        }
+        this.isAdmin = false;
     }
-    
-    public void assignToOrganisation(Long organisationId, boolean isAdmin) {
-    	this.organisationId = organisationId;
-    	this.isAdmin = isAdmin;
-    	this.isVerified = true;
+
+    public void verifyAssignedOrganisation() {
+        if (organisationId == null) {
+            throw new BusinessException(
+                    "While not assigned to a organisation, the user can't be verified");
+        }
+        this.isVerified = true;
+    }
+
+    public void assignToOrganisation(Long organisationId) {
+        Objects.requireNonNull(organisationId);
+        this.organisationId = organisationId;
     }
 
     @Override

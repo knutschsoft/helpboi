@@ -18,10 +18,9 @@ import org.helpboi.api.domain.model.user.User;
 public class CreateOrganisationHandler implements CommandHandler<CreateOrganisation> {
 
     @Inject
-    private OrganisationRepository  organisationRepository;
-    
+    private OrganisationRepository organisationRepository;
     @Inject
-    private UserRepository  userRepository;
+    private UserRepository         userRepository;
 
     @Override
     @Transactional
@@ -32,22 +31,24 @@ public class CreateOrganisationHandler implements CommandHandler<CreateOrganisat
         String address = command.getAddress();
         Long userId = command.getUserId();
 
-        Optional<Organisation> org = organisationRepository.findByNameAndZipcode(name, zipcode);
-        if (org.isPresent()) {
-            throw new BusinessException(
-                    String.format("An organisation with this name: '%s' and zipcode: '%s' already exists.", name, zipcode));
+        Optional<Organisation> organisation = organisationRepository
+                .findByNameAndZipcode(name, zipcode);
+        if (organisation.isPresent()) {
+            throw new BusinessException(String.format(
+                    "Organisation with name: '%s' and zipcode: '%s' already exists", name, zipcode));
         }
-        
-        Optional<User> user = userRepository.findById(userId);
-        if (!user.isPresent()) {
-            throw new BusinessException(
-                    String.format("An user with the id: '%s' does not exist.", userId));
-        }
+
+        User user = userRepository.findById(userId)
+                .orElseThrow(() -> new BusinessException(
+                        String.format("User id: %s not found", userId)));
 
         Organisation finalOrganisation = new Organisation(
                 null, name, zipcode, city, address);
         finalOrganisation = organisationRepository.save(finalOrganisation);
-        user.get().assignToOrganisation(finalOrganisation.getId(), true);
+
+        user.assignToOrganisation(finalOrganisation.getId());
+        user.verifyAssignedOrganisation();
+        user.promoteToAdmin();
 
         command.resolve(finalOrganisation);
     }

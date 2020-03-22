@@ -41,17 +41,8 @@ public class CreatePatientHandler implements CommandHandler<CreatePatient> {
                         "Organisation id: %s not found", organisationId)));
 
         Patient patient = new Patient(
-                null,
-                organisationId,
-                firstname,
-                lastname,
-                gender,
-                phone,
-                dateOfBirth,
-                zipcode,
-                city,
-                address,
-                notes
+                null, organisationId, firstname, lastname, gender, phone,
+                dateOfBirth, zipcode, city, address, notes
         );
         patient = patientRepository.save(patient);
         command.resolve(patient);
