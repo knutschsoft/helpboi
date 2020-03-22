@@ -104,8 +104,10 @@
             </template>
         </v-navigation-drawer>
 
-        <v-content>
-            <router-view></router-view>
+        <v-content class="grey lighten-3">
+            <div class="ma-3">
+                <router-view></router-view>
+            </div>
         </v-content>
 
     </v-app>
