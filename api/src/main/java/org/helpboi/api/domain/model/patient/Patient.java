@@ -81,8 +81,7 @@ public class Patient {
     @Column(name = "symptom_id")
     private Set<Long> symptomIds = new LinkedHashSet<>();
 
-    @JsonIgnore
-    @OneToMany(orphanRemoval = true, mappedBy = "patient", cascade = {CascadeType.ALL})
+    @OneToMany(orphanRemoval = true, mappedBy = "patient", cascade = {CascadeType.ALL}, fetch=FetchType.EAGER)
     private List<History> histories = new ArrayList<>();
 
     public Patient() {
@@ -171,6 +170,10 @@ public class Patient {
     public List<History> getHistories() {
         return Collections.unmodifiableList(histories);
     }
+    
+    public void addHistory(History history) {
+		this.histories.add(history);
+	}
     
     public void applySymptomIds(Set<Long> symptomIds) {
 		this.symptomIds = symptomIds;

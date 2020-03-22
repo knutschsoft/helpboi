@@ -1,5 +1,7 @@
 package org.helpboi.api.domain.model.patient;
 
 public enum HistoryType {
-    UNKNOWN
+    ACTION,
+    INFO,
+    TASK
 }
