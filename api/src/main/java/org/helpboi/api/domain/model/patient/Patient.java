@@ -76,8 +76,7 @@ public class Patient {
     @Lob
     private String notes;
 
-    @JsonIgnore
-    @ElementCollection(fetch = FetchType.LAZY)
+    @ElementCollection(fetch = FetchType.EAGER)
     @CollectionTable(name = "patient_symptom", joinColumns = @JoinColumn(name = "patient_id"))
     @Column(name = "symptom_id")
     private Set<Long> symptomIds = new LinkedHashSet<>();
@@ -172,6 +171,10 @@ public class Patient {
     public List<History> getHistories() {
         return Collections.unmodifiableList(histories);
     }
+    
+    public void applySymptomIds(Set<Long> symptomIds) {
+		this.symptomIds = symptomIds;
+	}
 
     @Override
     public boolean equals(Object o) {

@@ -1,8 +1,11 @@
 package org.helpboi.api.infrastructure.active.api.resource;
 
+import java.util.Set;
+
 import javax.inject.Inject;
 
 import org.helpboi.api.application.CommandBus;
+import org.helpboi.api.application.command.patient.AddSymptomsToPatient;
 import org.helpboi.api.application.command.patient.CreatePatient;
 import org.helpboi.api.application.command.patient.DeletePatient;
 import org.helpboi.api.application.command.patient.GetPatient;
@@ -32,6 +35,11 @@ public class PatientResource {
 	@Post
 	public Maybe<Patient> createPatient(@Body CreatePatient command) {
 		return commandBus.execute(command);
+	}
+	
+	@Post("/{id}/symptoms")
+	public Maybe<Patient> addSymptomsToPatient(Long id, @Body Set<Long> symptomIds) {
+		return commandBus.execute(new AddSymptomsToPatient(id, symptomIds));
 	}
 	
 	@Delete("/{id}")
