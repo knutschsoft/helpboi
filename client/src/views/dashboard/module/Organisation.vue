@@ -39,8 +39,21 @@
                             :headers="headers"
                             :items="organisationUsers"
                             :items-per-page="10"
-                            class="elevation-1"
-                        ></v-data-table>
+                            :search="organisationUsersSearch"
+                            multi-sort
+                        >
+                            <template v-slot:top>
+                                <v-toolbar flat>
+                                    <v-toolbar-title class="font-weight-light">Filter:</v-toolbar-title>
+                                    <v-text-field class="ml-4" v-model="organisationUsersSearch"
+                                                  append-icon="mdi-magnify" label="Suche"
+                                                  single-line hide-details style="max-width: 500px;"/>
+                                </v-toolbar>
+                            </template>
+                            <template v-slot:no-data>
+                                Keine Einträge gefunden
+                            </template>
+                        </v-data-table>
                     </v-card-text>
                 </v-card>
             </v-tab-item>
@@ -77,6 +90,8 @@
             },
         },
         data: () => ({
+            organisationUsersSearch: null,
+
             breadcrumbItems: [
                 {
                     to: {path: '/organisation'},
@@ -91,10 +106,10 @@
                 },
             ],
             headers: [
-                { text: 'Vorname', value: 'firstname' },
-                { text: 'Nachname', value: 'lastname' },
-                { text: 'E-Mail', value: 'email' },
-                { text: 'Telefon', value: 'phone' },
+                {text: 'Vorname', value: 'firstname'},
+                {text: 'Nachname', value: 'lastname'},
+                {text: 'E-Mail', value: 'email'},
+                {text: 'Telefon', value: 'phone'},
             ],
         }),
         created() {
