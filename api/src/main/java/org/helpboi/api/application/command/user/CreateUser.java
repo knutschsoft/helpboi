@@ -51,7 +51,7 @@ public class CreateUser extends Command<User> {
     }
 
     public String getFirstname() {
-        return lastname;
+        return firstname;
     }
 
     public String getLastname() {
