@@ -123,6 +123,13 @@
                             <v-timeline-item class="text-right">timeline item</v-timeline-item>
                             <v-timeline-item>timeline item</v-timeline-item>
                         </v-timeline>
+                        <v-btn
+                            v-for="actionType in actions"
+                            :key="actionType"
+                            @click="createAction(actionType)"
+                        >
+                            {{ actionType }}
+                        </v-btn>
                     </v-tab-item>
                     <v-tab>Fragenkatalog</v-tab>
                     <v-tab-item>
@@ -163,20 +170,9 @@
             organisationPatients() {
                 return this.$store.getters['organisation/organisationPatients'];
             },
-            patient() {
-                let patients = this.$store.getters['organisation/organisationPatients'];
-                let that = this;
-                let myPatient = false;
-                patients.forEach(function (patient) {
-                    if (parseInt(patient.id) === parseInt(that.patientId)) {
-                        myPatient = patient;
-                    }
-                });
-
-                return myPatient;
-            }
         },
         data: () => ({
+            patient: false,
             breadcrumbItems: [
                 {
                     to: {path: '/'},
@@ -190,16 +186,12 @@
                     disabled: true,
                 },
             ],
-            headers: [
-                { text: 'Vorname', value: 'firstname' },
-                { text: 'Nachname', value: 'lastname' },
-                { text: 'Geschlecht', value: 'gender' },
-                { text: 'Status', value: 'status' },
-                { text: 'Telefon', value: 'phone' },
-                { text: 'PLZ', value: 'zipcode' },
-                { text: 'Ort', value: 'city' },
-                { text: 'Adresse', value: 'address' },
-                { text: 'Vermerk', value: 'notes' },
+            actions: [
+                'Freiwillige Quarantäne',
+                'Quarantäne',
+                'Test',
+                'Quarantäne & Test',
+                'Zum Arzt/KH',
             ],
         }),
         created() {
@@ -211,28 +203,28 @@
                 this.$router.push({path: "/organisation"});
             }
 
-            // this.patient = patientId
+            let patients = this.$store.getters['organisation/organisationPatients'];
+            let that = this;
+            patients.forEach(function (patient) {
+                if (parseInt(patient.id) === parseInt(that.patientId)) {
+                    that.patient = patient;
+                }
+            });
         },
         methods: {
-            async createPatient() {
-                let user = this.$store.getters["security/currentUser"];
-
-                await this.$store.dispatch(
-                    "organisation/createOrganisationPatient",
+            async createAction(actionType) {
+                let patient = await this.$store.dispatch(
+                    "organisation/addHistoryToPatient",
                     [
-                        user.organisationId,
-                        this.$data.firstname,
-                        this.$data.lastname,
-                        this.$data.gender,
-                        this.$data.phone,
-                        this.$data.dateOfBirth,
-                        this.$data.zipcode,
-                        this.$data.city,
-                        this.$data.address,
-                        this.$data.status,
-                        this.$data.notes,
+                        this.patientId,
+                        "TASK",
+                        `Maßnahme hinzugefügt: ${actionType}`
                     ]
                 );
+
+                if (patient) {
+                    this.patient = patient;
+                }
             },
             isMale(patient) {
                 return patient.gender === 'MALE';
