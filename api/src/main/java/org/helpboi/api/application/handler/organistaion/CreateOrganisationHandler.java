@@ -10,7 +10,6 @@ import javax.transaction.Transactional;
 import org.helpboi.api.application.CommandHandler;
 import org.helpboi.api.application.command.organisation.CreateOrganisation;
 import org.helpboi.api.application.persistence.OrganisationRepository;
-import org.helpboi.api.application.persistence.UserRepository;
 import org.helpboi.api.application.service.user.CurrentUser;
 import org.helpboi.api.domain.exception.AuthorizationException;
 import org.helpboi.api.domain.exception.BusinessException;
@@ -21,8 +20,7 @@ public class CreateOrganisationHandler implements CommandHandler<CreateOrganisat
 
     @Inject
     private OrganisationRepository organisationRepository;
-    @Inject
-    private UserRepository         userRepository;
+    
     @Inject
     private CurrentUser            currentUser;
 
