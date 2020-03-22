@@ -5,75 +5,76 @@
             :items="breadcrumbItems"
             divider=">"
         />
-        <v-row>
-            <v-col
-                cols="12"
-                sm="10"
-                md="8"
-            >
-                <v-card class="elevation-12">
-                    <v-card-text>
-                        Du hast noch keine Organisation.
-                        <br>
-                        Um loszulegen musst du zuerst eine erstellen.
-                        <br>
-                    </v-card-text>
-                </v-card>
-                <v-card class="elevation-12">
-                    <v-toolbar
-                        dark
-                        flat
-                    >
-                        <v-toolbar-title>Organisation erstellen</v-toolbar-title>
-                    </v-toolbar>
-                    <v-card-text>
-                        <v-form>
-                            <v-text-field
-                                v-model="name"
-                                label="Der Name deiner Organisation"
-                                name="name"
-                                type="text"
-                            />
-                            <v-text-field
-                                v-model="zipcode"
-                                label="Postleizahl"
-                                name="zipcode"
-                                type="text"
-                            />
-                            <v-text-field
-                                v-model="city"
-                                label="Ort"
-                                name="city"
-                                type="text"
-                            />
-                            <v-text-field
-                                v-model="address"
-                                label="Straße und Straßennummer"
-                                name="address"
-                                type="text"
-                            />
-                        </v-form>
-                    </v-card-text>
-                    <v-card-actions>
-                        <v-spacer />
-                        <v-btn
-                            class="px-4 ml-4"
-                            dark
-                            @click="createOrganisation()"
-                        >
-                            Organisation erstellen
-                        </v-btn>
-                    </v-card-actions>
-                    <v-divider></v-divider>
-                    <v-alert
-                        v-if="hasError"
-                        class="warning"
-                    >
-                        {{ error }}
-                    </v-alert>
-                </v-card>
-            </v-col>
-        </v-row>
+
+        <v-toolbar flat color="transparent">
+            <v-btn icon>
+                <v-icon>mdi-bank-plus</v-icon>
+            </v-btn>
+            <v-toolbar-title class="headline">Organisation erstellen</v-toolbar-title>
+        </v-toolbar>
+
+        <v-card class="elevation-12 mt-5">
+            <v-banner single-line dark>
+                <v-icon
+                    slot="icon"
+                    color="warning"
+                    size="36"
+                >
+                    mdi-alert-outline
+                </v-icon>
+                <span class="title font-weight-light">
+                Du hast noch keine Organisation. Um loszulegen musst Du zuerst eine erstellen.
+            </span>
+
+            </v-banner>
+            <v-card-text>
+                <v-alert
+                    v-if="hasError"
+                    dense
+                    text
+                    type="error"
+                >
+                    {{ error }}
+                </v-alert>
+                <v-form>
+                    <v-text-field
+                        v-model="name"
+                        label="Name deiner Organisation"
+                        name="name"
+                        type="text"
+                    />
+                    <v-text-field
+                        v-model="zipcode"
+                        label="Postleizahl"
+                        name="zipcode"
+                        type="text"
+                    />
+                    <v-text-field
+                        v-model="city"
+                        label="Ort"
+                        name="city"
+                        type="text"
+                    />
+                    <v-text-field
+                        v-model="address"
+                        label="Straße und Straßennummer"
+                        name="address"
+                        type="text"
+                    />
+                </v-form>
+            </v-card-text>
+            <v-card-actions>
+                <v-btn
+                    x-large
+                    depressed
+                    color="primary"
+                    @click="createOrganisation()"
+                >
+                    Organisation erstellen
+                </v-btn>
+                <v-spacer/>
+            </v-card-actions>
+        </v-card>
     </v-container>
 </template>
 

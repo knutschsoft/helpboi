@@ -1,42 +1,57 @@
 <template>
-    <div>
+    <v-container fluid>
         <v-breadcrumbs
+            large
             :items="breadcrumbItems"
             divider=">"
         />
 
-        <v-card
-            v-if="hasOrganisation"
-        >
-            <v-card-title>Bezeichnung</v-card-title>
-            <v-card-text>
-                <p>
-                    {{ organisation.name }}
-                </p>
-                <p>
-                    {{ organisation.zipcode }}
-                    {{ organisation.city }}
-                </p>
-                <p>
-                    {{ organisation.address }}
-                </p>
-            </v-card-text>
-        </v-card>
+        <v-toolbar flat color="transparent">
+            <v-btn icon>
+                <v-icon>mdi-bank</v-icon>
+            </v-btn>
+            <v-toolbar-title class="headline">Organisation verwalten</v-toolbar-title>
+        </v-toolbar>
 
-        <v-card
-            v-if="hasOrganisation"
-        >
-            <v-card-title>Mitarbeiter / Agents</v-card-title>
-            <v-card-text>
-                <v-data-table
-                    :headers="headers"
-                    :items="organisationUsers"
-                    :items-per-page="10"
-                    class="elevation-1"
-                ></v-data-table>
-            </v-card-text>
-        </v-card>
-    </div>
+        <v-tabs show-arrows background-color="transparent">
+            <v-tab>Bezeichnung</v-tab>
+            <v-tab-item>
+                <v-card
+                    v-if="hasOrganisation"
+                    class="elevation-12 mt-2"
+                >
+                    <v-card-text>
+                        <p>
+                            {{ organisation.name }}
+                        </p>
+                        <p>
+                            {{ organisation.zipcode }}
+                            {{ organisation.city }}
+                        </p>
+                        <p>
+                            {{ organisation.address }}
+                        </p>
+                    </v-card-text>
+                </v-card>
+            </v-tab-item>
+            <v-tab>Mitarbeiter / Agents</v-tab>
+            <v-tab-item>
+                <v-card
+                    v-if="hasOrganisation"
+                    class="elevation-12 mt-2"
+                >
+                    <v-card-text>
+                        <v-data-table
+                            :headers="headers"
+                            :items="organisationUsers"
+                            :items-per-page="10"
+                            class="elevation-1"
+                        ></v-data-table>
+                    </v-card-text>
+                </v-card>
+            </v-tab-item>
+        </v-tabs>
+    </v-container>
 </template>
 
 <script>
