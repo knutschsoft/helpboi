@@ -41,7 +41,7 @@ public class PatientResource {
 	}
 	
 	@Post("/{id}/history")
-	public Maybe<Patient> addSymptomsToPatient(@PathVariable Long id, HistoryType type, String content) {
+	public Maybe<Patient> addHistoryToPatient(@PathVariable Long id, HistoryType type, String content) {
 		return commandBus.execute(new AddHistoryToPatient(id, type, content));
 	}
 	
