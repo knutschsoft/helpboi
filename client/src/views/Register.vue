@@ -68,7 +68,7 @@
                                     x-large
                                     text
                                     :disabled="firstname.length === 0 || lastname.length === 0 || email.length === 0 || password.length === 0 || phone.length === 0 || isLoading"
-                                    class="px-4 ml-4" @click="createUser()">
+                                    @click="createUser()">
                                     Jetzt anmelden
                                 </v-btn>
                             </v-toolbar>
