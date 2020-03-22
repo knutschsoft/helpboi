@@ -72,12 +72,19 @@
                 </v-row>
             </v-container>
         </v-content>
+        <Footer />
     </v-app>
 </template>
 
 <script>
+    import Footer from "../components/Footer";
+
     export default {
         name: "Login",
+        components: {
+            Footer
+        },
+
         data() {
             return {
                 email: "",
