@@ -1,11 +1,11 @@
 <template>
-    <div>
+    <v-container fluid>
         <v-breadcrumbs
             large
             :items="breadcrumbItems"
             divider=">"
         />
-    </div>
+    </v-container>
 </template>
 
 <script>

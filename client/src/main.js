@@ -12,6 +12,8 @@ Vue.use(Storage, {
   drivers: ['local', 'session'],
 });
 
+import "@/assets/global.css"
+
 new Vue({
   router,
   store,

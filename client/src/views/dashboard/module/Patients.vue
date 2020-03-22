@@ -25,6 +25,7 @@
                     :search="organisationPatientsSearch"
                     @click:row="editPatient"
                     multi-sort
+                    class="clickable"
                 >
                     <template v-slot:top>
                         <v-toolbar flat>

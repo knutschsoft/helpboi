@@ -1,0 +1,7 @@
+/*
+ * Table Styles
+ */
+
+.v-data-table.clickable tr {
+    cursor: pointer;
+}
