@@ -1,6 +1,7 @@
 <template>
-    <v-container>
+    <v-container fluid>
         <v-breadcrumbs
+            large
             :items="breadcrumbItems"
             divider=">"
         />
@@ -12,11 +13,10 @@
             >
                 <v-card class="elevation-12">
                     <v-card-text>
-                        Tja, du hast noch keine Organisation.
+                        Du hast noch keine Organisation.
                         <br>
                         Um loszulegen musst du zuerst eine erstellen.
                         <br>
-                        So let's go!
                     </v-card-text>
                 </v-card>
                 <v-card class="elevation-12">

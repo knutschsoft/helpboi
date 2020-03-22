@@ -1,6 +1,7 @@
 <template>
     <div>
         <v-breadcrumbs
+            large
             :items="breadcrumbItems"
             divider=">"
         />
