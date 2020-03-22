@@ -7,6 +7,7 @@ import Register from "../views/Register";
 import Logout from "../views/Logout";
 
 import Dashboard from "../views/dashboard/Dashboard";
+import Patient from "../views/dashboard/module/Patient.vue";
 import Patients from "../views/dashboard/module/Patients.vue";
 import Organisation from "../views/dashboard/module/Organisation.vue";
 import OrganisationCreate from "../views/dashboard/module/OrganisationCreate.vue";
@@ -28,6 +29,12 @@ const routes = [
                 path: '/',
                 name: 'Patients',
                 component: Patients
+            },
+            {
+                path: '/patientenkartei/:patientId',
+                name: 'Patient',
+                component: Patient,
+                props: true
             },
             {
                 path: '/organisation',
