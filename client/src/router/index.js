@@ -39,7 +39,7 @@ const routes = [
                 component: Users
             },
             {
-                path: '/tasks',
+                path: '/aufgaben',
                 name: 'Tasks',
                 component: Tasks
             },
