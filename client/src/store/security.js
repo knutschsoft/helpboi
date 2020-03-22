@@ -11,8 +11,8 @@ export default {
     state: {
         isLoading: false,
         error: null,
-        isAuthenticated: false,
-        user: null
+        isAuthenticated: JSON.parse(window.localStorage['helpboi-store-isAuthenticated']),
+        user: JSON.parse(window.localStorage['helpboi-store-user']),
     },
     getters: {
         isLoading(state) {
@@ -33,6 +33,7 @@ export default {
             }
         },
         currentUser(state) {
+            console.log(state.user)
             return state.user;
         }
     },

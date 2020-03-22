@@ -7,6 +7,7 @@ import Register from "../views/Register";
 import Logout from "../views/Logout";
 
 import Dashboard from "../views/dashboard/Dashboard";
+import Patients from "../views/dashboard/module/Patients.vue";
 import Organisation from "../views/dashboard/module/Organisation.vue";
 import OrganisationCreate from "../views/OrganisationCreate.vue";
 import Users from "../views/dashboard/module/Users";
@@ -23,6 +24,11 @@ const routes = [
             requiresAuth: true
         },
         children: [
+            {
+                path: '',
+                name: 'Patients',
+                component: Patients
+            },
             {
                 path: '/organisation',
                 name: 'Organisation',
@@ -77,11 +83,12 @@ const router = new VueRouter({
 
 router.beforeEach((to, from, next) => {
     if (to.matched.some(record => record.meta.requiresAuth)) {
+        console.log(store.getters["security/isAuthenticated"]);
         if (store.getters["security/isAuthenticated"]) {
             next();
         } else if (to.fullPath === "/login"
             && store.getters["security/isAuthenticated"]) {
-            next('/');
+            next('/patientenkartei');
         } else {
             next("/login");
         }
