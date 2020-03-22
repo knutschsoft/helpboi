@@ -50,9 +50,10 @@ public class Patient {
 
     @Enumerated(EnumType.STRING)
     private PatientGender gender;
+    
     @NotBlank
     @Size(max = 255)
-    private String        phone;
+    private String phone;
 
     @Column(name = "date_of_birth")
     private ZonedDateTime dateOfBirth;
@@ -60,9 +61,11 @@ public class Patient {
     @NotBlank
     @Size(max = 255)
     private String zipcode;
+    
     @NotBlank
     @Size(max = 255)
     private String city;
+    
     @NotBlank
     @Size(max = 255)
     private String address;

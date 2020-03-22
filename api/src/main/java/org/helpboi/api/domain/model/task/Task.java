@@ -98,6 +98,17 @@ public class Task {
     public String getContent() {
         return content;
     }
+    
+    public void apply(
+    		TaskStatus status,
+    		ZonedDateTime activeTo,
+    		Long agentId,
+    		String content) {
+    	this.status = status;
+    	this.activeTo = activeTo;
+    	this.agentId = agentId;
+    	this.content = content;
+    }
 
     @Override
     public boolean equals(Object o) {

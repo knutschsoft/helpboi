@@ -25,11 +25,13 @@ public class CreatePatient extends Command<Patient> {
     @NotBlank
     @Size(max = 255)
     private String firstname;
+    
     @NotBlank
     @Size(max = 255)
     private String lastname;
 
     private PatientGender gender;
+    
     @NotBlank
     @Size(max = 255)
     private String        phone;

@@ -9,6 +9,6 @@ public class GetAllTasks extends Command<Iterable<Task>> {
 
 	@Override
 	public String toString() {
-		return "GetAllTasks []";
+		return "GetAllTasks{}";
 	}
 }

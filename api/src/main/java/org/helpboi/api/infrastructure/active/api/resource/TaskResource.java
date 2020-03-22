@@ -5,12 +5,14 @@ import javax.inject.Inject;
 import org.helpboi.api.application.CommandBus;
 import org.helpboi.api.application.command.tasks.CreateTask;
 import org.helpboi.api.application.command.tasks.GetAllTasks;
+import org.helpboi.api.application.command.tasks.UpdateTask;
 import org.helpboi.api.domain.model.task.Task;
 
 import io.micronaut.http.annotation.Body;
 import io.micronaut.http.annotation.Controller;
 import io.micronaut.http.annotation.Get;
 import io.micronaut.http.annotation.Post;
+import io.micronaut.http.annotation.Put;
 import io.micronaut.security.annotation.Secured;
 import io.micronaut.security.rules.SecurityRule;
 import io.reactivex.Maybe;
@@ -33,5 +35,11 @@ public class TaskResource {
 	public Maybe<Iterable<Task>> getAllTasks() {	
 		return commandBus.execute(
 		        new GetAllTasks());
+	}
+	
+	@Put
+	@Secured(SecurityRule.IS_ANONYMOUS)
+	public Maybe<Task> updateTasks(@Body UpdateTask command) {	
+		return commandBus.execute(command);
 	}
 }

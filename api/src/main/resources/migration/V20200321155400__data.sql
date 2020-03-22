@@ -22,3 +22,6 @@ INSERT INTO `symptom` (`name`) VALUES
 	
 INSERT INTO `patient` (`organisation_id`, `firstname`, `lastname`, `gender`, `phone`, `date_of_birth`, `zipcode`, `city`, `address`, `status`, `notes`) VALUES
 	(1, 'Shain', 'Toad', 'DIVERS', '1213321123', '1945-03-28 00:00:01.0', '01231', 'Totenstadt', 'Am Friedhof 1', 'UNKNOWN', 'scheintot');
+	
+INSERT INTO `task` (`patient_id`, `agent_id`, `content`, `status`, `created_at`, `active_to`) VALUES
+	(1, 1, 'Patient anrufen', 'OPEN', '2020-03-21 10:00:00.0', '2020-03-25 12:00:00.0');
