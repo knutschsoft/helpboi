@@ -11,7 +11,6 @@
                 >
                     <v-card class="elevation-10" width="400">
                         <v-toolbar flat>
-                            <v-toolbar-title>Helpboi</v-toolbar-title>
                             <v-spacer/>
                             <v-tooltip bottom>
                                 <template v-slot:activator="{ on }">
