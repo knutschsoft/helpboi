@@ -107,6 +107,27 @@
                     <v-card-text>
                     </v-card-text>
                 </v-card>
+
+                <v-tabs show-arrows background-color="transparent">
+                    <v-tab>Verlauf</v-tab>
+                    <v-tab-item>
+                        <v-timeline>
+                            <v-timeline-item
+                                v-for="history in patient.histories"
+                                :key="history.id"
+                            >
+                                {{ getHistoryTypeLabel(history) }}
+                                {{ history.content }}
+                                {{ history.createdAt }}
+                            </v-timeline-item>
+                            <v-timeline-item class="text-right">timeline item</v-timeline-item>
+                            <v-timeline-item>timeline item</v-timeline-item>
+                        </v-timeline>
+                    </v-tab-item>
+                    <v-tab>Fragenkatalog</v-tab>
+                    <v-tab-item>
+                    </v-tab-item>
+                </v-tabs>
             </v-col>
         </v-row>
     </v-container>
@@ -233,6 +254,18 @@
             },
             isTest(patient) {
                 return patient.gender !== 'DIVERS';
+            },
+            getHistoryTypeLabel(history) {
+                switch (history.type) {
+                    case 'ACTION':
+                        return 'Aktion';
+                    case 'INFO':
+                        return 'Info';
+                    case 'TASK':
+                        return 'Aufgabe';
+                }
+
+                return '';
             },
         },
     }
