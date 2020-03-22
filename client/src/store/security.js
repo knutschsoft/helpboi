@@ -4,8 +4,14 @@ import axios from "axios";
 let payload = window.localStorage['helpboi-store-payload'];
 if (undefined !== payload) {
     payload = JSON.parse(payload);
-    let basicAuth = 'Basic ' + btoa(payload.email + ':' + payload.password);
-    axios.defaults.headers.common = {'Authorization': basicAuth}
+    if (payload.email && payload.password) {
+        let basicAuth = 'Basic ' + btoa(payload.email + ':' + payload.password);
+        axios.defaults.headers.common = {'Authorization': basicAuth}
+    } else {
+        payload = false;
+    }
+} else {
+    payload = false;
 }
 let isAuthenticated = window.localStorage['helpboi-store-isAuthenticated'];
 isAuthenticated = undefined !== isAuthenticated ? JSON.parse(isAuthenticated) : false;
