@@ -3,7 +3,7 @@ import config from '@/config';
 
 export default {
     findAll() {
-        return axios.get(`${config.apiUrl}/users/1`, config.axiosGetAuth);
+        return axios.get(`${config.apiUrl}/users/1`);
     },
     create(firstName, lastName, email, password, phone) {
         return axios.post(`${config.apiUrl}/users`, {
@@ -12,6 +12,6 @@ export default {
             "email": email,
             "password": password,
             "phone": phone
-        }, config.axiosGetAuth);
+        });
     },
 };

@@ -3,8 +3,14 @@ import App from './App.vue'
 import router from './router'
 import store from './store'
 import vuetify from './plugins/vuetify';
+import Storage from 'vue-web-storage';
 
 Vue.config.productionTip = false
+
+Vue.use(Storage, {
+  prefix: 'helpboi-store-',
+  drivers: ['local', 'session'],
+});
 
 new Vue({
   router,

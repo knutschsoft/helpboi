@@ -32,13 +32,25 @@
                 </v-list-item>
                 <v-list-item
                     link
-                    to="/tasks"
+                    to="/aufgaben"
                 >
                     <v-list-item-action>
                         <v-icon>mdi-calendar-today</v-icon>
                     </v-list-item-action>
                     <v-list-item-content>
                         <v-list-item-title>Aufgaben</v-list-item-title>
+                    </v-list-item-content>
+                </v-list-item>
+                <v-list-item
+                    v-if="isAuthenticated"
+                    link
+                    to="/abmelden"
+                >
+                    <v-list-item-action>
+                        <v-icon>mdi-location-exit</v-icon>
+                    </v-list-item-action>
+                    <v-list-item-content>
+                        <v-list-item-title>Abmelden</v-list-item-title>
                     </v-list-item-content>
                 </v-list-item>
             </v-list>
@@ -52,6 +64,7 @@
 </template>
 
 <script>
+    import axios from "axios";
 
     export default {
         name: 'App',
@@ -63,5 +76,32 @@
             drawer: true, // Display side menu by default
             isExpandOnHover: false,
         }),
+        computed: {
+            isAuthenticated() {
+                return this.$store.getters['security/isAuthenticated'];
+            },
+        },
+        created() {
+            let isAuthenticated = this.$localStorage.get('isAuthenticated', false);
+            let user = this.$localStorage.get('user', null);
+            let payload = this.$localStorage.get('payload', null);
+
+            if (payload) {
+                let basicAuth = 'Basic ' + btoa(payload.email + ':' + payload.password);
+                axios.defaults.headers.common = {'Authorization': basicAuth}
+            }
+
+            payload = { isAuthenticated: isAuthenticated, user: user };
+            this.$store.dispatch("security/onRefresh", payload);
+
+            axios.interceptors.response.use(undefined, (err) => {
+                return new Promise(() => {
+                    if (err.response.status === 401) {
+                        this.$router.push({path: "/login"})
+                    }
+                    throw err;
+                });
+            });
+        },
     };
 </script>
