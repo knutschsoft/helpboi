@@ -13,7 +13,7 @@ import org.helpboi.api.domain.model.organisation.Organisation;
 import io.micronaut.core.annotation.Introspected;
 
 @Introspected
-public class CreateOrganisation  extends Command<Organisation> {
+public class CreateOrganisation extends Command<Organisation> {
 
     @NotNull
     @NotBlank
@@ -34,7 +34,7 @@ public class CreateOrganisation  extends Command<Organisation> {
     @NotBlank
     @Size(max = 255)
     private String address;
-    
+
     @Min(1)
     @NotNull
     private Long userId;
@@ -68,7 +68,7 @@ public class CreateOrganisation  extends Command<Organisation> {
 	public String getAddress() {
 		return address;
 	}
-	
+
 	public Long getUserId() {
 		return userId;
 	}

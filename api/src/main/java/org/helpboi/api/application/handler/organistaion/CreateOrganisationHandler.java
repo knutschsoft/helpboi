@@ -1,5 +1,6 @@
 package org.helpboi.api.application.handler.organistaion;
 
+import java.util.Objects;
 import java.util.Optional;
 
 import javax.inject.Inject;
@@ -10,6 +11,8 @@ import org.helpboi.api.application.CommandHandler;
 import org.helpboi.api.application.command.organisation.CreateOrganisation;
 import org.helpboi.api.application.persistence.OrganisationRepository;
 import org.helpboi.api.application.persistence.UserRepository;
+import org.helpboi.api.application.service.user.CurrentUser;
+import org.helpboi.api.domain.exception.AuthorizationException;
 import org.helpboi.api.domain.exception.BusinessException;
 import org.helpboi.api.domain.model.organisation.Organisation;
 import org.helpboi.api.domain.model.user.User;
@@ -21,6 +24,8 @@ public class CreateOrganisationHandler implements CommandHandler<CreateOrganisat
     private OrganisationRepository organisationRepository;
     @Inject
     private UserRepository         userRepository;
+    @Inject
+    private CurrentUser            currentUser;
 
     @Override
     @Transactional
@@ -30,6 +35,11 @@ public class CreateOrganisationHandler implements CommandHandler<CreateOrganisat
         String city = command.getCity();
         String address = command.getAddress();
         Long userId = command.getUserId();
+
+        if (!Objects.equals(currentUser.getId(), userId)) {
+            throw new AuthorizationException(String.format(
+                    "It's not allowed to create a organisation for user id: %s", userId));
+        }
 
         Optional<Organisation> organisation = organisationRepository
                 .findByNameAndZipcode(name, zipcode);
@@ -41,6 +51,11 @@ public class CreateOrganisationHandler implements CommandHandler<CreateOrganisat
         User user = userRepository.findById(userId)
                 .orElseThrow(() -> new BusinessException(
                         String.format("User id: %s not found", userId)));
+
+        if (user.hasOrganisation()) {
+            throw new BusinessException(String.format(
+                    "User id: %s is already assigned to organisation id: %s", userId, user.getOrganisationId()));
+        }
 
         Organisation finalOrganisation = new Organisation(
                 null, name, zipcode, city, address);
