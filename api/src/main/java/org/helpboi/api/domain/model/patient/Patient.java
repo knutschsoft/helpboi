@@ -22,6 +22,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.Lob;
 import javax.persistence.OneToMany;
+import javax.validation.constraints.Email;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
@@ -52,6 +53,10 @@ public class Patient {
     @NotBlank
     @Size(max = 255)
     private String phone;
+    
+    @Email
+    @Size(max = 255)
+    private String email;
 
     @Column(name = "date_of_birth")
     private ZonedDateTime dateOfBirth;
@@ -97,7 +102,8 @@ public class Patient {
             String city,
             String address,
             String notes,
-            PatientStatus status
+            PatientStatus status,
+            String email
     ) {
         this.id = id;
         this.organisationId = organisationId;
@@ -111,6 +117,7 @@ public class Patient {
         this.address = address;
         this.notes = notes;
         this.status = status;
+        this.email = email;
     }
 
     public Long getId() {
@@ -159,6 +166,10 @@ public class Patient {
 
     public String getNotes() {
         return notes;
+    }
+    
+    public String getEmail() {
+        return email;
     }
 
     public Set<Long> getSymptomIds() {
@@ -209,6 +220,7 @@ public class Patient {
                 ", address='" + address + '\'' +
                 ", status=" + status +
                 ", notes='" + notes + '\'' +
+                ", email='" + email + '\'' +
                 '}';
     }
 }

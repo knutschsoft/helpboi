@@ -42,6 +42,7 @@ public class CreatePatientHandler implements CommandHandler<CreatePatient> {
         String address = command.getAddress();
         String notes = command.getNotes();
         PatientStatus status = command.getStatus();
+        String email = command.getEmail();
 
         if (!Objects.equals(currentUser.getOrganisationId(), organisationId)) {
             throw new AuthorizationException(String.format(
@@ -54,7 +55,7 @@ public class CreatePatientHandler implements CommandHandler<CreatePatient> {
 
         Patient patient = new Patient(
                 null, organisationId, firstname, lastname, gender, phone,
-                dateOfBirth, zipcode, city, address, notes, status
+                dateOfBirth, zipcode, city, address, notes, status, email
         );
         patient = patientRepository.save(patient);
         command.resolve(patient);

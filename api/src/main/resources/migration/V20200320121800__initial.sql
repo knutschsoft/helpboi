@@ -45,6 +45,7 @@ CREATE TABLE IF NOT EXISTS `patient`
     `lastname`        VARCHAR(255) DEFAULT NULL,
     `gender`          VARCHAR(255) DEFAULT NULL,
     `phone`           VARCHAR(255) DEFAULT NULL,
+    `email`           VARCHAR(255) DEFAULT NULL,
     `date_of_birth`   DATETIME     DEFAULT NULL,
     `zipcode`         VARCHAR(255) DEFAULT NULL,
     `city`            VARCHAR(255) DEFAULT NULL,

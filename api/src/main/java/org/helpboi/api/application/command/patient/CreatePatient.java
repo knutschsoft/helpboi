@@ -3,6 +3,7 @@ package org.helpboi.api.application.command.patient;
 import java.time.ZonedDateTime;
 import java.util.Objects;
 
+import javax.validation.constraints.Email;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
@@ -35,6 +36,10 @@ public class CreatePatient extends Command<Patient> {
     @NotBlank
     @Size(max = 255)
     private String        phone;
+    
+    @Email
+    @Size(max = 255)
+    private String email;
 
     private ZonedDateTime dateOfBirth;
 
@@ -63,7 +68,8 @@ public class CreatePatient extends Command<Patient> {
             String city,
             String address,
             PatientStatus status,
-            String notes
+            String notes,
+            String email
     ) {
         this.organisationId = organisationId;
         this.firstname = firstname;
@@ -76,6 +82,7 @@ public class CreatePatient extends Command<Patient> {
         this.address = address;
         this.status = status;
         this.notes = notes;
+        this.email = email;
     }
 
     public Long getOrganisationId() {
@@ -121,6 +128,10 @@ public class CreatePatient extends Command<Patient> {
     public String getNotes() {
         return notes;
     }
+    
+    public String getEmail() {
+    	return email;
+    }
 
     @Override
     public boolean equals(Object o) {
@@ -140,12 +151,13 @@ public class CreatePatient extends Command<Patient> {
                 Objects.equals(city, that.city) &&
                 Objects.equals(address, that.address) &&
                 status == that.status &&
-                Objects.equals(notes, that.notes);
+                Objects.equals(notes, that.notes) &&
+                Objects.equals(email, that.email);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(firstname, lastname, gender, phone, dateOfBirth, zipcode, city, address, status, notes);
+        return Objects.hash(firstname, lastname, gender, phone, dateOfBirth, zipcode, city, address, status, notes, email);
     }
 
     @Override
@@ -161,6 +173,7 @@ public class CreatePatient extends Command<Patient> {
                 ", address='" + address + '\'' +
                 ", status=" + status +
                 ", notes='" + notes + '\'' +
+                ", email='" + email + '\'' +
                 '}';
     }
 }
