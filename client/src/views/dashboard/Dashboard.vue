@@ -2,19 +2,43 @@
     <v-app>
         <v-navigation-drawer
                 v-model="drawer"
+                :mini-variant="mini"
                 app
                 dark
+                color="primary"
                 permanent
                 :expand-on-hover="isExpandOnHover"
         >
-            <v-list dense>
-                <v-list-item
-                        v-if="isAuthenticated"
-                >
-                    <v-list-item-content>
-                        <v-list-item-title>{{ hello }}</v-list-item-title>
-                    </v-list-item-content>
-                </v-list-item>
+            <template v-slot:prepend>
+                <v-list nav two-line class="my-1">
+                    <v-list-item>
+                        <v-list-item-avatar>
+                            <v-avatar size="42">
+                                <v-img :src="require('../../assets/logo.png')"></v-img>
+                            </v-avatar>
+                        </v-list-item-avatar>
+                        <v-list-item-content>
+                            <v-list-item-title class="headline">
+                                Helpboi
+                            </v-list-item-title>
+                            <v-list-item-subtitle>
+                            </v-list-item-subtitle>
+                        </v-list-item-content>
+                    </v-list-item>
+                    <v-divider></v-divider>
+                    <v-list-item to="/abmelden" two-line>
+                        <v-list-item-action>
+                            <v-icon>mdi-logout</v-icon>
+                        </v-list-item-action>
+                        <v-list-item-content>
+                            <v-list-item-title>{{ hello }}</v-list-item-title>
+                            <v-list-item-subtitle>Logout</v-list-item-subtitle>
+                        </v-list-item-content>
+                    </v-list-item>
+                    <v-divider></v-divider>
+                </v-list>
+            </template>
+            <v-list nav>
                 <v-list-item
                     v-if="user.organisationId"
                     link
@@ -63,19 +87,21 @@
                         <v-list-item-title>Organisation erstellen</v-list-item-title>
                     </v-list-item-content>
                 </v-list-item>
-                <v-list-item
-                        v-if="isAuthenticated"
-                        link
-                        to="/abmelden"
-                >
-                    <v-list-item-action>
-                        <v-icon>mdi-location-exit</v-icon>
-                    </v-list-item-action>
-                    <v-list-item-content>
-                        <v-list-item-title>Abmelden</v-list-item-title>
-                    </v-list-item-content>
-                </v-list-item>
             </v-list>
+            <template v-slot:append>
+                <v-divider></v-divider>
+                <v-list shaped>
+                    <v-list-item @click="mini = !mini">
+                        <v-list-item-icon>
+                            <v-icon v-if="!mini">mdi-chevron-double-left</v-icon>
+                            <v-icon v-if="mini">mdi-chevron-double-right</v-icon>
+                        </v-list-item-icon>
+                        <v-list-item-content>
+                            <v-list-item-subtitle>Sidebar verkleinern</v-list-item-subtitle>
+                        </v-list-item-content>
+                    </v-list-item>
+                </v-list>
+            </template>
         </v-navigation-drawer>
 
         <v-content>
@@ -89,11 +115,9 @@
     export default {
         name: 'Dashboard',
 
-        components: {
-        },
-
         data: () => ({
             drawer: true, // Display side menu by default
+            mini: false,
             isExpandOnHover: false,
             user: false,
         }),
@@ -102,7 +126,7 @@
                 return this.$store.getters['security/isAuthenticated'];
             },
             hello() {
-                return `Hallo ${this.user.firstname}!:)`;
+                return `Hallo ${this.user.firstname}!`;
             },
             currentUser() {
                 return this.$store.getters['security/currentUser'];
