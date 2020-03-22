@@ -9,7 +9,7 @@ if (undefined !== payload) {
 }
 let isAuthenticated = window.localStorage['helpboi-store-isAuthenticated'];
 isAuthenticated = undefined !== isAuthenticated ? JSON.parse(isAuthenticated) : false;
-let user = window.localStorage['helpboi-store-isuser'];
+let user = window.localStorage['helpboi-store-user'];
 user = undefined !== user ? JSON.parse(user) : false;
 
 const AUTHENTICATING = "AUTHENTICATING",
