@@ -115,7 +115,7 @@
             async createPatient() {
                 let user = this.$store.getters["security/currentUser"];
 
-                await this.$store.dispatch(
+                let patient = await this.$store.dispatch(
                     "organisation/createOrganisationPatient",
                     [
                         user.organisationId,
@@ -131,6 +131,17 @@
                         this.$data.notes,
                     ]
                 );
+
+                if (patient) {
+                    await this.$store.dispatch(
+                        "organisation/addHistoryToPatient",
+                        [
+                            patient.id,
+                            "INFO",
+                            "Patient erstellt"
+                        ]
+                    );
+                }
             }
         },
     }

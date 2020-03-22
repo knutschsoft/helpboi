@@ -13,6 +13,12 @@ export default {
     findOrganisationPatients(organisationId) {
         return axios.get(`${config.apiUrl}/organisations/${organisationId}/patients`);
     },
+    addHistoryToPatient(patientId, type, content) {
+        return axios.post(`${config.apiUrl}/patients/${patientId}/history`, {
+            type: type,
+            content: content,
+        });
+    },
     create(name, zipcode, city, address, userId) {
         return axios.post(`${config.apiUrl}/organisations`, {
             "name": name,

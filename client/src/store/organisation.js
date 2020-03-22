@@ -9,6 +9,9 @@ const CREATING_ORGANISATION = "CREATING_ORGANISATION",
     FETCHING_ORGANISATION_USERS = "FETCHING_ORGANISATION_USERS",
     FETCHING_ORGANISATION_USERS_SUCCESS = "FETCHING_ORGANISATION_USERS_SUCCESS",
     FETCHING_ORGANISATION_USERS_ERROR = "FETCHING_ORGANISATION_USERS_ERROR",
+    ADD_HISTORY_TO_PATIENT = "ADD_HISTORY_TO_PATIENT",
+    ADD_HISTORY_TO_PATIENT_SUCCESS = "ADD_HISTORY_TO_PATIENT_SUCCESS",
+    ADD_HISTORY_TO_PATIENT_ERROR = "ADD_HISTORY_TO_PATIENT_ERROR",
     FETCHING_ORGANISATION_PATIENTS = "FETCHING_ORGANISATION_PATIENTS",
     FETCHING_ORGANISATION_PATIENTS_SUCCESS = "FETCHING_ORGANISATION_PATIENTS_SUCCESS",
     FETCHING_ORGANISATION_PATIENTS_ERROR = "FETCHING_ORGANISATION_PATIENTS_ERROR",
@@ -88,6 +91,24 @@ export default {
             state.isLoading = false;
             state.error = error;
             state.organisationUsers = [];
+        },
+        [ADD_HISTORY_TO_PATIENT](state) {
+            state.isLoading = true;
+            state.error = null;
+        },
+        [ADD_HISTORY_TO_PATIENT_SUCCESS](state, patient) {
+            state.isLoading = false;
+            state.error = null;
+            state.organisationPatients.forEach(function (oldPatient, key) {
+                if (oldPatient.id === patient.id) {
+                    state.organisationPatients[key] = patient;
+                }
+            });
+        },
+        [ADD_HISTORY_TO_PATIENT_ERROR](state, error) {
+            state.isLoading = false;
+            state.error = error;
+            state.organisationPatients = [];
         },
         [FETCHING_ORGANISATION_PATIENTS](state) {
             state.isLoading = true;
@@ -184,6 +205,17 @@ export default {
                 return response.data;
             } catch (error) {
                 commit(FETCHING_ORGANISATION_USERS_ERROR, error);
+                return null;
+            }
+        },
+        async addHistoryToPatient({commit}, [patientId, type, content]) {
+            commit(ADD_HISTORY_TO_PATIENT);
+            try {
+                let response = await OrganisationAPI.addHistoryToPatient(patientId, type, content);
+                commit(ADD_HISTORY_TO_PATIENT_SUCCESS, response.data);
+                return response.data;
+            } catch (error) {
+                commit(ADD_HISTORY_TO_PATIENT_ERROR, error);
                 return null;
             }
         },
