@@ -9,6 +9,6 @@ public class GetAllSymptoms  extends Command<Iterable<Symptom>> {
 
 	@Override
 	public String toString() {
-		return "GetAllSymptom []";
+		return "GetAllSymptoms []";
 	}
 }

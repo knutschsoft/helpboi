@@ -26,6 +26,7 @@ public class Task {
     @NotNull
     @Column(name = "patient_id")
     private Long patientId;
+    
     @Min(1L)
     @Column(name = "agent_id")
     private Long agentId;
@@ -37,6 +38,10 @@ public class Task {
     @NotNull
     @Column(name = "active_to")
     private ZonedDateTime activeTo;
+
+    @NotNull
+    @Column(name = "created_at")
+    private ZonedDateTime createdAt;
 
     @Lob
     @NotNull
@@ -50,19 +55,18 @@ public class Task {
             Long id,
             Long patientId,
             Long agentId,
-            TaskStatus status,
             ZonedDateTime activeTo,
             String content
     ) {
         Objects.requireNonNull(patientId);
-        Objects.requireNonNull(status);
         Objects.requireNonNull(activeTo);
         Objects.requireNonNull(content);
 
         this.id = id;
         this.patientId = patientId;
         this.agentId = agentId;
-        this.status = status;
+        this.status = TaskStatus.OPEN;
+        this.createdAt = ZonedDateTime.now();
         this.activeTo = activeTo;
         this.content = content;
     }
@@ -85,6 +89,10 @@ public class Task {
 
     public ZonedDateTime getActiveTo() {
         return activeTo;
+    }
+    
+    public ZonedDateTime getCreatedAt() {
+        return createdAt;
     }
 
     public String getContent() {
@@ -116,6 +124,7 @@ public class Task {
                 ", agentId=" + agentId +
                 ", status=" + status +
                 ", activeTo=" + activeTo +
+                ", createdAt=" + createdAt +
                 ", content='" + content + '\'' +
                 '}';
     }

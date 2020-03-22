@@ -87,6 +87,7 @@ CREATE TABLE IF NOT EXISTS `task`
     `patient_id` BIGINT(20)   NOT NULL,
     `agent_id`   BIGINT(20) DEFAULT NULL,
     `status`     VARCHAR(255) NOT NULL,
+    `created_at` TIMESTAMP    NULL NOT NULL,
     `active_to`  TIMESTAMP    NULL NOT NULL,
     `content`    LONGTEXT     NOT NULL,
 

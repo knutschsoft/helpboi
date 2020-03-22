@@ -97,7 +97,8 @@ public class Patient {
             String zipcode,
             String city,
             String address,
-            String notes
+            String notes,
+            PatientStatus status
     ) {
         this.id = id;
         this.organisationId = organisationId;
@@ -110,6 +111,7 @@ public class Patient {
         this.city = city;
         this.address = address;
         this.notes = notes;
+        this.status = status;
     }
 
     public Long getId() {
