@@ -21,16 +21,10 @@
                     class="elevation-12 mt-2"
                 >
                     <v-card-text>
-                        <p>
-                            {{ organisation.name }}
-                        </p>
-                        <p>
-                            {{ organisation.zipcode }}
-                            {{ organisation.city }}
-                        </p>
-                        <p>
-                            {{ organisation.address }}
-                        </p>
+                        <v-text-field v-model="organisation.name" filled label="Organisation Name" readonly/>
+                        <v-text-field v-model="organisation.zipcode" filled label="Postleizahl" readonly/>
+                        <v-text-field v-model="organisation.city" filled label="Stadt" readonly/>
+                        <v-text-field v-model="organisation.address" filled label="Adresse" readonly/>
                     </v-card-text>
                 </v-card>
             </v-tab-item>
