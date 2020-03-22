@@ -130,6 +130,16 @@
                         >
                             {{ actionType }}
                         </v-btn>
+                        <v-btn
+                            @click="createInfo()"
+                        >
+                            Info hinzufügen
+                        </v-btn>
+                        <v-btn
+                            @click="createTask()"
+                        >
+                            Aufgabe hinzufügen
+                        </v-btn>
                     </v-tab-item>
                     <v-tab>Fragenkatalog</v-tab>
                     <v-tab-item>
@@ -218,6 +228,37 @@
                         this.patientId,
                         "TASK",
                         `Maßnahme hinzugefügt: ${actionType}`
+                    ]
+                );
+
+                if (patient) {
+                    this.patient = patient;
+                }
+            },
+            async createInfo() {
+                let patient = await this.$store.dispatch(
+                    "organisation/addHistoryToPatient",
+                    [
+                        this.patientId,
+                        "INFO",
+                        `Zähneputzen, pullern und ab ins Bett!`
+                    ]
+                );
+
+                if (patient) {
+                    this.patient = patient;
+                }
+            },
+            async createTask() {
+                let activeTo = "2020-03-22T21:16:00Z";
+                let task = "Nachsorge Anruf";
+
+                let patient = await this.$store.dispatch(
+                    "organisation/addHistoryToPatient",
+                    [
+                        this.patientId,
+                        "TASK",
+                        `Aufgabe hinzugefügt: ${task} bis ${activeTo}, pullern und ab ins Bett!`
                     ]
                 );
 
