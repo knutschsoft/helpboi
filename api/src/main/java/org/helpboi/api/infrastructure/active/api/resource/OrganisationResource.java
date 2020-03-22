@@ -3,9 +3,11 @@ package org.helpboi.api.infrastructure.active.api.resource;
 import javax.inject.Inject;
 
 import org.helpboi.api.application.CommandBus;
+import org.helpboi.api.application.command.organisation.AddUserToOrganisation;
 import org.helpboi.api.application.command.organisation.CreateOrganisation;
 import org.helpboi.api.application.command.organisation.GetOrganisation;
 import org.helpboi.api.domain.model.organisation.Organisation;
+import org.helpboi.api.domain.model.user.User;
 
 import io.micronaut.http.annotation.Body;
 import io.micronaut.http.annotation.Controller;
@@ -27,6 +29,12 @@ public class OrganisationResource {
     @Secured(SecurityRule.IS_ANONYMOUS)
     public Maybe<Organisation> createOrganisation(@Body CreateOrganisation command) {
         return commandBus.execute(command);
+    }
+	
+	@Post("/{oid}/user/{uid}")
+    @Secured(SecurityRule.IS_ANONYMOUS)
+    public Maybe<User> addUser(Long oid, Long uid) {
+        return commandBus.execute(new AddUserToOrganisation(oid, uid));
     }
 	
 	@Get("/{id}")
