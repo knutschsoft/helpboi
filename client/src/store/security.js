@@ -1,4 +1,11 @@
 import SecurityAPI from "../api/security";
+import axios from "axios";
+
+let payload = JSON.parse(window.localStorage['helpboi-store-payload'])
+if (payload) {
+    let basicAuth = 'Basic ' + btoa(payload.email + ':' + payload.password);
+    axios.defaults.headers.common = {'Authorization': basicAuth}
+}
 
 const AUTHENTICATING = "AUTHENTICATING",
     AUTHENTICATING_SUCCESS = "AUTHENTICATING_SUCCESS",
