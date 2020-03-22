@@ -33,7 +33,6 @@ export default {
             }
         },
         currentUser(state) {
-            console.log(state.user)
             return state.user;
         }
     },
