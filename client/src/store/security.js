@@ -2,6 +2,8 @@ import SecurityAPI from "../api/security";
 import axios from "axios";
 
 let payload = window.localStorage['helpboi-store-payload'];
+console.log('payload');
+console.log(payload);
 if (undefined !== payload) {
     payload = JSON.parse(payload);
     if (payload && payload.email && payload.password) {
@@ -61,17 +63,19 @@ export default {
             state.isAuthenticated = false;
             state.user = null;
         },
-        [AUTHENTICATING_SUCCESS](state, user) {
+        [AUTHENTICATING_SUCCESS](state, user, payload) {
             state.isLoading = false;
             state.error = null;
             state.isAuthenticated = true;
             state.user = user;
+            state.payload = payload;
         },
         [AUTHENTICATING_ERROR](state, error) {
             state.isLoading = false;
             state.error = error;
             state.isAuthenticated = false;
             state.user = null;
+            state.payload = null;
         },
         [PROVIDING_DATA_ON_REFRESH_SUCCESS](state, payload) {
             state.isLoading = false;
@@ -88,7 +92,7 @@ export default {
             commit(AUTHENTICATING);
             try {
                 let response = await SecurityAPI.login(payload.email, payload.password);
-                commit(AUTHENTICATING_SUCCESS, response.data);
+                commit(AUTHENTICATING_SUCCESS, response.data, payload);
                 return response.data;
             } catch (error) {
                 commit(AUTHENTICATING_ERROR, error);
