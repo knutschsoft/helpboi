@@ -44,7 +44,7 @@
                     class="btn btn-primary"
                     @click="createUser()"
                 >
-                    Nutzer anlegen
+                    Registrieren und Einloggen
                 </v-btn>
             </v-col>
         </v-row>
@@ -53,16 +53,16 @@
 
 <script>
     export default {
-        name: "UserCreate",
+        name: "Register",
         props: {
         },
         data() {
             return {
-                firstName: "Robb",
-                lastName: "Stark",
-                email: "robb@got.de",
-                password: "EchtStark",
-                phone: '0160 123 123 123',
+                firstName: "",
+                lastName: "",
+                email: "",
+                password: "",
+                phone: '',
             };
         },
         computed: {
@@ -83,7 +83,6 @@
             }
         },
         created() {
-            this.$store.dispatch("user/findAll");
         },
         methods: {
             async createUser() {
@@ -98,11 +97,16 @@
                     ]
                 );
                 if (result !== null) {
-                    this.$data.firstName = "";
-                    this.$data.lastName = "";
-                    this.$data.email = "";
-                    this.$data.password = "";
-                    this.$data.phone = "";
+                    let payload = {email: this.$data.email, password: this.$data.password};
+
+                    let user = await this.$store.dispatch("security/login", payload);
+                    if (!this.$store.getters["security/hasError"]) {
+                        this.$localStorage.set('isAuthenticated', true);
+                        this.$localStorage.set('user', user);
+                        this.$localStorage.set('payload', payload);
+
+                        this.$router.push({path: "/"});
+                    }
                 }
             }
         },
