@@ -43,7 +43,7 @@ export default {
         zipcode = faker.address.zipCode();
         city = faker.address.city();
         address = faker.address.streetName();
-        status = faker.helpers.randomize(['UNKNOWN']);
+        status = faker.helpers.randomize(['REGISTERED', 'TEST_IN_QUARANTINE', 'VOLUNTARY_QUARANTINE', 'TEST_POSITIVE_IN_QUARANTINE', 'TEST_VISIT_HOSPITAL']);
         notes = faker.lorem.sentence();
 
         return axios.post(`${config.apiUrl}/patients`, {
