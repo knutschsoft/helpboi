@@ -12,7 +12,7 @@ export default {
     state: {
         isLoading: false,
         error: null,
-        tasks: []
+        tasks: [],
     },
     getters: {
         isLoading(state) {
@@ -54,7 +54,7 @@ export default {
         [FETCHING_TASKS_SUCCESS](state, tasks) {
             state.isLoading = false;
             state.error = null;
-            state.tasks = [tasks];
+            state.tasks = tasks;
         },
         [FETCHING_TASKS_ERROR](state, error) {
             state.isLoading = false;

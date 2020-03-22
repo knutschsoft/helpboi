@@ -9,4 +9,7 @@ export default {
             activeTo: activeTo,
         });
     },
+    findAll() {
+        return axios.get(`${config.apiUrl}/tasks`);
+    },
 };
