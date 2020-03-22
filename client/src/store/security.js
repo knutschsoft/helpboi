@@ -4,7 +4,7 @@ import axios from "axios";
 let payload = window.localStorage['helpboi-store-payload'];
 if (undefined !== payload) {
     payload = JSON.parse(payload);
-    if (payload.email && payload.password) {
+    if (payload && payload.email && payload.password) {
         let basicAuth = 'Basic ' + btoa(payload.email + ':' + payload.password);
         axios.defaults.headers.common = {'Authorization': basicAuth}
     } else {
