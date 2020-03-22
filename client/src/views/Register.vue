@@ -2,7 +2,7 @@
     <v-app>
         <v-content>
             <v-container
-                class="fill-height grey lighten-4"
+                class="fill-height grey lighten-4 background"
                 fluid
             >
                 <v-row
@@ -149,3 +149,13 @@
         watch: {},
     };
 </script>
+
+<style scoped>
+    .background {
+        background-image: url('../assets/ringe.png');
+        background-repeat: no-repeat;
+        background-attachment: fixed;
+        background-position: 50px 50px;
+        background-size: 20%;
+    }
+</style>
