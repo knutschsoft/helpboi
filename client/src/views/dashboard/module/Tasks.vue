@@ -5,6 +5,13 @@
             :items="breadcrumbItems"
             divider=">"
         />
+
+        <v-toolbar flat color="transparent">
+            <v-icon class="mr-5">mdi-calendar-today</v-icon>
+            <v-toolbar-title class="headline">Aufgaben</v-toolbar-title>
+            <v-spacer/>
+        </v-toolbar>
+
         <v-card class="elevation-12 mt-5">
             <v-card-text>
                 <v-data-table
