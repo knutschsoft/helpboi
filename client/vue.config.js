@@ -13,6 +13,6 @@ module.exports = {
         }
     },
     publicPath: process.env.NODE_ENV === 'production'
-        ? 'https://helpboi.projektmotor.de/'
+        ? '/' // there seems to be no need to change it to https://helpboi.projektmotor.de
         : '/'
 }
