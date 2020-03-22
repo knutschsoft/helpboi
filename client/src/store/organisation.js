@@ -6,6 +6,9 @@ const CREATING_ORGANISATION = "CREATING_ORGANISATION",
     FETCHING_ORGANISATION_USERS = "FETCHING_ORGANISATION_USERS",
     FETCHING_ORGANISATION_USERS_SUCCESS = "FETCHING_ORGANISATION_USERS_SUCCESS",
     FETCHING_ORGANISATION_USERS_ERROR = "FETCHING_ORGANISATION_USERS_ERROR",
+    FETCHING_ORGANISATION_PATIENTS = "FETCHING_ORGANISATION_PATIENTS",
+    FETCHING_ORGANISATION_PATIENTS_SUCCESS = "FETCHING_ORGANISATION_PATIENTS_SUCCESS",
+    FETCHING_ORGANISATION_PATIENTS_ERROR = "FETCHING_ORGANISATION_PATIENTS_ERROR",
     FETCHING_ORGANISATION = "FETCHING_ORGANISATION",
     FETCHING_ORGANISATION_SUCCESS = "FETCHING_ORGANISATION_SUCCESS",
     FETCHING_ORGANISATION_ERROR = "FETCHING_ORGANISATION_ERROR";
@@ -17,6 +20,7 @@ export default {
         error: null,
         organisation: null,
         organisationUsers: [],
+        organisationPatients: [],
     },
     getters: {
         isLoading(state) {
@@ -36,6 +40,9 @@ export default {
         },
         organisationUsers(state) {
             return state.organisationUsers;
+        },
+        organisationPatients(state) {
+            return state.organisationPatients;
         }
     },
     mutations: {
@@ -65,6 +72,20 @@ export default {
             state.isLoading = false;
             state.error = error;
             state.organisationUsers = [];
+        },
+        [FETCHING_ORGANISATION_PATIENTS](state) {
+            state.isLoading = true;
+            state.error = null;
+        },
+        [FETCHING_ORGANISATION_PATIENTS_SUCCESS](state, organisationPatients) {
+            state.isLoading = false;
+            state.error = null;
+            state.organisationPatients = organisationPatients;
+        },
+        [FETCHING_ORGANISATION_PATIENTS_ERROR](state, error) {
+            state.isLoading = false;
+            state.error = error;
+            state.organisationPatients = [];
         },
         [FETCHING_ORGANISATION](state) {
             state.isLoading = true;
@@ -112,6 +133,17 @@ export default {
                 return response.data;
             } catch (error) {
                 commit(FETCHING_ORGANISATION_USERS_ERROR, error);
+                return null;
+            }
+        },
+        async findOrganisationPatients({commit}, id) {
+            commit(FETCHING_ORGANISATION_PATIENTS);
+            try {
+                let response = await OrganisationAPI.findOrganisationPatients(id);
+                commit(FETCHING_ORGANISATION_PATIENTS_SUCCESS, response.data);
+                return response.data;
+            } catch (error) {
+                commit(FETCHING_ORGANISATION_PATIENTS_ERROR, error);
                 return null;
             }
         },

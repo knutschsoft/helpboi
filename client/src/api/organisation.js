@@ -8,6 +8,9 @@ export default {
     findOrganisationUsers(organisationId) {
         return axios.get(`${config.apiUrl}/organisations/${organisationId}/users`);
     },
+    findOrganisationPatients(organisationId) {
+        return axios.get(`${config.apiUrl}/organisations/${organisationId}/patients`);
+    },
     create(name, zipcode, city, address, userId) {
         return axios.post(`${config.apiUrl}/organisations`, {
             "name": name,

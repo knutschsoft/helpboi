@@ -90,8 +90,12 @@
         }),
         created() {
             let user = this.$store.getters["security/currentUser"];
-            this.$store.dispatch("organisation/find", user.organisationId);
-            this.$store.dispatch("organisation/findOrganisationUsers", user.organisationId);
+            if (user.organisationId) {
+                this.$store.dispatch("organisation/find", user.organisationId);
+                this.$store.dispatch("organisation/findOrganisationUsers", user.organisationId);
+            } else {
+                this.$router.push({path: "/organisation/erstellen"});
+            }
         }
     }
 </script>
