@@ -35,7 +35,7 @@ public class GetPatientHandler implements CommandHandler<GetPatient> {
                     "It's not allowed to get patient id: %s for organisation id: %s",
                     patientId, currentUser.getOrganisationId()));
         }
-
+        
         command.resolve(patient);
     }
 }

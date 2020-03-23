@@ -90,7 +90,7 @@
                 <v-row>
                     <v-col>
                         <h3 class="mb-4">Personendaten</h3>
-                        <v-text-field :value="patient.firstname + ' ' + patient.lastname" filled label="Geschlecht"
+                        <v-text-field :value="patient.firstname + ' ' + patient.lastname" filled label="Name"
                                       readonly/>
                         <v-text-field :value="getGender(patient)" filled label="Geschlecht" readonly/>
                         <v-text-field :value="patient.address + ' ' + patient.zipcode + ' ' + patient.city" filled
@@ -283,7 +283,7 @@
                     case 'MALE':
                         return "Männlich";
                     case 'FEMALE':
-                        return "Weblich";
+                        return "Weiblich";
                     case 'DIVERS':
                         return "Divers";
                 }

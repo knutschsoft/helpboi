@@ -22,6 +22,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.Lob;
 import javax.persistence.OneToMany;
+import javax.persistence.OrderBy;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotBlank;
@@ -84,6 +85,7 @@ public class Patient {
     @Column(name = "symptom_id")
     private Set<Long> symptomIds = new LinkedHashSet<>();
 
+    @OrderBy("createdAt DESC, id DESC")
     @OneToMany(orphanRemoval = true, mappedBy = "patient", cascade = {CascadeType.ALL}, fetch=FetchType.EAGER)
     private List<History> histories = new ArrayList<>();
 
