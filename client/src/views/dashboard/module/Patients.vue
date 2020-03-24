@@ -69,8 +69,10 @@
             },
             organisationPatients() {
                 let patients = this.$store.getters['organisation/organisationPatients'];
-                patients.forEach((patient) => patient.gender = this.getGender(patient));
-                patients.forEach((patient) => patient.status = this.getStatus(patient));
+                patients.forEach((patient) => {
+                    patient.gender = this.getGender(patient);
+                    patient.status = this.getStatus(patient)
+                });
                 return patients;
             },
         },
