@@ -32,7 +32,7 @@
                         </v-list-item-action>
                         <v-list-item-content>
                             <v-list-item-title>{{ hello }}</v-list-item-title>
-                            <v-list-item-subtitle>Logout</v-list-item-subtitle>
+                            <v-list-item-subtitle>Abmelden</v-list-item-subtitle>
                         </v-list-item-content>
                     </v-list-item>
                     <v-divider></v-divider>
