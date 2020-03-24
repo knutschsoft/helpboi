@@ -52,7 +52,7 @@
                     </v-list-item-content>
                 </v-list-item>
                 <v-list-item
-                    v-if="user.admin && user.organisationId"
+                    v-if="user.organisationId"
                     link
                     to="/aufgaben"
                 >

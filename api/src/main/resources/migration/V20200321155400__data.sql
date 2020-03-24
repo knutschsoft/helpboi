@@ -2,7 +2,10 @@ INSERT INTO `organisation` (`name`, `zipcode`, `city`, `address`) VALUES
     ('Testorga', '00123', 'Berlin', 'Musterstrasse');
 
 INSERT INTO `user` (`email`, `password`, `firstname`, `lastname`, `phone`, `organisation_id`, `is_admin`, `is_verified`) VALUES
-	('root@root.com', '$2a$10$uuT5ef4CsSdtmQ8A17afr.nj7EPvUbpk3zFRlszmMTrfWzoWxHeYm', 'Ruth', 'Juza', '012832873', 1, true, true);
+	('admin@root.com', '$2a$10$uuT5ef4CsSdtmQ8A17afr.nj7EPvUbpk3zFRlszmMTrfWzoWxHeYm', 'Ruth', 'Admin', '012832873', 1, true, true);
+	
+INSERT INTO `user` (`email`, `password`, `firstname`, `lastname`, `phone`, `organisation_id`, `is_admin`, `is_verified`) VALUES
+	('user@root.com', '$2a$10$uuT5ef4CsSdtmQ8A17afr.nj7EPvUbpk3zFRlszmMTrfWzoWxHeYm', 'Norm-Al', 'User', '012832873', 1, false, true);
 
 INSERT INTO `symptom` (`name`) VALUES
 	('Fieber >37.5°C'),
@@ -45,4 +48,4 @@ INSERT INTO `history` (`patient_id`, `creator_id`, `created_at`, `modified_at`, 
 	
 INSERT INTO `task` (`patient_id`, `agent_id`, `content`, `status`, `created_at`, `active_to`) VALUES
 	(1, 1, 'Patient anrufen', 'CLOSED', '2020-02-01 10:41:01.4', '2020-02-03 10:41:01.4'),
-	(1, 1, 'Patient anrufen', 'CLOSED', '2020-02-03 09:41:01.4', '2020-02-05 09:41:01.4');
+	(1, 2, 'Patient anrufen', 'CLOSED', '2020-02-03 09:41:01.4', '2020-02-05 09:41:01.4');
