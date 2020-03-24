@@ -30,11 +30,10 @@ INSERT INTO `patient` (`organisation_id`, `firstname`, `lastname`, `gender`, `ph
 	
 INSERT INTO `patient_symptom` (`patient_id`, `symptom_id`) VALUES
 	(1, 1),	(1, 2),
-	(2, 11),
 	(3, 3), (3, 7), (3,12),
 	(4, 2), (4, 5), (4, 3),
 	(5, 10), (5, 3),
-	(6, 2), (6,5), (6, 7);
+	(6,5), (6, 7);
 	
 INSERT INTO `history` (`patient_id`, `creator_id`, `created_at`, `modified_at`, `type`, `content`) VALUES
 	(1, 1, '2020-02-01 10:32:17.4', '2020-02-01 10:32:17.4', 'INFO', 'erster Anruf, besorgt, Aufnahme der Symptome'),

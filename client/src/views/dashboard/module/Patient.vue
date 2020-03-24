@@ -267,16 +267,20 @@
                 }
             },
             hasSymptoms(patient) {
-                return patient.gender !== 'DIVERS';
+                return (patient.symptomIds && patient.symptomIds.length > 0);
             },
             isSeriouslyIll(patient) {
-                return patient.gender === 'DIVERS';
+                return patient.symptomIds && (patient.symptomIds.includes(1) ||patient.symptomIds.includes(2));
             },
             isQuarantine(patient) {
-                return patient.gender === 'DIVERS';
+                return (patient.status === 'VOLUNTARY_QUARANTINE' ||
+                        patient.status === 'TEST_IN_QUARANTINE' ||
+                        patient.status === 'TEST_POSITIVE_IN_QUARANTINE');
             },
             isTest(patient) {
-                return patient.gender !== 'DIVERS';
+                return (patient.status === 'TEST_IN_QUARANTINE' ||
+                        patient.status === 'TEST_VISIT_HOSPITAL' ||
+                        patient.status === 'TEST_POSITIVE_IN_QUARANTINE');
             },
             getGender(patient) {
                 switch (patient.gender) {
