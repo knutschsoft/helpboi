@@ -82,9 +82,9 @@
                 return this.$store.getters["task/hasTasks"];
             },
             tasks() {
-                let data = this.$store.getters["task/tasks"];
-                data.forEach((task) => task.status = this.getStatus(task));
-                return data;
+                let tasks = this.$store.getters['organisation/organisationTasks'];
+                tasks.forEach((task) => task.status = this.getStatus(task));
+                return tasks;
             },
             currentUser() {
                 return this.$store.getters['security/currentUser'];
@@ -93,7 +93,7 @@
         created() {
             let user = this.$store.getters["security/currentUser"];
             if (user.organisationId) {
-                this.$store.dispatch("task/findAll");
+                this.$store.dispatch("organisation/findOrganisationTasks", user.organisationId);
                 // this.$store.dispatch("organisation/find", user.organisationId);
                 // this.$store.dispatch("organisation/findOrganisationPatients", user.organisationId);
             } else {

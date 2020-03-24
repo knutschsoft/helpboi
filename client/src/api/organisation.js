@@ -13,6 +13,9 @@ export default {
     findOrganisationPatients(organisationId) {
         return axios.get(`${config.apiUrl}/organisations/${organisationId}/patients`);
     },
+    findOrganisationTasks(organisationId) {
+        return axios.get(`${config.apiUrl}/organisations/${organisationId}/tasks`);
+    },
     addHistoryToPatient(patientId, type, content) {
         return axios.post(`${config.apiUrl}/patients/${patientId}/history`, {
             type: type,
