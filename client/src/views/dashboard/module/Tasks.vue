@@ -62,7 +62,7 @@
             headers: [
                 {text: 'Patient', value: 'patientId'},
                 {text: 'Aufgabe', value: 'content'},
-                {text: 'Status', value: 'state'},
+                {text: 'Status', value: 'status'},
                 {text: 'Bearbeiter', value: 'agentId'},
                 {text: 'Bis', value: 'activeTo'},
                 {text: 'Überfällig', value: 'overdue'},
@@ -82,7 +82,9 @@
                 return this.$store.getters["task/hasTasks"];
             },
             tasks() {
-                return this.$store.getters["task/tasks"];
+                let data = this.$store.getters["task/tasks"];
+                data.forEach((task) => task.status = this.getStatus(task));
+                return data;
             },
             currentUser() {
                 return this.$store.getters['security/currentUser'];
@@ -98,5 +100,19 @@
                 this.$router.push({path: "/organisation"});
             }
         },
+        methods: {
+            getStatus(task) {
+                switch (task.status) {
+                    case 'OPEN':
+                        return "Offen";
+                    case 'PROGRESS':
+                        return "In Bearbeitung";
+                    case 'CLOSED':
+                        return "Geschlossen";
+                }
+
+                return "";
+            },
+        }
     }
 </script>

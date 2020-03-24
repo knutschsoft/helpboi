@@ -68,7 +68,10 @@
                 return this.$store.getters['security/currentUser'];
             },
             organisationPatients() {
-                return this.$store.getters['organisation/organisationPatients'];
+                let patients = this.$store.getters['organisation/organisationPatients'];
+                patients.forEach((patient) => patient.gender = this.getGender(patient));
+                patients.forEach((patient) => patient.status = this.getStatus(patient));
+                return patients;
             },
         },
         data: () => ({
@@ -142,7 +145,33 @@
                         ]
                     );
                 }
-            }
+            },
+            getGender(patient) {
+                switch (patient.gender) {
+                    case 'MALE':
+                        return "Männlich";
+                    case 'FEMALE':
+                        return "Weiblich";
+                    case 'DIVERS':
+                        return "Divers";
+                }
+                return '';
+            },
+            getStatus(patient) {
+                switch (patient.status) {
+                    case 'REGISTERED':
+                        return "Erfasst (Symptome / Risikogebiet / Kontakt mit infizierten) ohne Maßnahmen";
+                    case 'TEST_VISIT_HOSPITAL':
+                        return "Test & Arzt / Krankenhaus aufsuchen";
+                    case 'TEST_IN_QUARANTINE':
+                        return "Test & Quarantäne";
+                    case 'TEST_POSITIVE_IN_QUARANTINE':
+                        return "Testergebnis Positiv & Quarantäne";
+                    case 'VOLUNTARY_QUARANTINE':
+                        return "Empfehlung freiwillige Quarantäne / ggf. Test";
+                }
+                return '';
+            },
         },
     }
 </script>
