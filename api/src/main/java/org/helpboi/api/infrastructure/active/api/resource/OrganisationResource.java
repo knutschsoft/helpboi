@@ -7,10 +7,12 @@ import javax.inject.Inject;
 import org.helpboi.api.application.CommandBus;
 import org.helpboi.api.application.command.organisation.CreateOrganisation;
 import org.helpboi.api.application.command.organisation.GetAllOrganisationPatients;
+import org.helpboi.api.application.command.organisation.GetAllOrganisationTasks;
 import org.helpboi.api.application.command.organisation.GetAllOrganisationUsers;
 import org.helpboi.api.application.command.organisation.GetOrganisation;
 import org.helpboi.api.domain.model.organisation.Organisation;
 import org.helpboi.api.domain.model.patient.Patient;
+import org.helpboi.api.domain.model.task.Task;
 import org.helpboi.api.domain.model.user.User;
 
 import io.micronaut.http.annotation.Body;
@@ -48,5 +50,10 @@ public class OrganisationResource {
 	@Get("/{id}/patients")
 	public Maybe<List<Patient>> getAllOrganisationPatients(Long id) {
 	    return commandBus.execute(new GetAllOrganisationPatients(id));
+    }
+	
+	@Get("/{id}/tasks")
+	public Maybe<List<Task>> getAllOrganisationTasks(Long id) {
+	    return commandBus.execute(new GetAllOrganisationTasks(id));
     }
 }

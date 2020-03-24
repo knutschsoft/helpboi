@@ -11,4 +11,6 @@ import io.micronaut.data.repository.CrudRepository;
 public interface TaskRepository extends CrudRepository<Task, Long> {
 
 	List<Task> listOrderByActiveToDesc();
+	
+	List<Task> findByPatientIdInList(List<Long> ids);
 }
