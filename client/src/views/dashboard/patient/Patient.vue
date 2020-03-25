@@ -101,8 +101,8 @@
                         <v-text-field v-model="patient.email" filled label="Email" readonly
                                       append-icon="mdi-email-edit"/>
 
-                        <h3 class="mb-4">Vorerkrankungen</h3>
-                        <v-textarea outlined value="Darmkrebs, HIV"/>
+                        <h3 class="mb-4">Anmerkungen</h3>
+                        <v-textarea outlined v-model="patient.notes"/>
                     </v-col>
                     <v-col>
                         <v-tabs show-arrows background-color="transparent">
