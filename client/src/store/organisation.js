@@ -20,7 +20,10 @@ const CREATING_ORGANISATION = "CREATING_ORGANISATION",
     FETCHING_ORGANISATION_TASKS_ERROR = "FETCHING_ORGANISATION_TASKS_ERROR",
     FETCHING_ORGANISATION = "FETCHING_ORGANISATION",
     FETCHING_ORGANISATION_SUCCESS = "FETCHING_ORGANISATION_SUCCESS",
-    FETCHING_ORGANISATION_ERROR = "FETCHING_ORGANISATION_ERROR";
+    FETCHING_ORGANISATION_ERROR = "FETCHING_ORGANISATION_ERROR",
+    SET_SYMPTOMS_OF_PATIENT = "SET_SYMPTOMS_OF_PATIENT",
+    SET_SYMPTOMS_OF_PATIENT_SUCCESS = "SET_SYMPTOMS_OF_PATIENT_SUCCESS",
+    SET_SYMPTOMS_OF_PATIENT_ERROR = "SET_SYMPTOMS_OF_PATIENT_ERROR";
 
 export default {
     namespaced: true,
@@ -159,6 +162,23 @@ export default {
             state.error = error;
             state.organisation = null;
         },
+        [SET_SYMPTOMS_OF_PATIENT](state) {
+            state.isLoading = true;
+            state.error = null;
+        },
+        [SET_SYMPTOMS_OF_PATIENT_SUCCESS](state, patient) {
+            state.isLoading = false;
+            state.error = null;
+            state.organisationPatients.forEach(function (oldPatient, key) {
+                if (oldPatient.id === patient.id) {
+                    state.organisationPatients[key] = patient;
+                }
+            });
+        },
+        [SET_SYMPTOMS_OF_PATIENT_ERROR](state, error) {
+            state.isLoading = false;
+            state.error = error;
+        },
     },
     actions: {
         async create({commit}, [name, zipcode, city, address, userId]) {
@@ -237,6 +257,17 @@ export default {
                 return response.data;
             } catch (error) {
                 commit(ADD_HISTORY_TO_PATIENT_ERROR, error);
+                return null;
+            }
+        },
+        async setSymptomsOfPatient({commit}, [patientId, symptoms]) {
+            commit(SET_SYMPTOMS_OF_PATIENT);
+            try {
+                let response = await OrganisationAPI.setSymptomsOfPatient(patientId, symptoms);
+                commit(SET_SYMPTOMS_OF_PATIENT_SUCCESS, response.data);
+                return response.data;
+            } catch (error) {
+                commit(SET_SYMPTOMS_OF_PATIENT_ERROR, error);
                 return null;
             }
         },

@@ -22,6 +22,9 @@ export default {
             content: content,
         });
     },
+    setSymptomsOfPatient(patientId, symptoms) {
+        return axios.post(`${config.apiUrl}/patients/${patientId}/symptoms`, symptoms);
+    },
     create(name, zipcode, city, address, userId) {
         return axios.post(`${config.apiUrl}/organisations`, {
             "name": name,

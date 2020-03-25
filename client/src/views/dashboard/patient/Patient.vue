@@ -132,6 +132,13 @@
                             </v-tab-item>
                             <v-tab>Fragenkatalog</v-tab>
                             <v-tab-item>
+                                <v-checkbox v-for="(symptom, i) in symptoms" :key="`symptom.name-${i}`"
+                                    :input-value="hasSymptom(patient, symptom.id)"
+                                    :true-value="symptom.id"
+                                    color="primary"
+                                    :label="`${symptom.name}`"
+                                    @click="editSymptom(patient, symptom.id)"
+                                ></v-checkbox>
                             </v-tab-item>
                         </v-tabs>
                     </v-col>
@@ -171,6 +178,9 @@
             organisationPatients() {
                 return this.$store.getters['organisation/organisationPatients'];
             },
+            symptoms() {
+                return this.$store.getters['symptom/symptoms'][0];
+            },
         },
         data: () => ({
             patient: false,
@@ -198,6 +208,7 @@
         async created() {
             let user = this.$store.getters["security/currentUser"];
             if (user.organisationId) {
+                this.$store.dispatch("symptom/findAll");
                 this.$store.dispatch("organisation/find", user.organisationId);
                 let patients = await this.$store.dispatch("organisation/findOrganisationPatients", user.organisationId);
 
@@ -205,6 +216,9 @@
                 patients.forEach(function (patient) {
                     if (parseInt(patient.id) === parseInt(that.patientId)) {
                         that.patient = patient;
+                        if (!patient.symptomIds) {
+                            patient.symptomIds = [];
+                        }
                     }
                 });
             } else {
@@ -269,6 +283,9 @@
             hasSymptoms(patient) {
                 return (patient.symptomIds && patient.symptomIds.length > 0);
             },
+            hasSymptom(patient, symptomId) {
+                return (patient.symptomIds && patient.symptomIds.includes(symptomId));
+            },
             isSeriouslyIll(patient) {
                 return patient.symptomIds && (patient.symptomIds.includes(1) ||patient.symptomIds.includes(2));
             },
@@ -304,6 +321,21 @@
                 }
 
                 return '';
+            },
+            async editSymptom(patient, symptomId) {
+                if (this.hasSymptom(patient, symptomId)) {
+                    patient.symptomIds.splice( patient.symptomIds.indexOf(symptomId), 1 );
+                } else {
+                    patient.symptomIds.push(symptomId);
+                }
+
+                await this.$store.dispatch(
+                    "organisation/setSymptomsOfPatient",
+                    [
+                        this.patient.id,
+                        this.patient.symptomIds
+                    ]
+                );
             },
         },
     }
