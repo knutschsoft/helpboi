@@ -12,7 +12,7 @@
                 <v-list-item>
                     <v-list-item-avatar>
                         <v-avatar size="42">
-                            <v-img :src="require('../assets/logo.png')"></v-img>
+                            <v-img :src="require('../../assets/logo.png')"></v-img>
                         </v-avatar>
                     </v-list-item-avatar>
                     <v-list-item-content>
@@ -70,7 +70,7 @@
                     <v-icon>mdi-bank</v-icon>
                 </v-list-item-action>
                 <v-list-item-content>
-                    <v-list-item-title>Organisation verwalten</v-list-item-title>
+                    <v-list-item-title>Organisation</v-list-item-title>
                 </v-list-item-content>
             </v-list-item>
             <v-list-item

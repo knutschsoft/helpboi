@@ -8,13 +8,13 @@ import Logout from "../views/Logout";
 
 import Dashboard from "../views/dashboard/Dashboard";
 
-import Patient from "../views/dashboard/module/patient/Patient.vue";
-import Patients from "../views/dashboard/module/patient/Patients.vue";
+import Patient from "../views/dashboard/patient/Patient.vue";
+import Patients from "../views/dashboard/patient/Patients.vue";
 
-import Organisation from "../views/dashboard/module/organisation/Organisation.vue";
-import OrganisationCreate from "../views/dashboard/module/organisation/OrganisationCreate.vue";
+import Organisation from "../views/dashboard/organisation/Organisation.vue";
+import OrganisationCreate from "../views/dashboard/organisation/OrganisationCreate.vue";
 
-import Tasks from "../views/dashboard/module/task/Tasks";
+import Tasks from "../views/dashboard/task/Tasks";
 
 Vue.use(VueRouter);
 

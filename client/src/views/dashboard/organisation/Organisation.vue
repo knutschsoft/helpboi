@@ -8,7 +8,7 @@
 
         <v-toolbar flat color="transparent">
             <v-icon class="mr-5">mdi-bank</v-icon>
-            <v-toolbar-title class="headline">Organisation verwalten</v-toolbar-title>
+            <v-toolbar-title class="headline">Organisation</v-toolbar-title>
             <v-spacer/>
             <v-tooltip>
                 <template v-slot:activator="{ on }">
