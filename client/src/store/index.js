@@ -1,5 +1,6 @@
-import Vue from 'vue'
-import Vuex from 'vuex'
+import Vue from 'vue';
+import Vuex from 'vuex';
+import VuexReset from '@ianwalter/vuex-reset';
 import OrganisationModule from "./organisation";
 import UserModule from "./user";
 import SecurityModule from "./security";
@@ -10,7 +11,9 @@ Vue.use(Vuex)
 
 export default new Vuex.Store({
     state: {},
-    mutations: {},
+    mutations: {
+        reset: () => {},
+    },
     actions: {},
     modules: {
         organisation: OrganisationModule,
@@ -18,5 +21,6 @@ export default new Vuex.Store({
         security: SecurityModule,
         task: TaskModule,
         symptom: SymptomModule,
-    }
+    },
+    plugins: [new VuexReset()],
 })
