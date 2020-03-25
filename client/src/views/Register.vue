@@ -83,6 +83,7 @@
 
 <script>
     import Footer from "../components/Footer";
+    import axios from "axios";
 
     export default {
         name: "Register",
@@ -140,6 +141,9 @@
                         this.$localStorage.set('isAuthenticated', true);
                         this.$localStorage.set('user', user);
                         this.$localStorage.set('payload', payload);
+
+                        let basicAuth = 'Basic ' + btoa(payload.email + ':' + payload.password);
+                        axios.defaults.headers.common = {'Authorization': basicAuth};
 
                         this.$router.push({path: "/"});
                     }
