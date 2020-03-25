@@ -14,8 +14,6 @@ import Patients from "../views/dashboard/module/patient/Patients.vue";
 import Organisation from "../views/dashboard/module/organisation/Organisation.vue";
 import OrganisationCreate from "../views/dashboard/module/organisation/OrganisationCreate.vue";
 
-import Users from "../views/dashboard/module/user/Users";
-
 import Tasks from "../views/dashboard/module/task/Tasks";
 
 Vue.use(VueRouter);
@@ -49,11 +47,6 @@ const routes = [
                 path: '/organisation/erstellen',
                 name: 'OrganisationCreate',
                 component: OrganisationCreate
-            },
-            {
-                path: '/users',
-                name: 'Users',
-                component: Users
             },
             {
                 path: '/aufgaben',
