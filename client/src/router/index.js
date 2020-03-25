@@ -7,12 +7,16 @@ import Register from "../views/Register";
 import Logout from "../views/Logout";
 
 import Dashboard from "../views/dashboard/Dashboard";
-import Patient from "../views/dashboard/module/Patient.vue";
-import Patients from "../views/dashboard/module/Patients.vue";
-import Organisation from "../views/dashboard/module/Organisation.vue";
-import OrganisationCreate from "../views/dashboard/module/OrganisationCreate.vue";
-import Users from "../views/dashboard/module/Users";
-import Tasks from "../views/dashboard/module/Tasks";
+
+import Patient from "../views/dashboard/module/patient/Patient.vue";
+import Patients from "../views/dashboard/module/patient/Patients.vue";
+
+import Organisation from "../views/dashboard/module/organisation/Organisation.vue";
+import OrganisationCreate from "../views/dashboard/module/organisation/OrganisationCreate.vue";
+
+import Users from "../views/dashboard/module/user/Users";
+
+import Tasks from "../views/dashboard/module/task/Tasks";
 
 Vue.use(VueRouter);
 
