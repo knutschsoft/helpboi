@@ -102,6 +102,9 @@ export default {
         },
         updateCurrentUser({commit}, user) {
             commit(UPDATE_CURRENT_USER, user);
+            window.localStorage['helpboi-store-user'] = (user)
+                ? JSON.stringify(user)
+                : null;
         }
     }
 }

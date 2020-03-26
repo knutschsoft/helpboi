@@ -14,4 +14,9 @@ export default {
             "phone": phone
         });
     },
+    assignToOrganisation(id, organisationId) {
+        return axios.post(`${config.apiUrl}/users/${id}/organisations`, {
+            "organisationId": organisationId
+        });
+    }
 };

@@ -5,7 +5,10 @@ const CREATING_USER = "CREATING_USER",
     CREATING_USER_ERROR = "CREATING_USER_ERROR",
     FETCHING_USERS = "FETCHING_USERS",
     FETCHING_USERS_SUCCESS = "FETCHING_USERS_SUCCESS",
-    FETCHING_USERS_ERROR = "FETCHING_USERS_ERROR";
+    FETCHING_USERS_ERROR = "FETCHING_USERS_ERROR",
+    ASSIGN_USER_TO_ORGANISATION = "FETCHING_USERS_ERROR",
+    ASSIGN_USER_TO_ORGANISATION_SUCCESS = "FETCHING_USERS_ERROR",
+    ASSIGN_USER_TO_ORGANISATION_ERROR = "FETCHING_USERS_ERROR";
 
 export default {
     namespaced: true,
@@ -60,6 +63,18 @@ export default {
             state.isLoading = false;
             state.error = error;
             state.users = [];
+        },
+        [ASSIGN_USER_TO_ORGANISATION](state) {
+            state.isLoading = true;
+            state.error = null;
+        },
+        [ASSIGN_USER_TO_ORGANISATION_SUCCESS](state) {
+            state.isLoading = false;
+            state.error = null;
+        },
+        [ASSIGN_USER_TO_ORGANISATION_ERROR](state, error) {
+            state.isLoading = false;
+            state.error = error;
         }
     },
     actions: {
@@ -82,6 +97,17 @@ export default {
                 return response.data;
             } catch (error) {
                 commit(FETCHING_USERS_ERROR, error);
+                return null;
+            }
+        },
+        async assignToOrganisation({ commit }, [ id, organisationId ]) {
+            commit(ASSIGN_USER_TO_ORGANISATION);
+            try {
+                let response = await UserAPI.assignToOrganisation(id, organisationId);
+                commit(ASSIGN_USER_TO_ORGANISATION_SUCCESS, response.data);
+                return response.data;
+            } catch (error) {
+                commit(ASSIGN_USER_TO_ORGANISATION_ERROR, error);
                 return null;
             }
         },

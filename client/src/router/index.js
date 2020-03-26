@@ -13,6 +13,7 @@ import Patients from "../views/dashboard/patient/Patients.vue";
 
 import Organisation from "../views/dashboard/organisation/Organisation.vue";
 import OrganisationCreate from "../views/dashboard/organisation/OrganisationCreate.vue";
+import OrganisationJoin from "../views/dashboard/organisation/OrganisationJoin.vue";
 
 import Tasks from "../views/dashboard/task/Tasks";
 
@@ -47,6 +48,11 @@ const routes = [
                 path: '/organisation/erstellen',
                 name: 'OrganisationCreate',
                 component: OrganisationCreate
+            },
+            {
+                path: '/organisation/:organisationId/beitreten/:organisationHash',
+                name: 'OrganisationJoin',
+                component: OrganisationJoin
             },
             {
                 path: '/aufgaben',
