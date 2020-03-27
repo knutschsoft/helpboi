@@ -85,7 +85,6 @@
 
 <script>
     import Footer from "../components/Footer";
-    import axios from "axios";
 
     export default {
         name: "Login",
@@ -130,12 +129,12 @@
 
                 let user = await this.$store.dispatch("security/login", payload);
                 if (user) {
-                    this.$localStorage.set('isAuthenticated', true);
-                    this.$localStorage.set('user', user);
-                    this.$localStorage.set('payload', payload);
-
-                    let basicAuth = 'Basic ' + btoa(payload.email + ':' + payload.password);
-                    axios.defaults.headers.common = {'Authorization': basicAuth};
+                    let onRefreshPayload = {
+                        payload: payload,
+                        user: user,
+                        isAuthenticated: true,
+                    };
+                    this.$store.dispatch('security/onRefresh', onRefreshPayload);
 
                     if (typeof redirect !== "undefined") {
                         this.$router.push({path: redirect});

@@ -138,8 +138,7 @@
                     user.organisationId = organisation.id;
                     user.admin = true;
 
-                    this.$localStorage.set('user', user);
-                    this.$store.dispatch("security/updateCurrentUser", user);
+                    await this.$store.dispatch("security/updateCurrentUser", user);
 
                     this.$router.push({path: "/organisation"});
                 }

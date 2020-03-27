@@ -114,7 +114,6 @@
         },
 
         mounted() {
-            console.log(this.currentUser.organisationId);
             if (this.currentUser
                 && this.currentUser.organisationId) {
                 this.$router.push({path: "/organisation"});
@@ -129,7 +128,9 @@
                 const organisationId = this.$route.params.organisationId;
                 const user = await this.$store.dispatch("user/assignToOrganisation",
                     [this.currentUser.id, organisationId]);
-                await this.$store.dispatch("security/updateCurrentUser", user);
+                if (user) {
+                    await this.$store.dispatch("security/updateCurrentUser", user);
+                }
                 // It's easier to start with a fresh state
                 location.reload();
             }

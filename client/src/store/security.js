@@ -1,22 +1,12 @@
 import SecurityAPI from "../api/security";
 import axios from "axios";
 
-let payload = window.localStorage['helpboi-store-payload'];
-if (undefined !== payload) {
-    payload = JSON.parse(payload);
-    if (payload && payload.email && payload.password) {
-        let basicAuth = 'Basic ' + btoa(payload.email + ':' + payload.password);
-        axios.defaults.headers.common = {'Authorization': basicAuth}
-    } else {
-        payload = false;
-    }
-} else {
-    payload = false;
-}
+let authHeader = window.localStorage['helpboi-store-authHeader'];
+axios.defaults.headers.common = (undefined !== authHeader) ? JSON.parse(authHeader) : {};
 let isAuthenticated = window.localStorage['helpboi-store-isAuthenticated'];
-isAuthenticated = undefined !== isAuthenticated ? JSON.parse(isAuthenticated) : false;
+isAuthenticated = (undefined !== isAuthenticated) ? JSON.parse(isAuthenticated) : false;
 let user = window.localStorage['helpboi-store-user'];
-user = undefined !== user ? JSON.parse(user) : false;
+user = (undefined !== user) ? JSON.parse(user) : false;
 
 const AUTHENTICATING = "AUTHENTICATING",
     AUTHENTICATING_SUCCESS = "AUTHENTICATING_SUCCESS",
@@ -76,13 +66,28 @@ export default {
             state.payload = null;
         },
         [PROVIDING_DATA_ON_REFRESH_SUCCESS](state, payload) {
+            let credentialsPayload = payload.payload;
+            let authHeader = credentialsPayload
+                ? { 'Authorization': 'Basic ' + btoa(credentialsPayload.email + ':' + credentialsPayload.password) }
+                : {};
             state.isLoading = false;
             state.error = null;
             state.isAuthenticated = payload.isAuthenticated;
             state.user = payload.user;
+            window.localStorage['helpboi-store-user'] = (payload.user)
+                ? JSON.stringify(payload.user)
+                : null;
+            window.localStorage['helpboi-store-isAuthenticated'] = (payload.isAuthenticated)
+                ? JSON.stringify(payload.isAuthenticated)
+                : null;
+            window.localStorage['helpboi-store-authHeader'] = JSON.stringify(authHeader);
+            axios.defaults.headers.common = authHeader;
         },
         [UPDATE_CURRENT_USER](state, user) {
             state.user = user;
+            window.localStorage['helpboi-store-user'] = (user)
+                ? JSON.stringify(user)
+                : null;
         },
     },
     actions: {
@@ -102,9 +107,6 @@ export default {
         },
         updateCurrentUser({commit}, user) {
             commit(UPDATE_CURRENT_USER, user);
-            window.localStorage['helpboi-store-user'] = (user)
-                ? JSON.stringify(user)
-                : null;
         }
     }
 }

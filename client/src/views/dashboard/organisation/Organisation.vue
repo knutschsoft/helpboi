@@ -21,7 +21,7 @@
                     class="elevation-12 mt-2"
                 >
                     <v-card-text>
-                        <v-text-field v-model="organisation.name" filled label="Organisation Name" readonly/>
+                        <v-text-field v-model="organisation.name" filled label="Name der Organisation" readonly/>
                         <v-text-field v-model="organisation.zipcode" filled label="Postleizahl" readonly/>
                         <v-text-field v-model="organisation.city" filled label="Stadt" readonly/>
                         <v-text-field v-model="organisation.address" filled label="Adresse" readonly/>
