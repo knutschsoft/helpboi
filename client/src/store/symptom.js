@@ -26,7 +26,17 @@ export default {
         },
         symptoms(state) {
             return state.symptoms;
-        }
+        },
+        symptom(state, symptomId) {
+            state.symptoms.forEach(
+                (symptom) => {
+                    if (symptom.id === symptomId) {
+                        return symptom;
+                    }
+                }
+            );
+            return null;
+        },
     },
     mutations: {
         [FETCHING_SYMPTOMS](state) {
@@ -37,7 +47,7 @@ export default {
         [FETCHING_SYMPTOMS_SUCCESS](state, symptoms) {
             state.isLoading = false;
             state.error = null;
-            state.symptoms = [symptoms];
+            state.symptoms = symptoms;
         },
         [FETCHING_SYMPTOMS_ERROR](state, error) {
             state.isLoading = false;

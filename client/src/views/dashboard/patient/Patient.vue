@@ -179,7 +179,7 @@
                 return this.$store.getters['organisation/organisationPatients'];
             },
             symptoms() {
-                return this.$store.getters['symptom/symptoms'][0];
+                return this.$store.getters['symptom/symptoms'];
             },
         },
         data: () => ({
