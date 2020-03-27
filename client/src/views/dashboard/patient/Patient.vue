@@ -37,7 +37,7 @@
                         </v-list-item>
                         <v-divider :key="actionType"/>
                     </template>
-                    <v-list-item @click="createInfo()">
+                    <v-list-item @click="createInfo(`Zähneputzen, pullern und ab ins Bett!`)">
                         <v-list-item-icon>
                             <v-icon>mdi-plus</v-icon>
                         </v-list-item-icon>
@@ -240,13 +240,13 @@
                     this.patient = patient;
                 }
             },
-            async createInfo() {
+            async createInfo(message) {
                 let patient = await this.$store.dispatch(
                     "organisation/addHistoryToPatient",
                     [
                         this.patientId,
                         "INFO",
-                        `Zähneputzen, pullern und ab ins Bett!`
+                        message,
                     ]
                 );
 
@@ -322,8 +322,13 @@
 
                 return '';
             },
+            getSymptomById(symptomId) {
+                return this.$store.getters['symptom/getSymptomById'](symptomId);
+            },
             async editSymptom(patient, symptomId) {
-                if (this.hasSymptom(patient, symptomId)) {
+                let isAdded = this.hasSymptom(patient, symptomId);
+
+                if (isAdded) {
                     patient.symptomIds.splice( patient.symptomIds.indexOf(symptomId), 1 );
                 } else {
                     patient.symptomIds.push(symptomId);
@@ -336,6 +341,12 @@
                         this.patient.symptomIds
                     ]
                 );
+
+                if (isAdded) {
+                    await this.createInfo(`Symptom entfernt: ${this.getSymptomById(symptomId).name}`);
+                } else {
+                    await this.createInfo(`Symptom hinzugefügt: ${this.getSymptomById(symptomId).name}`);
+                }
             },
         },
     }

@@ -27,15 +27,19 @@ export default {
         symptoms(state) {
             return state.symptoms;
         },
-        symptom(state, symptomId) {
-            state.symptoms.forEach(
-                (symptom) => {
-                    if (symptom.id === symptomId) {
-                        return symptom;
+        getSymptomById(state) {
+            return symptomId => {
+                let foundSymptom = false;
+                state.symptoms.forEach(
+                    (symptom) => {
+                        if (symptom.id === symptomId) {
+                            foundSymptom = symptom;
+                        }
                     }
-                }
-            );
-            return null;
+                );
+
+                return foundSymptom;
+            }
         },
     },
     mutations: {
