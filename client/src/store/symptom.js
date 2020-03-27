@@ -21,7 +21,7 @@ export default {
         error(state) {
             return state.error;
         },
-        hasUsers(state) {
+        hasSymptoms(state) {
             return state.symptoms.length > 0;
         },
         symptoms(state) {
