@@ -23,4 +23,5 @@ export default new Vuex.Store({
         symptom: SymptomModule,
     },
     plugins: [new VuexReset()],
+    strict: process.env.NODE_ENV !== 'production',
 })

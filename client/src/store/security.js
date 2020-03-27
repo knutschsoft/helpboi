@@ -42,7 +42,13 @@ export default {
         },
         currentUser(state) {
             return state.user;
-        }
+        },
+        isAdminOfOrganisation(state, getters) {
+            return state.user && state.user.admin && getters.isMemberOfOrganisation;
+        },
+        isMemberOfOrganisation(state) {
+            return state.user && undefined !== state.user.organisationId;
+        },
     },
     mutations: {
         [AUTHENTICATING](state) {
@@ -84,7 +90,7 @@ export default {
             axios.defaults.headers.common = authHeader;
         },
         [UPDATE_CURRENT_USER](state, user) {
-            state.user = user;
+            state.user = { ...user };
             window.localStorage['helpboi-store-user'] = (user)
                 ? JSON.stringify(user)
                 : null;

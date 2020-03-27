@@ -38,7 +38,7 @@
         </template>
         <v-list nav>
             <v-list-item
-                v-if="user.organisationId"
+                v-if="isMemberOfOrganisation"
                 link
                 to="/"
             >
@@ -50,7 +50,7 @@
                 </v-list-item-content>
             </v-list-item>
             <v-list-item
-                v-if="user.organisationId"
+                v-if="isMemberOfOrganisation"
                 link
                 to="/aufgaben"
             >
@@ -62,7 +62,7 @@
                 </v-list-item-content>
             </v-list-item>
             <v-list-item
-                v-if="user.admin && user.organisationId"
+                v-if="isAdminOfOrganisation"
                 link
                 to="/organisation"
             >
@@ -74,7 +74,7 @@
                 </v-list-item-content>
             </v-list-item>
             <v-list-item
-                v-else-if="!user.organisationId"
+                v-else-if="!isMemberOfOrganisation"
                 link
                 to="/organisation/erstellen"
             >
@@ -106,25 +106,28 @@
 <script>
     export default {
         name: "Navigation",
-
         data: () => ({
             drawer: true,
             mini: false,
-            user: false,
         }),
         computed: {
             isAuthenticated() {
                 return this.$store.getters['security/isAuthenticated'];
             },
             hello() {
-                return `Hallo ${this.user.firstname}!`;
+                return `Hallo ${this.currentUser.firstname}!`;
             },
             currentUser() {
                 return this.$store.getters['security/currentUser'];
             },
+            isAdminOfOrganisation() {
+                return this.$store.getters['security/isAdminOfOrganisation'];
+            },
+            isMemberOfOrganisation() {
+                return this.$store.getters['security/isMemberOfOrganisation'];
+            }
         },
         created() {
-            this.user = this.$store.getters['security/currentUser'];
         },
     }
 </script>
